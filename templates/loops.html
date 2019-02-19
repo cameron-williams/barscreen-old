@@ -1,0 +1,111 @@
+
+
+
+{% extends 'base_layout.html' %}
+{% block head %}
+{{ super() }}
+    <script src="{{ url_for('static', filename='loops.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='loops.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="container" id="main">
+    <div id="divider" class="row">
+
+        <div id="sidebar" class="col-6 col-md-3">
+            <div id="info">
+                <h4>WEEKDAYS</h4>
+                <p>Edited 11 Days Ago</p>
+            </div>
+            <div id="enabled-widgets">
+                <div class="enabled-widget">
+                    <p>1</p>
+                    <img src="/static/check1.png">
+                </div>
+                <div class="enabled-widget">
+                    <p>2</p>
+                    <img src="/static/img2.png">
+                </div>
+                <div class="enabled-widget">
+                    <p>3</p>
+                    <img src="/static/img3.png">
+                </div>
+            </div>
+
+        </div>
+
+
+        <div id="widgets" class="col-12 col-md-9">
+            <div id="custom-widgets">
+                <p><strong>Custom Widgets</strong></p>
+                <div id="custom-widgets-list">
+                    <div class="custom-widget">
+                        <img src="/static/check1.png">
+                    </div>
+                    <div class="custom-widget">
+                        <img src="/static/img3.png">
+                    </div>
+                    <div class="custom-widget">
+                        <img src="/static/img4.png">
+                    </div>
+                </div>
+            </div>
+            <div id="channels">
+                <p><strong>Channels</strong></p>
+                <div class="form-group" id="channel-search">
+                    <label for="search">Search Channels:</label>
+                    <input type="text" class="form-control" id="search">
+                </div>
+                <div id="channels-list" class="row">
+                    <div class="channel">
+                        <img src="/static/img2.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img4.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/check1.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img3.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/check1.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img5.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img6.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img2.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/check1.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img3.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/check1.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img3.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img4.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img5.png">
+                    </div>
+                    <div class="channel">
+                        <img src="/static/img6.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

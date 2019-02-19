@@ -1,0 +1,11 @@
+requests
+sqlalchemy
+flask
+flask_sqlalchemy
+flask_login
+flask_bcrypt
+gunicorn
+wtforms
+psycopg2-binary
+flask-migrate
+flask-bootstrap

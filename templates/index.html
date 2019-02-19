@@ -1,0 +1,11 @@
+{% extends 'base_layout.html' %}
+{% block head %}
+{{ super() }}
+    <script src="{{ url_for('static', filename='index.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <h2>Hello there.</h2>
+</div>
+{% endblock %}
