@@ -8,6 +8,10 @@ var eRighttrue = eRightHt + 160
 
 $(".splash").css("height",eRighttrue);
 
+$(".hamburger").click(function(){
+    $(".nav_menu").toggle();
+  });
+
 var $hamburger = $(".hamburger");
   $hamburger.on("click", function(e) {
     $hamburger.toggleClass("is-active");
