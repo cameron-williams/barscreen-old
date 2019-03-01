@@ -1,0 +1,127 @@
+/* Login Styles */
+
+.splash_login{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -9999;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: url("../images/login_splash.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.container_login{
+  width: 20em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: calc(50vh - 160px);
+}
+
+.container_login img{
+  width: 80%;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Log In Form */
+
+form{
+  margin-bottom: 0;
+}
+
+.form_container{
+  border-radius: 1em;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.form_container form{
+  margin-block-end: 0;
+}
+
+.form_container feildset{
+  width: 100%;
+  padding-top: .75em;
+  padding-bottom: .75em;
+  padding-left: .5em;
+  color: #232323;
+  font-size: 1em;
+  display: block;
+  background-color: #F0F4FF;
+}
+
+.form_container feildset:first-child{
+  border-bottom: 1px solid #DBDEE8;
+}
+
+.form_container feildset:nth-child(3){
+  padding-left: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.form_container feildset:last-child{
+  background-color: transparent;
+}
+
+.form_container feildset label{
+  width: 25%;
+  display: inline-block;
+}
+
+.form_container feildset input{
+  width: 74%;
+  border:none;
+  font-size: 1em;
+  background-color: #F0F4FF;
+}
+
+.form_container feildset .password_input{
+  width:57%;
+}
+
+.form_container .forgot_password{
+  font-size: .75em;
+  color: #8D9499;
+}
+
+.sigin button{
+  width:100%;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  border: none;
+  font-size: 1em;
+  background-color: #EF9F00;
+  color: #232323;
+  font-weight: 600;
+}
+
+.container_rememberme{
+  color: #F0F4FF;
+  display: block;
+  line-height: 14px;
+  text-align: center;
+  padding-top: .5em;
+  padding-bottom: .5em;
+}
+
+.container_rememberme label{
+  vertical-align: middle;
+}
+
+.new_account{
+  color: #F0F4FF;
+  text-align: center;
+}
+
+.footer{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}

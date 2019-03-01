@@ -311,6 +311,7 @@ nav{
   font-size: 1em;
   color: #F0F4FF;
   font-weight: 400;
+  text-align: center;
 }
 
 @media only screen and (max-width: 600px) {

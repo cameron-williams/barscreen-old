@@ -1,6 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+  <link rel="stylesheet" type="text/css" href="static/styles/login.css">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
   <link href="static/styles/hamburger.css" rel="stylesheet">
@@ -10,30 +11,38 @@
 </head>
 <body>
   <div class="site_container">
-    <nav>
-      <div class="nav_container">
-        <div class="site_logo">
-          <img class="logo" src="static/images/barscreenlogo.png">
-          <div class="logo_title">
-            <span>BarScreen</span>
+    <div class="splash_login">
+      <div class="container_login">
+        <img src="images/horizontal_logo.png" />
+        <form>
+          <div class="form_container">
+            <feildset class="form_username">
+              <label for="username">Username</label>
+              <input type="text" id="username" required="required" class="username_input" style>
+            </feildset>
+            <feildset class="form_username">
+              <label for="password">Password</label>
+              <input type="text" id="password" required="required" class="password_input" style>
+              <a class="forgot_password">Forgot?</a>
+            </feildset>
+            <feildset class="sigin">
+                <button>Sign In</button>
+            </feildset>
           </div>
-        </div>
-        <button class="hamburger hamburger--minus" type="button">
-          <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-          </span>
-        </button>
-        <div class="nav_menu">
-          <ul>
-            <li><a>Features</a></li>
-            <li><a>About</a></li>
-            <li><a>Log In</a></li>
-          </ul>
-        </div>
+            <feildset class="form_rememberme">
+              <div class="container_rememberme">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Keep me signed in</label>
+              </div>
+            </feildset>
+        </form>
       </div>
-    </nav>
-
+    </div>
+    <div class="footer">
+      <div class="section">
+        <h4><i class="fa fa-copyright"></i> BarScreen 2019</h4>
+      </div>
+    </div>
   </div>
-
 </body>
 </html>
