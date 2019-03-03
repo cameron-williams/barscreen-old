@@ -11,7 +11,7 @@
   background-size: cover;
 }
 
-.splash_splash:before{
+.splash_signup:before{
   content: "";
   display: block;
   position: absolute;
