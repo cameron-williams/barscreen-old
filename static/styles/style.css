@@ -303,6 +303,8 @@ nav{
 
 .footer{
   background-color: #232323;
+  bottom: 0;
+  width: 100%;
 }
 
 .footer h4{

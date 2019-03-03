@@ -1,0 +1,96 @@
+.splash_signup{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -9999;
+  width: 100%;
+  overflow: hidden;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.splash_splash:before{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #232323cc;
+}
+
+#signup{
+  background: url("../images/signup_splash.jpg") no-repeat center center fixed;
+  height: calc(141px + 2em);
+}
+
+.title {
+  color: #F0F4FF;
+  z-index: 9999;
+  margin-top: calc(64px + 2em);
+  text-transform: uppercase;
+}
+
+.title h3{
+  font-weight: 600;
+  font-size: 2.25em;
+  margin: 0;
+  text-align: center;
+}
+
+/* Sign Up */
+
+.form_container{
+  margin-top: 2em;
+}
+
+.form_container feildset{
+  display: block;
+  margin-bottom: 1em;
+}
+
+.form_container feildset label{
+  font-weight: 600;
+}
+
+.form_container feildset input{
+  display: block;
+  font-size: 1.5em;
+  width: 50%;
+}
+
+.submit button{
+font-weight: 600;
+background-color: #EF9F00;
+color: #232323;
+border: none;
+border-bottom: #DA9100 solid 3px !important;
+padding: 0.5em 1.5em 0.5em 1.5em;
+border-radius: 8px;
+font-size: 1.25em;
+display: block;
+font-family: 'Source Sans Pro', sans-serif;
+}
+
+.submit button:hover{
+  background-color: #F1B02E;
+  cursor: pointer;
+}
+
+.submit button:focus{
+  outline:0;
+}
+
+@media screen and (max-width: 600px) {
+  .form_container feildset input{
+    width: 100%;
+  }
+  .submit button{
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+}

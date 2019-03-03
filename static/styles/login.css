@@ -91,7 +91,7 @@ form{
   color: #8D9499;
 }
 
-.sigin button{
+.signin button{
   width:100%;
   padding-top: .5em;
   padding-bottom: .5em;
@@ -118,10 +118,4 @@ form{
 .new_account{
   color: #F0F4FF;
   text-align: center;
-}
-
-.footer{
-  position: absolute;
-  bottom: 0;
-  width: 100%;
 }
