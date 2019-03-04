@@ -1,0 +1,141 @@
+.contact_splash{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -9999;
+  width: 100%;
+  overflow: hidden;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.contact_splash:before{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #232323cc;
+}
+
+#contact{
+  background: url("../images/contact_splash.jpg") no-repeat center center fixed;
+  height: calc(141px + 2em);
+}
+
+.title {
+  color: #F0F4FF;
+  z-index: 9999;
+  margin-top: calc(64px + 2em);
+  text-transform: uppercase;
+}
+
+.title h3{
+  font-weight: 600;
+  font-size: 2.25em;
+  margin: 0;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.two_section{
+  background-color: #232323;
+}
+
+.left_section{
+  width: 50%;
+  display: inline-block;
+  padding-right: 2em;
+  background-color: #F0F4FF;
+}
+
+.right_section{
+  width: calc(50% - 6em);
+  display: inline-block;
+  float: right;
+  height: calc(326px - 4em);
+  padding: 1em 2em;
+}
+
+.left_section h3{
+  font-size: 1.5em;
+  font-weight: 400;
+  margin-top: .25em;
+}
+
+.contact_item{
+  margin-bottom: 1em;
+}
+
+.contact_item h4{
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.25em
+}
+
+.contact_item p{
+  margin: 0;
+}
+
+.contact_item a{
+  text-decoration: none;
+  color: #232323;
+}
+
+.contact_item a:hover{
+  color: #EF9F00;
+}
+
+.right_section h3{
+  margin: 0;
+  margin-bottom: 1em;
+  font-weight: 600;
+  color: #F0F4FF;
+}
+
+.right_section feildset{
+  display: block;
+  margin-bottom: 1em;
+}
+
+.right_section input, .right_section textarea{
+  width: 100%;
+  font-size: 1em;
+}
+
+.right_section button{
+  font-weight: 600;
+  background-color: #EF9F00;
+  color: #232323;
+  border: none;
+  border-bottom: #DA9100 solid 3px !important;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+  border-radius: 8px;
+  font-size: 1.25em;
+  display: block;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.right_section button:hover{
+  background-color: #F1B02E;
+  cursor: pointer;
+}
+
+.right_section button:focus{
+  outline:0;
+}
+
+@media screen and (max-width: 600px) {
+  .right_section{
+    width: calc(100% - 1em);
+    float: none;
+    padding: 1em .5em;
+  }
+  .left_section{
+    width: 100%;
+  }
+}
