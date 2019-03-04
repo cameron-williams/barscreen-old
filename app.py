@@ -52,11 +52,21 @@ def loops():
 def dashboard():
     return render_template("dashboard.html")
 
-
 @app.route("/login", methods=["GET"])
 def login():
     return render_template("login.html")
 
+@app.route("/about", methods=["GET"])
+def about():
+    return render_template("about.html")
+
+@app.route("/contact", methods=["POST","GET"])
+def contact():
+    return render_template("contact.html")
+
+@app.route("/signup", methods=["POST","GET"])
+def signup():
+    return render_template("signup.html")
 
 if __name__ == '__main__':
     app.run('127.0.0.1', port=5000, debug=True)
