@@ -119,3 +119,7 @@ form{
   color: #F0F4FF;
   text-align: center;
 }
+
+.footer{
+  position: absolute;
+}

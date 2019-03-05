@@ -78,6 +78,11 @@ nav{
   line-height: initial;
 }
 
+.nav_menu ul li a{
+  text-decoration: none;
+  color: inherit;
+}
+
 .nav_menu ul li:hover{
   color: #000DFF;
   background-color: #F0F4FF;
@@ -265,6 +270,11 @@ nav{
   margin-left: auto;
   padding-top: 1em;
   padding-bottom: 1em;
+}
+
+.contact{
+  text-decoration: none;
+  color: inherit;
 }
 
 .contact h2{
