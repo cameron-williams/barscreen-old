@@ -4,6 +4,8 @@ body{
   margin: 0;
   font-family: 'Source Sans Pro', sans-serif;
   background-color: #F0F4FF;
+  height: 100%;
+  min-height: 100%;
 }
 
 /*Navigation Bar */
@@ -313,8 +315,9 @@ nav{
 
 .footer{
   background-color: #232323;
-  bottom: 0;
-  width: 100%;
+  clear: both;
+  position: relative;
+  height: 68px;
 }
 
 .footer h4{
