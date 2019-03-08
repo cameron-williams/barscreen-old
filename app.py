@@ -27,6 +27,16 @@ def create_app():
     bcrypt.init_app(app)
     bootstrap = Bootstrap(app)
     login_manager.init_app(app)
+
+    # register blueprints
+    subdomain_routing = True  # change this to false if you're testing locally
+    from views import base
+    from views.dashboard import dashboard
+    from views.admin import admin
+
+    app.register_blueprint(base.base)
+    app.register_blueprint(admin, url_prefix="/a", subdomain="admin" if subdomain_routing else None)
+    app.register_blueprint(dashboard, url_prefix="/d", subdomain="dashboard" if subdomain_routing else None)
     return app
 
 
@@ -37,36 +47,6 @@ app = create_app()
 def load_user(user_id):
     return User.query.filter_by(id=user_id).first()
 
-
-@app.route("/", methods=["POST", "GET"])
-def index():
-    return render_template("index.html")
-
-
-@app.route("/loops", methods=["POST", "GET"])
-def loops():
-    return render_template("loops.html")
-
-
-@app.route("/dashboard", methods=["GET"])
-def dashboard():
-    return render_template("dashboard.html")
-
-@app.route("/login", methods=["GET"])
-def login():
-    return render_template("login.html")
-
-@app.route("/about", methods=["GET"])
-def about():
-    return render_template("about.html")
-
-@app.route("/contact", methods=["POST","GET"])
-def contact():
-    return render_template("contact.html")
-
-@app.route("/signup", methods=["POST","GET"])
-def signup():
-    return render_template("signup.html")
 
 if __name__ == '__main__':
     app.run('127.0.0.1', port=5000, debug=True)

@@ -29,8 +29,8 @@
         <div class="nav_menu">
           <ul>
             <li><a>Features</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/login">Log In</a></li>
+            <li><a href="{{ url_for('base.about') }}">About</a></li>
+            <li><a href="{{ url_for('dashboard.login') }}">Log In</a></li>
           </ul>
         </div>
       </div>
@@ -53,7 +53,7 @@
     <div class="contact_row">
       <div class="contact">
         <h2>Want more information?</h2>
-        <a href="/contact">
+        <a href="{{ url_for('base.contact') }}">
           <button>Contact Us</button>
         </a>
       </div>
