@@ -23,6 +23,9 @@ def create_app():
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,
         'SECRET_KEY': "97e5782c0ef1621d168ed4229ac95f148d1d09a9abaa490d7349d363f16cc7b3"
     })
+    LOCAL = False
+    if not LOCAL:
+        app.config['SERVER_NAME'] = 'barscreen.tv'
     db.init_app(app)
     migrate = Migrate(app, db)
     bcrypt.init_app(app)
