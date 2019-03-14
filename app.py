@@ -9,6 +9,7 @@ from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
 from sqlalchemy.sql.expression import func
 from flask_bootstrap import Bootstrap
+from forms.contact import ContactForm
 
 login_manager = LoginManager()
 bcrypt = Bcrypt()
@@ -35,8 +36,8 @@ def create_app():
     from views.admin import admin
 
     app.register_blueprint(base.base)
-    app.register_blueprint(admin, url_prefix="/a", subdomain="admin" if subdomain_routing else None)
-    app.register_blueprint(dashboard, url_prefix="/d", subdomain="dashboard" if subdomain_routing else None)
+    app.register_blueprint(admin, subdomain="admin" if subdomain_routing else None)
+    app.register_blueprint(dashboard, subdomain="dashboard" if subdomain_routing else None)
     return app
 
 
