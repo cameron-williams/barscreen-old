@@ -62,7 +62,7 @@
   width: 50%;
 }
 
-.submit button{
+.submit input#submit{
 font-weight: 600;
 background-color: #EF9F00;
 color: #232323;
@@ -71,16 +71,17 @@ border-bottom: #DA9100 solid 3px !important;
 padding: 0.5em 1.5em 0.5em 1.5em;
 border-radius: 8px;
 font-size: 1.25em;
+width: inherit;
 display: block;
 font-family: 'Source Sans Pro', sans-serif;
 }
 
-.submit button:hover{
+.submit input#submit:hover{
   background-color: #F1B02E;
   cursor: pointer;
 }
 
-.submit button:focus{
+.submit input#submit:focus{
   outline:0;
 }
 
@@ -88,7 +89,7 @@ font-family: 'Source Sans Pro', sans-serif;
   .form_container feildset input{
     width: 100%;
   }
-  .submit button{
+  .submit input#submit{
     margin-left: auto;
     margin-right: auto;
   }
