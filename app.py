@@ -2,14 +2,12 @@
 Barscreen Web App
 """
 
-from flask import Flask, render_template, request, abort, jsonify, copy_current_request_context
+from flask import Flask
 from models import db, User
-from flask_login import LoginManager, login_required, login_user, current_user
+from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 from flask_migrate import Migrate
-from sqlalchemy.sql.expression import func
 from flask_bootstrap import Bootstrap
-from forms.contact import ContactForm
 
 login_manager = LoginManager()
 bcrypt = Bcrypt()
@@ -17,13 +15,13 @@ bcrypt = Bcrypt()
 
 def create_app():
     app = Flask(__name__, subdomain_matching=True)
-    DB_URL = "postgresql+psycopg2://cam:root@localhost:5432/barscreen"
+    DB_URL = "postgresql+psycopg2://postgres:abdER422sh1@35.197.9.48:5432/barscreen"
     app.config.update({
         'SQLALCHEMY_DATABASE_URI': DB_URL,
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,
         'SECRET_KEY': "97e5782c0ef1621d168ed4229ac95f148d1d09a9abaa490d7349d363f16cc7b3"
     })
-    LOCAL = False
+    LOCAL = True
     if not LOCAL:
         app.config['SERVER_NAME'] = 'barscreen.tv'
     db.init_app(app)
