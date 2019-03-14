@@ -14,3 +14,15 @@ def index():
 @dashboard.route("/login")
 def login():
     return render_template("dashboard/login.html")
+
+@dashboard.route("/password")
+def password():
+    return render_template("dashboard/password.html")
+
+@dashboard.route("/loops")
+def loops():
+    return render_template("dashboard/loops.html")
+
+@dashboard.route("/create")
+def create():
+    return render_template("dashboard/create.html")
