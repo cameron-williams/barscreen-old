@@ -36,6 +36,21 @@ class Users(BaseModel):
         self.confirmed = confirmed
         self.password = password
 
+    def __repr__(self):
+        return '<User {}>'.format(self.email)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return True
+
+    def get_id(self):
+        return str(self.id)
+
 
 class User(BaseModel):
     """

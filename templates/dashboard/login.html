@@ -10,23 +10,34 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
 <body>
+{% with messages = get_flashed_messages() %}
+   {% if messages %}
+      {% for message in messages %}
+         {{ message }}
+      {% endfor %}
+   {% endif %}
+{% endwith %}
   <div class="site_container">
     <div class="splash_login">
       <div class="container_login">
         <img src="static/images/horizontal_logo.png" />
-        <form>
+        <form method="POST">
+          {{ form.csrf_token }}
           <div class="form_container">
             <feildset class="form_username">
-              <label for="username">Username</label>
-              <input type="text" id="username" required="required" class="username_input" style>
+              {{ form.email.label }}{{ form.email }}
+              <!--<label for="username">Username</label>-->
+              <!--<input type="text" id="username" required="required" class="username_input" style>-->
             </feildset>
             <feildset class="form_username">
-              <label for="password">Password</label>
-              <input type="text" id="password" required="required" class="password_input" style>
+              {{ form.password.label }}{{ form.password }}
+              <!--<label for="password">Password</label>-->
+              <!--<input type="text" id="password" required="required" class="password_input" style>-->
               <a class="forgot_password">Forgot?</a>
             </feildset>
             <feildset class="signin">
-                <button>Sign In</button>
+              {{ form.submit }}
+                <!--<button>Sign In</button>-->
             </feildset>
           </div>
             <feildset class="form_rememberme">
