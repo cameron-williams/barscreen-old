@@ -1,6 +1,8 @@
 from flask import Blueprint, render_template, request
 from forms.contact import ContactForm
+from forms.signup import SignupForm
 from services.google import Gmail
+from models import Users, db
 
 base = Blueprint('base', __name__, static_folder='../static')
 
@@ -36,4 +38,15 @@ def contact():
 
 @base.route("/signup", methods=["POST", "GET"])
 def signup():
-    return render_template("signup.html")
+    form = SignupForm()
+    if request.method == "POST" and form.validate_on_submit():
+        user = Users(
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            phone_number=form.phone.data,
+            email=form.email.data,
+            company=form.company.data,
+        )
+        db.session.add(user)
+        db.session.commit()
+    return render_template("signup.html", form=form)

@@ -43,30 +43,37 @@
       </div>
     </div>
     <div class="section">
-      <form>
+      <form method="POST">
+        {{ form.csrf_token }}
         <div class="form_container">
           <feildset class="form_fname">
-            <label for="fname">First Name:</label>
-            <input type="text" id="fname" required="required" class="form_input" style>
+            {{ form.first_name.label }}{{ form.first_name }}
+            <!--<label for="fname">First Name:</label>-->
+            <!--<input type="text" id="fname" required="required" class="form_input" style>-->
           </feildset>
           <feildset class="form_lname">
-            <label for="lname">Last Name:</label>
-            <input type="text" id="lname" required="required" class="form_input" style>
+            {{ form.last_name.label }}{{ form.last_name }}
+            <!--<label for="lname">Last Name:</label>-->
+            <!--<input type="text" id="lname" required="required" class="form_input" style>-->
           </feildset>
           <feildset class="form_email">
-            <label for="email">Email:</label>
-            <input type="text" id="email" required="required" class="form_input" style>
+            {{ form.email.label }}{{ form.email }}
+            <!--<label for="email">Email:</label>-->
+            <!--<input type="text" id="email" required="required" class="form_input" style>-->
           </feildset>
           <feildset class="form_phone">
-            <label for="phone">Phone:</label>
-            <input type="text" id="phone" required="required" class="form_input" style>
+            {{ form.phone.label }}{{ form.phone }}
+            <!--<label for="phone">Phone:</label>-->
+            <!--<input type="text" id="phone" required="required" class="form_input" style>-->
           </feildset>
           <feildset class="form_company">
-            <label for="company">Company:</label>
-            <input type="text" id="phone" required="required" class="form_input" style>
+            {{ form.company.label }}{{ form.company }}
+            <!--<label for="company">Company:</label>-->
+            <!--<input type="text" id="phone" required="required" class="form_input" style>-->
           </feildset>
           <feildset class="submit">
-              <button>Submit</button>
+              {{ form.submit }}
+              <!--<button>Submit</button>-->
           </feildset>
         </div>
       </form>

@@ -15,6 +15,28 @@ class BaseModel(db.Model):
     last_updated = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
 
 
+class Users(BaseModel):
+    "Customer users model"
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
+    phone_number = db.Column(db.String, nullable=False)
+    email = db.Column(db.String, nullable=False, unique=True)
+    company = db.Column(db.String, nullable=False)
+    ads = db.Column(db.BOOLEAN, default=False)
+    confirmed = db.Column(db.BOOLEAN, default=False)
+    password = db.Column(db.CHAR(120), nullable=True)
+
+    def __init__(self, first_name, last_name, phone_number, email, company, password=None, ads=False, confirmed=False):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.phone_number = phone_number
+        self.company = company
+        self.email = email
+        self.ads = ads
+        self.confirmed = confirmed
+        self.password = password
+
+
 class User(BaseModel):
     """
     GUI user model
