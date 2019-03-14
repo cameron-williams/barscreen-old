@@ -1,7 +1,7 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="static/styles/dashboard.css">
-  <link href="styles/hamburger.css" rel="stylesheet">
+  <link href="static/styles/hamburger.css" rel="stylesheet">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -34,38 +34,61 @@
     </div>
   </nav>
   <div class="title_container">
-    <h3 class="title">Account Activity</h3>
+    <h3 class="title">Loops</h3>
   </div>
-  <div class="selector_wrapper">
-    <div class="selector_container">
-      <select>
-        <option value="today">Today</option>
-        <option value="yesterday">Yesterday</option>
-        <option value="lastmonth">Last Month</option>
-        <option value="monthtodate">Month to Date</option>
-        <option value="last7days">Last 7 Days</option>
-        <option value="last30days">Last 30 Days</option>
-      </select>
-      <button>
-        <i class="fas fa-sync-alt"></i>
-      </button>
+  <div class="createnew_wrapper">
+    <div class="createnew">
+      <button class="dash_button"><i class="fas fa-plus-circle"></i> Add New</button>
     </div>
   </div>
-  <div class="account_wrapper">
-    <div class="account_stats">
-      <ul class="stats">
-        <li><h3>Video Plays</h3><p>25,500</p></li>
-        <li><h3>Opportunities</h3><p>10,000</p></li>
-        <li><h3>Impressions</h3><p>7,500</p></li>
-        <li><h3>Fill Rate</h3><p>75.00%</p></li>
-        <li><h3>Revenue</h3><p>$187.50</p></li>
-        <li><h3>CPM</h3><p>$25.00</p></li>
+  <div class="loops_wrapper">
+    <div class="loops_container">
+      <ul>
+        <li>
+          <div class="loop_image">
+            <img src="static/images/vice.jpeg">
+          </div>
+          <div class="loop_title">
+            <h3>Week Days</h3>
+            <p>23:00</p>
+          </div>
+        </li>
+        <li>
+          <div class="loop_image">
+            <img src="static/images/vice.jpeg">
+          </div>
+          <div class="loop_title">
+            <h3>Week Days</h3>
+            <p>23:00</p>
+          </div>
+        </li>
+        <li>
+          <div class="loop_image">
+            <img src="static/images/vice.jpeg">
+          </div>
+          <div class="loop_title">
+            <h3>Week Days</h3>
+            <p>23:00</p>
+          </div>
+        </li>
+        <li>
+          <div class="loop_image">
+            <img src="static/images/vice.jpeg">
+          </div>
+          <div class="loop_title">
+            <h3>Week Days</h3>
+            <p>23:00</p>
+          </div>
+        </li>
       </ul>
     </div>
-  </div>
-  <div class="chart_wrapper">
-    <div class="chart_container">
-      <canvas id="myChart"></canvas>
+    <div class="pagination">
+      <a href="#">&laquo;</a>
+      <a href="#">1</a>
+      <a href="#" class="active">2</a>
+      <a href="#">3</a>
+      <a href="#">4</a>
+      <a href="#">&raquo;</a>
     </div>
   </div>
 </body>
