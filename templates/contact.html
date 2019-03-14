@@ -66,20 +66,19 @@
                 <form method="POST">
                     {{ form.csrf_token }}
                 <feildset class="form_name">
-                    {{ form.name.label }}{{ form.name }}
+                    {{ form.name }}
                 <!--<input type="text" id="name" required="required" class="form_input" placeholder="Name"style>-->
                 </feildset>
                 <feildset class="form_email">
-                    {{ form.email.label }}{{ form.email }}
+                    {{ form.email }}
                 <!--<input type="text" id="email" required="required" placeholder="Email" class="form_input" style>-->
                 </feildset>
-                    {{ form.message.label }}{{ form.message }}
+                    {{ form.message }}
                 <feildset class="form_message">
                 <!--<textarea name="message" rows="4" cols="40" id="phone" placeholder="Message" required="required" class="form_input"></textarea>-->
                 </feildset>
                 <feildset class="submit">
                     {{ form.submit }}
-                <!--<button>Submit</button>-->
                 </feildset>
                 </form>
             </div>

@@ -26,3 +26,7 @@ def loops():
 @dashboard.route("/create")
 def create():
     return render_template("dashboard/create.html")
+
+@dashboard.route("/account")
+def account():
+    return render_template("dashboard/account.html")

@@ -107,7 +107,7 @@
   font-size: 1em;
 }
 
-.right_section button{
+.right_section .submit input{
   font-weight: 600;
   background-color: #EF9F00;
   color: #232323;
@@ -117,15 +117,16 @@
   border-radius: 8px;
   font-size: 1.25em;
   display: block;
+  width: inherit;
   font-family: 'Source Sans Pro', sans-serif;
 }
 
-.right_section button:hover{
+.right_section .submit input:hover{
   background-color: #F1B02E;
   cursor: pointer;
 }
 
-.right_section button:focus{
+.right_section .submit input:focus{
   outline:0;
 }
 
