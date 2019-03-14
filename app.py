@@ -12,6 +12,10 @@ from flask_bootstrap import Bootstrap
 login_manager = LoginManager()
 bcrypt = Bcrypt()
 
+LOCAL = False
+if __name__ == "__main__":
+    LOCAL = True
+
 
 def create_app():
     app = Flask(__name__, subdomain_matching=True)
@@ -21,7 +25,6 @@ def create_app():
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,
         'SECRET_KEY': "97e5782c0ef1621d168ed4229ac95f148d1d09a9abaa490d7349d363f16cc7b3"
     })
-    LOCAL = False
     if not LOCAL:
         app.config['SERVER_NAME'] = 'barscreen.tv'
     db.init_app(app)
