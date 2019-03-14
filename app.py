@@ -16,7 +16,7 @@ bcrypt = Bcrypt()
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, subdomain_matching=True)
     DB_URL = "postgresql+psycopg2://cam:root@localhost:5432/barscreen"
     app.config.update({
         'SQLALCHEMY_DATABASE_URI': DB_URL,
