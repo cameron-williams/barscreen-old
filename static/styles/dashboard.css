@@ -725,6 +725,26 @@ nav{
   width: 100%;
 }
 
+/* Account Page */
+
+.account_container{
+  padding: 1em;
+}
+
+.account_info{
+  padding: .5em;
+  background-color: #F0F4FF;
+  border: 1px solid #232323aa;
+}
+
+.account_info h2{
+  margin: 0;
+  font-weight: 600;
+}
+
+.account_info span{
+  margin-left: .5em;
+}
 
 /* Media Query */
 
