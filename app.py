@@ -21,7 +21,7 @@ def create_app():
         'SQLALCHEMY_TRACK_MODIFICATIONS': False,
         'SECRET_KEY': "97e5782c0ef1621d168ed4229ac95f148d1d09a9abaa490d7349d363f16cc7b3"
     })
-    LOCAL = True
+    LOCAL = False
     if not LOCAL:
         app.config['SERVER_NAME'] = 'barscreen.tv'
     db.init_app(app)
@@ -31,7 +31,7 @@ def create_app():
     login_manager.init_app(app)
 
     # register blueprints
-    subdomain_routing = False  # change this to false if you're testing locally
+    subdomain_routing = not LOCAL  # change this to false if you're testing locally
     from views import base
     from views.dashboard import dashboard
     from views.admin import admin
