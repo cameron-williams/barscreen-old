@@ -1,94 +1,103 @@
 <html>
 <head>
-  <link rel="stylesheet" type="text/css" href="static/styles/style.css">
-  <link rel="stylesheet" type="text/css" href="static/styles/contact.css">
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-  <link href="static/styles/hamburger.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="static/styles/scripts.js"></script>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+    <link rel="stylesheet" type="text/css" href="static/styles/contact.css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link href="static/styles/hamburger.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="static/styles/scripts.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
 <body>
-  <div class="site_container">
+<div class="site_container">
     <nav>
-      <div class="nav_container">
-        <a href="/">
-          <div class="site_logo">
-            <img class="logo" src="static/images/barscreenlogo.png">
-            <div class="logo_title">
-              <span>BarScreen</span>
-            </div>
-          </div>
-        </a>
-        <button class="hamburger hamburger--minus" type="button">
+        <div class="nav_container">
+            <a href="/">
+                <div class="site_logo">
+                    <img class="logo" src="static/images/barscreenlogo.png">
+                    <div class="logo_title">
+                        <span>BarScreen</span>
+                    </div>
+                </div>
+            </a>
+            <button class="hamburger hamburger--minus" type="button">
           <span class="hamburger-box">
             <span class="hamburger-inner"></span>
           </span>
-        </button>
-        <div class="nav_menu">
-          <ul>
-            <li><a>Features</a></li>
-            <li><a href="{{ url_for('base.about') }}">About</a></li>
-            <li><a href="{{ url_for('dashboard.login') }}">Log In</a></li>
-          </ul>
+            </button>
+            <div class="nav_menu">
+                <ul>
+                    <li><a>Features</a></li>
+                    <li><a href="{{ url_for('base.about') }}">About</a></li>
+                    <li><a href="{{ url_for('dashboard.login') }}">Log In</a></li>
+                </ul>
+            </div>
         </div>
-      </div>
     </nav>
     <div class="contact_splash" id="contact">
     </div>
     <div class="section_splash">
-      <div class="title">
-        <h3>Contact BarScreen</h3>
-      </div>
+        <div class="title">
+            <h3>Contact BarScreen</h3>
+        </div>
     </div>
     <div class="section">
-      <div class="two_section">
-        <div class="left_section">
-          <h3>For first time inquiries, please use the form. We look forward to hearing from you.</h3>
-          <div class="contact_item">
-            <h4>Email</h4>
-            <p><a href="info@barscreen.tv">info@barscreen.tv</a></p>
-          </div>
-          <div class="contact_item">
-            <h4>Phone</h4>
-            <p>+1-778-350-4548</p>
-          </div>
-          <div class="contact_item">
-            <h4>Address</h4>
-            <p>777 Fort St</p>
-            <p>Victoria, BC</p>
-          </div>
+        <div class="two_section">
+            <div class="left_section">
+                <h3>For first time inquiries, please use the form. We look forward to hearing from you.</h3>
+                <div class="contact_item">
+                    <h4>Email</h4>
+                    <p><a href="info@barscreen.tv">info@barscreen.tv</a></p>
+                </div>
+                <div class="contact_item">
+                    <h4>Phone</h4>
+                    <p>+1-778-350-4548</p>
+                </div>
+                <div class="contact_item">
+                    <h4>Address</h4>
+                    <p>777 Fort St</p>
+                    <p>Victoria, BC</p>
+                </div>
+            </div>
+            <div class="right_section">
+                <h3>Contact Form</h3>
+                <form method="POST">
+                    {{ form.csrf_token }}
+                <feildset class="form_name">
+                    {{ form.name.label }}{{ form.name }}
+                <!--<input type="text" id="name" required="required" class="form_input" placeholder="Name"style>-->
+                </feildset>
+                <feildset class="form_email">
+                    {{ form.email.label }}{{ form.email }}
+                <!--<input type="text" id="email" required="required" placeholder="Email" class="form_input" style>-->
+                </feildset>
+                    {{ form.message.label }}{{ form.message }}
+                <feildset class="form_message">
+                <!--<textarea name="message" rows="4" cols="40" id="phone" placeholder="Message" required="required" class="form_input"></textarea>-->
+                </feildset>
+                <feildset class="submit">
+                    {{ form.submit }}
+                <!--<button>Submit</button>-->
+                </feildset>
+                </form>
+            </div>
         </div>
-        <div class="right_section">
-          <h3>Contact Form</h3>
-          <form>
-            <feildset class="form_name">
-              <input type="text" id="name" required="required" class="form_input" placeholder="Name"style>
-            </feildset>
-            <feildset class="form_email">
-              <input type="text" id="email" required="required" placeholder="Email" class="form_input" style>
-            </feildset>
-            <feildset class="form_message">
-              <textarea name="message" rows="4" cols="40" id="phone" placeholder="Message" required="required" class="form_input"></textarea>
-            </feildset>
-            <feildset class="submit">
-                <button>Submit</button>
-            </feildset>
-          </form>
-        </div>
-      </div>
     </div>
     <div class="section">
-      <div class="map" style="width: 100%">
-        <iframe width="100%" height="300" src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=777%20Forts%20St.+(BarScreen)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/map-my-route/">Plot a route map</a></iframe>
-      </div>
+        <div class="map" style="width: 100%">
+            <iframe width="100%" height="300"
+                    src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=777%20Forts%20St.+(BarScreen)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed"
+                    frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a
+                    href="https://www.maps.ie/map-my-route/">Plot a route map</a></iframe>
+        </div>
     </div>
     <div class="footer">
-      <div class="section">
-        <h4><i class="fa fa-copyright"></i> BarScreen 2019</h4>
-      </div>
+        <div class="section">
+            <h4><i class="fa fa-copyright"></i> BarScreen 2019</h4>
+        </div>
     </div>
-  </div>
+</div>
 </body>
 </html>
