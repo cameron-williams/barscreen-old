@@ -8,4 +8,8 @@ admin = Blueprint('admin', __name__, static_folder='../../static')
 
 @admin.route("/")
 def index():
-    return "there will be an admin page here eventually"
+    return render_template("admin/admin.html")
+
+@admin.route("/user")
+def user():
+    return render_template("admin/user.html")
