@@ -52,3 +52,7 @@ def create():
 @dashboard.route("/account")
 def account():
     return render_template("dashboard/account.html")
+
+@dashboard.route("/channel")
+def channel():
+    return render_template("dashboard/channel.html")

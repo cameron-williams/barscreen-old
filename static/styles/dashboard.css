@@ -23,6 +23,15 @@ body{
   cursor: pointer;
 }
 
+select{
+  background-color: #F0F4FF;
+  color: #232323;
+  padding: 1em;
+  height: 35px;
+  font-size: .75em;
+  border: #232323aa 1px solid;
+  border-radius: 0;
+}
 
 /* Nav Bar */
 nav{
@@ -167,17 +176,6 @@ nav{
   color: #232323;
   vertical-align: middle;
 }
-
-.selector_container select{
-  background-color: #F0F4FF;
-  color: #232323;
-  padding: 1em;
-  height: 35px;
-  font-size: .75em;
-  border: #232323aa 1px solid;
-  border-radius: 0;
-}
-
 
 /* Account Summary View */
 
@@ -744,6 +742,79 @@ nav{
 
 .account_info span{
   margin-left: .5em;
+}
+
+/* Channel Information */
+
+.toplevel_container{
+  padding: 1em;
+}
+
+.channel_image{
+ height: 10em;
+ display: inline-block;
+ max-width: 35%;
+ overflow: hidden;
+}
+
+.channel_image img{
+  width: 100%;
+  max-width: 330px;
+}
+
+.channel_desc{
+  display:inline-block;
+  vertical-align: top;
+  height: 10em;
+  width: 60%;
+  background-color: #F0F4FF;
+  padding: .25em;
+  box-sizing: border-box;
+}
+
+.channel_desc p{
+
+}
+
+.channel_desc p:first-child{
+  margin-top:0;
+}
+
+.channelselect_container{
+  padding: 1em;
+}
+
+.channelselect{
+  padding: .5em 0;
+  border-top: 1px solid #232323;
+  border-bottom: 1px solid #232323;
+  color: #EF9F00;
+}
+
+.channelselect h2{
+  margin: 0;
+  display: inline-block;
+  font-weight: 600;
+  vertical-align: bottom;
+  margin-right: .5em;
+}
+
+.channelselect select{
+  vertical-align: top;
+}
+
+.cliplibrary_container{
+  padding: 1em;
+}
+
+.cliplibrary .show_clip{
+  width: 15em;
+  margin: .25em .25em .25em 0;
+  height: inherit;
+}
+
+.cliplibrary .show_clip .clip_container{
+  height: inherit;
 }
 
 /* Media Query */
