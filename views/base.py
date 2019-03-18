@@ -49,4 +49,5 @@ def signup():
         )
         db.session.add(user)
         db.session.commit()
+        flash("Thanks, we will be in touch shortly.")
     return render_template("signup.html", form=form)
