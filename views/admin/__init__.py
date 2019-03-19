@@ -29,7 +29,7 @@ def approve_user():
     password_token = generate_confirmation_token(existing_user.email)
     
     # Fill in email body and send email
-    email_body = """Hi there, please visit the link below to create a password: {}""".format(
+    email_body = """Hi there, please visit the link below to create a password: http://barscreen.tv{}""".format(
         url_for('admin.confirm_email', token=password_token),   
     )
     gmail.send_email(to=existing_user.email, subject="New Password Token", body=email_body)
