@@ -8,6 +8,9 @@ from sqlalchemy import pool
 
 from alembic import context
 
+import os
+import sys
+
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -60,7 +63,18 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
+    # Get app and app context
+    from app import app
+    from models import db
 
+    
+    
+    # get existing alembic config
+    alembic_config = config.get_section(config.config_ini_section)
+    alembic_config['sqlalchemy.url'] = app.config["SQLALCHEMY_DATABASE_URI"]
+    target_metadata = db.metadata
+
+    
     # this callback is used to prevent an auto-migration from being generated
     # when there are no changes to the schema
     # reference: http://alembic.zzzcomputing.com/en/latest/cookbook.html
@@ -72,7 +86,7 @@ def run_migrations_online():
                 logger.info('No changes in schema detected.')
 
     connectable = engine_from_config(
-        config.get_section(config.config_ini_section),
+        alembic_config,
         prefix='sqlalchemy.',
         poolclass=pool.NullPool,
     )

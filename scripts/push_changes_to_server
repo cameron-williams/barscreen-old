@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import subprocess, os
+
+auth_output = subprocess.check_output("gcloud auth list", shell=True)
+# check for gcloud
+if "command not found" in auth_output:
+    raise ValueError("gcloud is not installed on this machine. Install it to continue.")
+
+# ensure we have an authed barscreen account in gcloud
+if 'barscreen.tv' not in auth_output:
+    os.system("gcloud auth login")
+
+
+

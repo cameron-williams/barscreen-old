@@ -3,6 +3,7 @@ from forms.contact import ContactForm
 from forms.signup import SignupForm
 from services.google import Gmail
 from models import Users, db
+from sqlalchemy.exc import IntegrityError
 
 base = Blueprint('base', __name__, static_folder='../static')
 
@@ -40,14 +41,19 @@ def contact():
 def signup():
     form = SignupForm()
     if request.method == "POST" and form.validate_on_submit():
-        user = Users(
-            first_name=form.first_name.data,
-            last_name=form.last_name.data,
-            phone_number=form.phone.data,
-            email=form.email.data,
-            company=form.company.data,
-        )
-        db.session.add(user)
-        db.session.commit()
-        flash("Thanks, we will be in touch shortly.")
+        try:
+            user = Users(
+                first_name=form.first_name.data,
+                last_name=form.last_name.data,
+                phone_number=form.phone.data,
+                email=form.email.data,
+                company=form.company.data,
+            )
+            db.session.add(user)
+            db.session.commit()
+        except IntegrityError:
+            flash("Sorry, a user with that email exists already.", category="error")
+        except Exception:
+            flash("Unknown error has occored. Please try again.", category="error")
+        flash("Thanks, we will be in touch shortly.", category="success")
     return render_template("signup.html", form=form)
