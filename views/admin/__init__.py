@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, render_template
 )
-
+from forms.newchannel import NewchannelForm
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
