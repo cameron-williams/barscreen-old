@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, flash
 from forms.contact import ContactForm
 from forms.signup import SignupForm
 from services.google import Gmail
