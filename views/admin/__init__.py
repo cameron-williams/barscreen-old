@@ -1,11 +1,13 @@
 from flask import (
     Blueprint, render_template, request, jsonify, abort, flash, url_for, redirect
 )
+from forms.newchannel import NewchannelForm
 from flask_login import login_required
 from forms.password import CreatePassword
 from models import db, Users
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
+
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -15,6 +17,7 @@ admin = Blueprint('admin', __name__, static_folder='../../static')
 def index():
     users = Users.query.all()
     return render_template("admin/admin.html", users=users)
+
 
 @admin.route("/approve_user", methods=["POST"])
 def approve_user():
@@ -69,7 +72,30 @@ def confirm_email(token):
         return redirect(url_for('dashboard.index'))
     return render_template("admin/create_password.html", form=form, token=token)
 
+
 @admin.route("/user")
 @login_required
 def user():
     return render_template("admin/user.html")
+
+
+@admin.route("/channels")
+def channels():
+    return render_template("admin/channels.html")
+
+
+@admin.route("/addchannel")
+def addchannel():
+    form = NewchannelForm()
+    if request.method == "POST" and form.validate_on_submit():
+        pass
+        # channel = Channels(
+        #     channel_name=form.channel_name.data,
+        #     category=form.category.data,
+        #     description=form.description.data,
+        #     channel_img=form.channel_img.data,
+        # )
+        # db.session.add(channel)
+        # db.session.commit()
+        flash("Successfully completed.")
+    return render_template("admin/addchannel.html", form=form)

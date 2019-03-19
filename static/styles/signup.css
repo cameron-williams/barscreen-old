@@ -41,6 +41,19 @@
   text-align: center;
 }
 
+/* Flash Message */
+
+.flash_message{
+  position: relative;
+  width: 100%;
+  font-weight: 600;
+  box-sizing: border-box;
+  margin-top: 2em;
+  background-color: #EF9F00;
+  padding: 1em;
+  border: 1px solid #232323;
+}
+
 /* Sign Up */
 
 .form_container{
