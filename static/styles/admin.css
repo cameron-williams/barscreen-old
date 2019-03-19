@@ -1,0 +1,114 @@
+.dash_button{
+  color: #232323;
+  font-weight: 600;
+  background-color: #EF9F00;
+  padding: .5em 1em;
+  border: none;
+}
+
+.dash_button:hover{
+  cursor: pointer;
+}
+
+nav{
+    background-color: #232323;
+}
+
+.nav_container {
+  width: 100%;
+
+}
+
+.site_logo .logo{
+  height: 30px;
+}
+
+.site_logo .logo_title{
+  height: 30px;
+  font-size: 1em;
+}
+
+.site_logo .logo_title span{
+  line-height: 30px;
+  font-size: 1em;
+}
+
+.nav_menu{
+  line-height: 30px;
+  float: none;
+  vertical-align: top;
+}
+
+.nav_menu ul li{
+  padding: 0 1em;
+}
+
+.nav_menu ul li:last-child{
+  background-color: inherit;
+  color: #F0F4FF;
+  font-weight: inherit;
+}
+
+
+.nav_menu ul li:hover{
+  background-color: inherit;
+  color: #EF9F00;
+}
+
+.nav_menu ul li:last-child:hover{
+  background-color: inherit;
+  color: #EF9F00
+}
+
+.section{
+  margin-top: 50px;
+  width: 90%;
+}
+
+.section h2{
+  margin: 0;
+}
+
+/* User Table */
+
+table{
+  width: 100%;
+}
+
+table th{
+  text-align: left;
+}
+
+table td{
+  background-color: #2E39FF22;
+}
+
+/* User Page */
+
+.user_information{
+  margin: 1em 0;
+}
+
+.user_information label{
+  display: inline-block;
+  width: 20%;
+}
+
+.user_information span{
+  display: inline-block;
+  width: 30%;
+}
+
+.user_information input{
+  width: 70%;
+}
+
+.user_information button{
+  float: right;
+}
+
+.edit{
+  display:inline-block;
+  width: 40%;
+  float: right;
+}

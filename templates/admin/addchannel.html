@@ -34,21 +34,38 @@
       </div>
     </nav>
     <div class="section">
-      <h2>Users</h2>
-      <table>
-        <tr>
-          <th>Company</th>
-          <th>Email</th>
-          <th>Confirmed</th>
-          <th>Ads</th>
-        </tr>
-        <tr>
-          <td><a>Pub Example</a></td>
-          <td>pub@pubs.net</td>
-          <td>Yes</td>
-          <td>Yes</td>
-      </table>
-    </div>
+      <h2>New Channel</h2>
+      <div class="channel_form_container">
+        <form method="POST">
+        {{ form.csrf_token }}
+        <div class="form_container">
+          <feildset class="form_cname">
+            {{ form.channel_name.label }}{{ form.channel_name }}
+            <!--<label for="fname">First Name:</label>-->
+            <!--<input type="text" id="fname" required="required" class="form_input" style>-->
+          </feildset>
+          <feildset class="form_category">
+            {{ form.category.label }}{{ form.category }}
+            <!--<label for="lname">Last Name:</label>-->
+            <!--<input type="text" id="lname" required="required" class="form_input" style>-->
+          </feildset>
+          <feildset class="form_description">
+            {{ form.description.label }}{{ description.email }}
+            <!--<label for="email">Email:</label>-->
+            <!--<input type="text" id="email" required="required" class="form_input" style>-->
+          </feildset>
+          <feildset class="form_channel_img">
+            {{ form.channel_img.label }}{{ form.channel_img }}
+            <!--<label for="phone">Phone:</label>-->
+            <!--<input type="text" id="phone" required="required" class="form_input" style>-->
+          </feildset>
+          <feildset class="submit">
+              {{ form.submit }}
+              <!--<button>Submit</button>-->
+          </feildset>
+        </div>
+      </form>
+      </div>
   </div>
 </body>
 </html>
