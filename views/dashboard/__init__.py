@@ -35,11 +35,39 @@ def login():
             flash("Invalid email or password.", "error")
     return render_template("dashboard/login.html", form=form)
 
-
+@dashboard.route("/confirm/<token>", methods=["GET", "POST"])
 @login_required
-@dashboard.route("/password")
-def password():
-    return render_template("dashboard/password.html")
+def confirm_email(token):
+    # make sure token is set based off what type of request we're getting
+    if token:
+        form = CreatePassword(token=token)
+    else:
+        form = CreatePassword()
+    if not token:
+        token = form.token.data
+    # try and confirm token, abort to signup if invalid or expired
+    try:
+        email = confirm_token(token)
+    except:
+        flash('The confirmation link is invalid or has expired.', category='danger')
+        return redirect(url_for('base.signup'))
+
+    # pull user associated with token
+    user = Users.query.filter_by(email=email).first()
+    if not user:
+        abort(400, 'Invalid token.')
+    if user.confirmed:
+        flash('Account already confirmed. Please log in.', category="success")
+        return redirect(url_for('dashboard.login'))
+
+    # if form submit, add new password to user and redirect them to dashboard
+    if request.method == "POST" and form.validate_on_submit():
+        user.set_password(form.password.data)
+        user.confirmed = True
+        db.session.commit()
+        flash("Password set successfully.", category="success")
+        return redirect(url_for('dashboard.index'))
+    return render_template("dashboard/password.html", form=form, token=token)
 
 
 @dashboard.route("/loops")
@@ -62,5 +90,6 @@ def account():
 
 
 @dashboard.route("/channel")
+@login_required
 def channel():
     return render_template("dashboard/channel.html")

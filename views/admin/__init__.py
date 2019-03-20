@@ -20,6 +20,7 @@ def index():
 
 
 @admin.route("/approve_user", methods=["POST"])
+@login_required
 def approve_user():
     req = request.get_json()
     existing_user = Users.query.filter_by(email=req["email"]).first()
@@ -30,16 +31,17 @@ def approve_user():
     gmail = Gmail(delegated_user="info@barscreen.tv")
     # generate password token
     password_token = generate_confirmation_token(existing_user.email)
-    
+
     # Fill in email body and send email
-    email_body = """Hi there, please visit the link below to create a password: http://admin.barscreen.tv{}""".format(
-        url_for('admin.confirm_email', token=password_token),   
+    email_body = """Congratulations you have been approved for a Barscreen account! Below is a link to create a password. Your email will be used for your username. Link: http://dashboard.barscreen.tv{}""".format(
+        url_for('dashboard.confirm_email', token=password_token),
     )
-    gmail.send_email(to=existing_user.email, subject="New Password Token", body=email_body)
+    gmail.send_email(to=existing_user.email, subject="BarScreen Account", body=email_body)
     return jsonify({"success": True})
 
 
 @admin.route("/confirm/<token>", methods=["GET", "POST"])
+@login_required
 def confirm_email(token):
     # make sure token is set based off what type of request we're getting
     if token:
@@ -62,7 +64,7 @@ def confirm_email(token):
     if user.confirmed:
         flash('Account already confirmed. Please log in.', category="success")
         return redirect(url_for('dashboard.login'))
-    
+
     # if form submit, add new password to user and redirect them to dashboard
     if request.method == "POST" and form.validate_on_submit():
         user.set_password(form.password.data)
@@ -80,11 +82,13 @@ def user():
 
 
 @admin.route("/channels")
+@login_required
 def channels():
     return render_template("admin/channels.html")
 
 
 @admin.route("/addchannel")
+@login_required
 def addchannel():
     form = NewchannelForm()
     if request.method == "POST" and form.validate_on_submit():
