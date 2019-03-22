@@ -8,7 +8,6 @@ from models import db, Users
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
 
-
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
 
@@ -33,7 +32,7 @@ def approve_user():
     password_token = generate_confirmation_token(existing_user.email)
 
     # Fill in email body and send email
-    email_body = """Congratulations you have been approved for a Barscreen account! Below is a link to create a password. Your email will be used for your username. Link: http://dashboard.barscreen.tv{}""".format(
+    email_body = """Congratulations you have been approved for a Barscreen account! Below is a link to create a password. Your email will be used for your username. Link: {}""".format(
         url_for('dashboard.confirm_email', token=password_token),
     )
     gmail.send_email(to=existing_user.email, subject="BarScreen Account", body=email_body)
