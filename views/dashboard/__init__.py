@@ -1,10 +1,11 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for
+    Blueprint, render_template, request, flash, redirect, url_for, abort
 )
 from flask_login import login_required, login_user, current_user
 from forms.login import LoginForm
-from models import Users
-from helpers import verify_password
+from forms.password import CreatePassword
+from models import Users, db
+from helpers import verify_password, confirm_token
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
 
@@ -34,6 +35,7 @@ def login():
         else:
             flash("Invalid email or password.", "error")
     return render_template("dashboard/login.html", form=form)
+
 
 @dashboard.route("/confirm/<token>", methods=["GET", "POST"])
 @login_required
