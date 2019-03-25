@@ -17,10 +17,7 @@ if __name__ == "__main__":
     LOCAL = True
 
 
-
-
-
-
+# Todo move secrets to env variables
 def create_app():
     app = Flask(__name__, subdomain_matching=True)
     DB_URL = "postgresql+psycopg2://postgres:abdER422sh1@35.197.9.48:5432/barscreen"
