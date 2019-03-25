@@ -90,3 +90,17 @@ class User(BaseModel):
 
     def get_id(self):
         return str(self.id)
+
+
+class Show(BaseModel):
+    """
+    Channel Show Model
+    """
+    name = db.Column(db.String, nullable=False, unique=True)
+    description = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return '<Show {}>'.format(self.name)
+
+    def get_id(self):
+        return str(self.id)
