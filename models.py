@@ -1,10 +1,12 @@
 """
 Barscreen Web App Models
 """
+import imghdr
 
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import bcrypt
 from helpers import hash_password
+from sqlalchemy.orm import validates
 
 db = SQLAlchemy()
 
@@ -90,3 +92,47 @@ class User(BaseModel):
 
     def get_id(self):
         return str(self.id)
+
+
+class Show(BaseModel):
+    """
+    Channel Show Model
+    """
+    name = db.Column(db.String, nullable=False, unique=True)
+    description = db.Column(db.String, nullable=False)
+
+    def __repr__(self):
+        return '<Show {}>'.format(self.name)
+
+    def get_id(self):
+        return str(self.id)
+
+
+class Clip(BaseModel):
+    """
+    Clip Model
+    """
+    name = db.Column(db.String, nullable=False, unique=True)
+    description = db.Column(db.String, nullable=False)
+    duration = db.Column(db.Integer, nullable=False, default=0)
+    clip_data = db.Column(db.LargeBinary)
+
+
+class Channel(BaseModel):
+    """
+    Clip Model
+    """
+    name = db.Column(db.String, nullable=False, unique=True)
+    category = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=False)
+    image_data = db.Column(db.LargeBinary)
+    
+    @validates('image_data')
+    def validate_image_data(self, key, image_data):
+        if not image_data:
+            raise AssertionError("No image data provided")
+        img_type = imghdr.what('', image_data)
+        if img_type != 'jpeg' and img_type != 'png':
+            raise AssertionError("Please use  a jpeg or a png file for a channel image")
+        return image_data
+
