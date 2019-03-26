@@ -127,7 +127,8 @@ class Channel(BaseModel):
     description = db.Column(db.String, nullable=False)
     image_data = db.Column(db.LargeBinary)
     
-    @validate_image_data(self, key, image_data):
+    @validates('image_data')
+    def validate_image_data(self, key, image_data):
         if not image_data:
             raise AssertionError("No image data provided")
         img_type = imghdr.what('', image_data)
