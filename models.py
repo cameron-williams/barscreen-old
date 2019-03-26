@@ -104,3 +104,14 @@ class Show(BaseModel):
 
     def get_id(self):
         return str(self.id)
+
+
+class Clip(BaseModel):
+    """
+    Clip Model
+    """
+    name = db.Column(db.String, nullable=False, unique=True)
+    description = db.Column(db.String, nullable=False)
+    duration = db.Column(db.Integer, nullable=False, default=0)
+    clip_data = db.Column(db.LargeBinary)
+
