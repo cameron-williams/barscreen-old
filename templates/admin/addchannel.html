@@ -36,7 +36,7 @@
     <div class="section">
       <h2>New Channel</h2>
       <div class="channel_form_container">
-        <form method="POST">
+        <form method="POST"  enctype="multipart/form-data">
         {{ form.csrf_token }}
         <div class="form_container">
           <feildset class="form_cname">
@@ -50,7 +50,7 @@
             <!--<input type="text" id="lname" required="required" class="form_input" style>-->
           </feildset>
           <feildset class="form_description">
-            {{ form.description.label }}{{ form.description.email }}
+            {{ form.description.label }}{{ form.description }}
             <!--<label for="email">Email:</label>-->
             <!--<input type="text" id="email" required="required" class="form_input" style>-->
           </feildset>

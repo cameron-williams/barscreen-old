@@ -17,3 +17,4 @@ google-auth-oauthlib
 oauth2client
 ipython
 pylint
+Pillow

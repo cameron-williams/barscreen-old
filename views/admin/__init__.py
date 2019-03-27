@@ -1,12 +1,15 @@
+from io import BytesIO
+
 from flask import (
     Blueprint, render_template, request, jsonify, abort, flash, url_for, redirect
 )
 from forms.newchannel import NewchannelForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users
+from models import db, Users, Channel
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
+from PIL import Image
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -90,15 +93,33 @@ def channels():
 @login_required
 def addchannel():
     form = NewchannelForm()
+
     if request.method == "POST" and form.validate_on_submit():
-        pass
-        # channel = Channels(
-        #     channel_name=form.channel_name.data,
-        #     category=form.category.data,
-        #     description=form.description.data,
-        #     channel_img=form.channel_img.data,
-        # )
-        # db.session.add(channel)
-        # db.session.commit()
-        flash("Successfully completed.")
+        image_file = form.channel_img.data
+        image_bytes = BytesIO(image_file.read())
+        img = Image.open(image_bytes)
+
+        size = img.size
+
+        width = size[0]
+        height = size[1]
+
+        if width != 405 and height != 540:
+            flash("invalid image size.")
+        else:
+            try:
+                channel = Channel(
+                    name=form.channel_name.data,
+                    category=form.category.data,
+                    description=form.description.data,
+                    image_data=image_file.read(),
+                )
+                db.session.add(channel)
+
+                db.session.commit()
+                flash("Successfully completed.")
+
+            except Exception as e:
+                db.session.rollback()
+                flash(str(e))
     return render_template("admin/addchannel.html", form=form)

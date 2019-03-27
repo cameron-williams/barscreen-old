@@ -120,7 +120,7 @@ class Clip(BaseModel):
 
 class Channel(BaseModel):
     """
-    Clip Model
+    Channel Model
     """
     name = db.Column(db.String, nullable=False, unique=True)
     category = db.Column(db.String, nullable=False)
