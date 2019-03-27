@@ -86,7 +86,7 @@ def channels():
     return render_template("admin/channels.html")
 
 
-@admin.route("/addchannel")
+@admin.route("/addchannel", methods=["POST", "GET"])
 @login_required
 def addchannel():
     form = NewchannelForm()
