@@ -3,6 +3,7 @@ from io import BytesIO
 from flask import (
     Blueprint, render_template, request, jsonify, abort, flash, url_for, redirect
 )
+from views.base import requires_admin
 from forms.newchannel import NewchannelForm
 from flask_login import login_required
 from forms.password import CreatePassword
@@ -16,6 +17,7 @@ admin = Blueprint('admin', __name__, static_folder='../../static')
 
 @admin.route("/")
 @login_required
+@requires_admin
 def index():
     users = Users.query.all()
     return render_template("admin/admin.html", users=users)
@@ -23,6 +25,7 @@ def index():
 
 @admin.route("/approve_user", methods=["POST"])
 @login_required
+@requires_admin
 def approve_user():
     req = request.get_json()
     existing_user = Users.query.filter_by(email=req["email"]).first()
@@ -38,7 +41,8 @@ def approve_user():
     email_body = """Congratulations you have been approved for a Barscreen account! Below is a link to create a password. Your email will be used for your username. Link: {}""".format(
         url_for('dashboard.confirm_email', token=password_token),
     )
-    gmail.send_email(to=existing_user.email, subject="BarScreen Account", body=email_body)
+    gmail.send_email(to=existing_user.email,
+                     subject="BarScreen Account", body=email_body)
     return jsonify({"success": True})
 
 
@@ -91,6 +95,7 @@ def channels():
 
 @admin.route("/addchannel", methods=["POST", "GET"])
 @login_required
+@requires_admin
 def addchannel():
     form = NewchannelForm()
 

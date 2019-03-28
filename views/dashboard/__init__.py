@@ -31,6 +31,8 @@ def login():
         # double check password matches hash
         if verify_password(matched_user.password, str(form.password.data)):
             login_user(matched_user)
+            if matched_user.admin:
+                return redirect(url_for("admin.index"))
             return redirect(url_for("dashboard.index"))
         else:
             flash("Invalid email or password.", "error")
