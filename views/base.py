@@ -14,10 +14,8 @@ def requires_admin(f):
     @wraps(f)
     def wrapper(*args, **kwargs):
         if not current_user.admin:
-            print("invalid user permissions")
             flash("Invalid user permissions.")
             return redirect(url_for('dashboard.login'))
-        print("valid user permissions")
         return f(*args, **kwargs)
     return wrapper
 
