@@ -2,6 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, FileField, TextAreaField
 from wtforms.validators import DataRequired
 
+
 class NewchannelForm(FlaskForm):
     channel_name = StringField("Channel Name", validators=[DataRequired()])
     category = StringField("Category", validators=[DataRequired()])

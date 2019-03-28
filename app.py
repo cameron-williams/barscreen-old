@@ -29,6 +29,7 @@ def create_app():
     })
     if not LOCAL:
         app.config['SERVER_NAME'] = 'barscreen.tv'
+
     db.init_app(app)
     migrate = Migrate(app, db)
     bcrypt.init_app(app)
@@ -44,15 +45,18 @@ def create_app():
 
     app.register_blueprint(base.base)
     app.register_blueprint(admin, url_prefix="/ad" if LOCAL else None, subdomain="admin" if subdomain_routing else None)
-    app.register_blueprint(dashboard, url_prefix="/dash" if LOCAL else None, subdomain="dashboard" if subdomain_routing else None)
+    app.register_blueprint(dashboard, url_prefix="/dash" if LOCAL else None,
+                           subdomain="dashboard" if subdomain_routing else None)
     return app
 
 
 app = create_app()
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return Users.query.filter_by(id=user_id).first()
+
 
 @login_manager.unauthorized_handler
 def unauthorized():
