@@ -1,11 +1,23 @@
-from flask import Blueprint, render_template, request, flash
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import current_user
 from forms.contact import ContactForm
 from forms.signup import SignupForm
 from services.google import Gmail
 from models import Users, db
 from sqlalchemy.exc import IntegrityError
+from functools import wraps
 
 base = Blueprint('base', __name__, static_folder='../static')
+
+
+def requires_admin(f):
+    @wraps(f)
+    def wrapper(*args, **kwargs):
+        if not current_user.admin:
+            flash("Invalid user permissions.")
+            return redirect(url_for('dashboard.login'))
+        return f(*args, **kwargs)
+    return wrapper
 
 
 @base.route("/")
@@ -32,7 +44,8 @@ def contact():
             form.email.data,
             form.message.data,
         )
-        g.send_email(to="info@barscreen.tv", subject="New Contact Submission", body=msg)
+        g.send_email(to="info@barscreen.tv",
+                     subject="New Contact Submission", body=msg)
 
     return render_template("contact.html", form=form)
 
