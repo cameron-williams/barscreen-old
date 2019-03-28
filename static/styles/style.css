@@ -251,7 +251,7 @@ nav{
 }
 
 .three_item img{
-  width: 90%;
+  width: 50%;
 }
 
 .three_item h3{
@@ -331,6 +331,11 @@ nav{
 
 @media only screen and (max-width: 600px) {
     /* Navigation */
+
+    .section_splash{
+      width: 100%;
+    }
+
     .nav_menu{
       display: none;
       width: 100%;
