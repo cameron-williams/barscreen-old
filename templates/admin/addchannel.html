@@ -66,6 +66,11 @@
         </div>
       </form>
       </div>
+      <div>
+        {% if error %}
+        <p><strong>Error:</strong> {{ error }}</p>
+      {% endif %}
+      </div>
   </div>
 </body>
 </html>
