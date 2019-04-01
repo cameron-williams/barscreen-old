@@ -4,6 +4,7 @@ from flask import (
     Blueprint, render_template, request, jsonify, abort, flash, url_for, redirect
 )
 from views.base import requires_admin
+from sqlalchemy.exc import IntegrityError
 from forms.newchannel import NewchannelForm
 from flask_login import login_required
 from forms.password import CreatePassword
@@ -98,33 +99,41 @@ def channels():
 @requires_admin
 def addchannel():
     form = NewchannelForm()
+    error = None
 
     if request.method == "POST" and form.validate_on_submit():
         image_file = form.channel_img.data
-        image_bytes = BytesIO(image_file.read())
+        image_data = image_file.read()
+        image_bytes = BytesIO(image_data)
         img = Image.open(image_bytes)
 
         size = img.size
-
         width = size[0]
         height = size[1]
 
-        if width != 405 and height != 540:
-            flash("invalid image size.")
+        if width != 540 and height != 405:
+            error = 'invalid image size'
+            print(error)
         else:
             try:
                 channel = Channel(
                     name=form.channel_name.data,
                     category=form.category.data,
                     description=form.description.data,
-                    image_data=image_file.read(),
+                    image_data=image_data
                 )
                 db.session.add(channel)
 
                 db.session.commit()
                 flash("Successfully completed.")
 
-            except Exception as e:
+            except IntegrityError as e:
                 db.session.rollback()
-                flash(str(e))
-    return render_template("admin/addchannel.html", form=form)
+                if 'duplicate key value violates unique constraint' in str(e):
+                    error = 'channel name already registered.'
+                else:
+                    error = 'failed to add channel.'
+            except AssertionError as e:
+                db.session.rollback()
+                error = str(e)
+    return render_template("admin/addchannel.html", form=form, error=error)
