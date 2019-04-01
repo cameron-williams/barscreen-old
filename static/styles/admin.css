@@ -112,3 +112,25 @@ table td{
   width: 40%;
   float: right;
 }
+
+/* Channel Add */
+
+.channel_form_container feildset{
+  display: block;
+  margin: 1em 0;
+}
+
+.channel_form_container feildset label{
+  display: inline-block;
+  width: 30%;
+  max-width: 200px;
+  vertical-align: top;
+}
+
+.channel_form_container #submit{
+  color: #232323;
+  font-weight: 600;
+  background-color: #EF9F00;
+  padding: .5em 1em;
+  border: none;
+}

@@ -3,8 +3,7 @@
     <link rel="stylesheet" type="text/css" href="static/styles/style.css">
     <link rel="stylesheet" type="text/css" href="static/styles/contact.css">
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
-          integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+    <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
     <link href="static/styles/hamburger.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="static/styles/scripts.js"></script>
@@ -29,7 +28,7 @@
             </button>
             <div class="nav_menu">
                 <ul>
-                    <li><a>Features</a></li>
+                    <li><a href="{{ url_for('base.features') }}">Features</a></li>
                     <li><a href="{{ url_for('base.about') }}">About</a></li>
                     <li><a href="{{ url_for('dashboard.login') }}">Log In</a></li>
                 </ul>
@@ -40,7 +39,7 @@
     </div>
     <div class="section_splash">
         <div class="title">
-            <h3>Contact BarScreen</h3>
+            <h3>Contact</h3>
         </div>
     </div>
     <div class="section">
