@@ -29,6 +29,9 @@ def index():
 def about():
     return render_template("about.html")
 
+@base.route("/features", methods=["GET"])
+def features():
+    return render_template("features.html")
 
 @base.route("/contact", methods=["POST", "GET"])
 def contact():

@@ -1,0 +1,141 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="static/styles/style.css">
+  <link rel="stylesheet" type="text/css" href="static/styles/features.css">
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link href="static/styles/hamburger.css" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="static/styles/scripts.js"></script>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+</head>
+<body>
+  <div class="site_container">
+    <nav>
+      <div class="nav_container">
+        <div class="site_logo">
+          <img class="logo" src="static/images/barscreenlogo.png">
+          <div class="logo_title">
+            <span>BarScreen</span>
+          </div>
+        </div>
+        <button class="hamburger hamburger--minus" type="button">
+          <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+          </span>
+        </button>
+        <div class="nav_menu">
+          <ul>
+            <li><a href="{{ url_for('base.features') }}">Features</a></li>
+            <li><a href="{{ url_for('base.about') }}">About</a></li>
+            <li><a href="{{ url_for('dashboard.login') }}">Log In</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="contact_splash" id="contact">
+    </div>
+    <div class="section_splash">
+      <div class="title">
+        <h3>Features</h3>
+      </div>
+    </div>
+
+    <div class="section" id="grid_container">
+      <h3>Restaurant Advantage</h3>
+      <div class="grid_wrapper">
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-tv"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Business Incentive</h4>
+            <p>Restaurants earn money from advertisements shown on their TV screens</p>
+          </div>
+        </div>
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-cog"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Customizable Content</h4>
+            <p>Managers can pick the content that is right for their patrons</p>
+          </div>
+        </div>
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-stopwatch"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Ease of Use</h4>
+            <p>Easily create playlists, customize templates and check stats</p>
+          </div>
+        </div>
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-bullhorn"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Brand Awareness</h4>
+            <p>Created branded promotion segments to increase customer engagement</p>
+          </div>
+        </div>
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-video"></i>
+          </div>
+          <div class="grid_text">
+            <h4>4K Resolution</h4>
+            <p>The highest quality definition provides the best picture on all Television screens</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="section" id="grid_container">
+      <h3>Why Advertisers Love Us</h3>
+      <div class="grid_wrapper">
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-check-square"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Verified Locations</h4>
+            <p>We audit and verify all our locations to ensure viewable screens and restaurant traffic</p>
+          </div>
+        </div>
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Muliple Views Per Ad</h4>
+            <p>Markets acquire a larger audience than traditional video ads resulting in a higher ROI</p>
+          </div>
+        </div>
+        <div class="grid_box">
+          <div class="grid_image">
+            <i class="fas fa-shield-alt"></i>
+          </div>
+          <div class="grid_text">
+            <h4>Brand Safety</h4>
+            <p>Safe content on trusted premium content partners</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div class="contact_row">
+      <div class="contact">
+        <h2>Want more information?</h2>
+        <button>Contact Us</button>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="section">
+        <h4><i class="fa fa-copyright"></i> BarScreen 2019</h4>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

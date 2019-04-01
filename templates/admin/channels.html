@@ -5,7 +5,9 @@
   <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
   <link href="static/styles/hamburger.css" rel="stylesheet">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+  <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
   <script src="static/styles/scripts.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
 </head>
@@ -37,17 +39,20 @@
       <h2>Channels</h2>
       <button class="dash_button">Add New</button>
       <table>
-        <tr>
-          <th>Channel</th>
-          <th>Category</th>
-          <th>Shows</th>
-          <th>Clips</th>
-        </tr>
-        <tr>
-          <td><a>Redbull TV</a></td>
-          <td>Sports</td>
-          <td>5</td>
-          <td>100</td>
+        <thead>
+          <tr>
+            <th>Channel</th>
+            <th>Category</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for channel in channels %}
+          <tr>
+            <td>{{ channel.name }}</td>
+            <td>{{ channel.category }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
       </table>
     </div>
   </div>
