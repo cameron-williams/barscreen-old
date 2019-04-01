@@ -90,8 +90,8 @@ def user():
 @admin.route("/channels")
 @login_required
 def channels():
-    channels = Channels.query.all()
-    return render_template("admin/channels.html")
+    channels = Channel.query.all()
+    return render_template("admin/channels.html", channels=channels)
 
 
 @admin.route("/addchannel", methods=["POST", "GET"])
