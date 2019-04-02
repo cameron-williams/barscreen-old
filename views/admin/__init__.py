@@ -49,6 +49,7 @@ def approve_user():
 
 @admin.route("/confirm/<token>", methods=["GET", "POST"])
 @login_required
+@requires_admin
 def confirm_email(token):
     # make sure token is set based off what type of request we're getting
     if token:
@@ -84,15 +85,23 @@ def confirm_email(token):
 
 @admin.route("/user")
 @login_required
+@requires_admin
 def user():
     return render_template("admin/user.html")
 
 
 @admin.route("/channels")
 @login_required
+@requires_admin
 def channels():
     channels = Channel.query.all()
     return render_template("admin/channels.html", channels=channels)
+
+@admin.route("/channelid")
+@login_required
+@requires_admin
+def channelid():
+    return render_template("admin/channelid.html")
 
 
 @admin.route("/addchannel", methods=["POST", "GET"])

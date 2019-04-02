@@ -4,6 +4,7 @@
   background-color: #EF9F00;
   padding: .5em 1em;
   border: none;
+  margin: 1em 0;
 }
 
 .dash_button:hover{
@@ -133,4 +134,32 @@ table td{
   background-color: #EF9F00;
   padding: .5em 1em;
   border: none;
+}
+
+/* Individual Channel */
+
+.channel_header{
+  padding-bottom: 1em;
+  border-bottom: 1px solid #232323;
+}
+
+.channel_header .channel_img{
+  width: 25%;
+  display: inline-block;
+  min-width: 200px;
+}
+
+.channel_header .channel_title{
+  display: inline-block;
+  vertical-align: top;
+  padding: 0 1em;
+  width: calc(74% - 2em)
+}
+
+.channel_header .channel_img img{
+  width: 100%;
+}
+
+#showlist_container{
+  margin-top: 0;
 }

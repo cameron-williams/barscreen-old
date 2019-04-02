@@ -37,24 +37,36 @@
       </div>
     </nav>
     <div class="section">
-      <h2>Channels</h2>
+      <div class="channel_header">
+        <div class="channel_img">
+          <img src="static/images/armchair.png" />
+        </div>
+        <div class="channel_title">
+          <h2>Armchair Tourist</h2>
+          <p>Category: <span>Landscape</span></p>
+          <p>ArmchairTourist lets you vicariously enjoy the sights and sounds of well known, and obscure travel locations from around the world. Watch online, on select broadcast channels, in-flight and in hotel rooms around the world. Enjoy our beach scenes, asian markets, European cafes, fountains, skylines and train stations – from around the planet.</p>
+        </div>
+      </div>
+    </div>
+    <div class="section" id="showlist_container">
+      <h2>Shows</h2>
       <button class="dash_button">Add New</button>
-      <table id="channels_table" class="display">
-        <thead>
-          <tr>
-            <th>Channel</th>
-            <th>Category</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for channel in channels %}
-          <tr>
-            <td>{{ channel.name }}</td>
-            <td>{{ channel.category }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+      <div class="show_list">
+        <table id="shows_table" class="display">
+          <thead>
+            <tr>
+              <th>Channel</th>
+              <th>Number of Clips</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Landscapes</td>
+              <td>6</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </body>
