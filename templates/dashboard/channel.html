@@ -1,41 +1,10 @@
-<html>
-<head>
-  <link rel="stylesheet" type="text/css" href="static/styles/dashboard.css">
-  <link href="static/styles/hamburger.css" rel="stylesheet">
-  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-  <script src="static/scripts/header.js"></script>
-  <script src="static/scripts/dashchart.js"></script>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0">
-</head>
-<body>
-  <nav>
-    <div class="nav_container">
-      <div class="site_logo">
-        <img class="logo" src="static/images/barscreenlogo.png">
-      </div>
-      <button class="hamburger hamburger--minus" type="button">
-        <span class="hamburger-box">
-          <span class="hamburger-inner"></span>
-        </span>
-      </button>
-      <div class="nav_menu">
-        <ul>
-          <li><a>Dashboard</a></li>
-          <li><a>Loops</a></li>
-          <li><a>Account</a></li>
-        </ul>
-      </div>
-      <div class="account_icon">
-        <a><i class="fas fa-user"></i></a>
-      </div>
-    </div>
-  </nav>
-  <div class="title_container">
-    <h3 class="title">Redbull TV</h3>
-  </div>
+{% extends "dashboard_layout.html" %}
+{% block title %}BarsScreen Dashboard - Redbull Channel{% endblock %}
+{% block h3title %}Redbull TV{% endblock %}
+{% block head %}
+  {{ super() }}
+{% endblock %}
+{% block content %}
   <div class="toplevel_container">
     <div class="channel_image">
       <img src="static/images/redbull.png">
@@ -133,5 +102,5 @@
       </div>
     </div>
   </div>
-</body>
-</html>
+
+{% endblock %}
