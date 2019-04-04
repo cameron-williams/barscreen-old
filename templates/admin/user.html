@@ -1,5 +1,5 @@
 {% extends "admin_layout.html" %}
-{% block title %}User{% endblock %}
+{% block title %}Admin - {{ current_user.company }}{% endblock %}
 {% block head %}
 {{ super() }}
 <script src="{{ url_for('static', filename='scripts/manage_user.js') }}"></script>

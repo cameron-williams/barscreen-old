@@ -7,7 +7,7 @@
 {% block content %}
   <div class="createnew_wrapper">
     <div class="createnew">
-      <button class="dash_button"><i class="fas fa-plus-circle"></i> Add New</button>
+      <a href="{{ url_for('dashboard.create') }}"><button class="dash_button"><i class="fas fa-plus-circle"></i> Add New</button></a>
     </div>
   </div>
   <div class="loops_wrapper">

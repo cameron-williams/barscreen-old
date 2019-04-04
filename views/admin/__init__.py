@@ -6,9 +6,10 @@ from flask import (
 from views.base import requires_admin
 from sqlalchemy.exc import IntegrityError
 from forms.newchannel import NewchannelForm
+from forms.newshow import NewshowForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users, Channel
+from models import db, Users, Channel, Show
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
 from PIL import Image
@@ -161,3 +162,25 @@ def addchannel():
                 db.session.rollback()
                 error = str(e)
     return render_template("admin/addchannel.html", form=form, error=error)
+
+@admin.route("/addshow", methods=["POST", "GET"])
+@login_required
+@requires_admin
+def addshow():
+    form = NewshowForm()
+    if request.method == "POST" and form.validate_on_submit():
+        try:
+            show = Show(
+                name=form.show_name.data,
+                description=form.description.data,
+                lookback=form.lookback.data,
+                order=form.order.data,
+            )
+            db.session.add(show)
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'duplicate key value violates unique constraint' in str(e):
+                error = 'show name already registered.'
+        flash("Show Created.", category="success")
+    return render_template("admin/addshow.html", form=form)
