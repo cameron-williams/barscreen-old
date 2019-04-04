@@ -1,27 +1,34 @@
 <html>
+
 <head>
   {% block head %}
   <title>{% block title %}{% endblock %}</title>
-  <link rel="stylesheet" type="text/css" href="static/styles/style.css">
-  <link rel="stylesheet" type="text/css" title="admin" href="static/styles/admin.css">
-  <link rel="stylesheet" type="text/css" title="admin" href="static/styles/loader.css">
-  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
-  <link href="static/styles/hamburger.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css') }}">
+  <link rel="stylesheet" type="text/css" title="admin" href="{{ url_for('static', filename='styles/admin.css') }}">
+  <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css'
+    integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+  <link href="{{ url_for('static', filename='styles/hamburger.css') }}" rel="stylesheet">
   <link href="//cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
   <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-  <script src="static/scripts/loader.js"></script>
-  <script src="static/scripts/header.js"></script>
-  <script src="static/scripts/admin.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js" type="text/javascript"></script>
+  <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='scripts/header.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='scripts/admin.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='scripts/loader.js') }}"" type="text/javascript"></script>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css"
+    rel="stylesheet" />
+  <script>$.fn.poshytip = { defaults: null }</script>
+  <script
+    src="//cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   {% endblock %}
+
 <body>
   <div class="site_container">
     <nav>
       <div class="nav_container">
         <div class="site_logo">
-          <img class="logo" src="static/images/barscreenlogo.png">
+          <img class="logo" src="{{ url_for('static', filename='images/barscreenlogo.png') }}">
           <div class="logo_title">
             <span>Admin</span>
           </div>
@@ -33,7 +40,7 @@
         </button>
         <div class="nav_menu">
           <ul>
-            <li><a>Users</a></li>
+            <li><a href="{{ url_for('admin.index') }}">Users</a></li>
             <li><a>Promos</a></li>
             <li><a>Channels</a></li>
           </ul>
@@ -45,4 +52,5 @@
     {% block content %}{% endblock %}
     </div>
   </div>
+
 </html>
