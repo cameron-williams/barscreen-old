@@ -22,7 +22,7 @@
         <tbody>
           {% for user in users %}
           <tr>
-            <td>{{ user.company }}</td>
+            <td><a href="{{ url_for('admin.user', user_id=user.id) }}">{{ user.company }}</a></td>
             <td>{{ user.email }}</td>
             <td>{{ user.confirmed }}</td>
             <td>{{ user.ads }}</td>
