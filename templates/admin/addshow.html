@@ -1,37 +1,37 @@
 {% extends "admin_layout.html" %}
 {% block title %}Admin - Add Show{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 {% endblock %}
 {% block content %}
-    <div class="section">
-      <h2>New Show</h2>
-      <div class="channel_form_container">
-        <form method="POST"  enctype="multipart/form-data">
-        {{ form.csrf_token }}
-        <div class="form_container">
-          <feildset class="form_cname">
-            {{ form.show_name.label }}{{ form.show_name }}
-          </feildset>
-          <feildset class="form_description">
-            {{ form.description.label }}{{ form.description }}
-          </feildset>
-          <feildset class="form_lookback">
-            {{ form.lookback.label }}{{ form.lookback }}
-          </feildset>
-          <feildset class="form_order">
-            {{ form.order.label }}{{ form.order }}
-          </feildset>
-          <feildset class="submit">
-            {{ form.submit }}
-          </feildset>
-        </div>
-      </form>
+<div class="section">
+  <h2>New Show</h2>
+  <div class="channel_form_container">
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <div class="form_container">
+        <feildset class="form_cname">
+          {{ form.show_name.label }}{{ form.show_name }}
+        </feildset>
+        <feildset class="form_description">
+          {{ form.description.label }}{{ form.description }}
+        </feildset>
+        <feildset class="form_lookback">
+          {{ form.lookback.label }}{{ form.lookback }}
+        </feildset>
+        <feildset class="form_order">
+          {{ form.order.label }}{{ form.order }}
+        </feildset>
+        <feildset class="submit">
+          {{ form.submit }}
+        </feildset>
       </div>
-      <div>
-        {% if error %}
-        <p><strong>Error:</strong> {{ error }}</p>
-      {% endif %}
-      </div>
+    </form>
   </div>
+  <div>
+    {% if error %}
+    <p><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+  </div>
+</div>
 {% endblock %}

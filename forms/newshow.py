@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField,  SelectField, TextAreaField
+from wtforms import StringField, IntegerField, SubmitField,  SelectField, TextAreaField, HiddenField
 from wtforms.validators import DataRequired
 
 
-class NewshowForm(FlaskForm):
+class NewShowForm(FlaskForm):
     show_name = StringField("Show Name", validators=[DataRequired()])
     description = TextAreaField("Description", validators=[DataRequired()], render_kw={"rows": 4})
     lookback = IntegerField("Look Back", validators=[DataRequired()])

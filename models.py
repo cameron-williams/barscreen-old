@@ -100,6 +100,9 @@ class Show(BaseModel):
     """
     name = db.Column(db.String, nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
+    lookback = db.Column(db.Integer, default=1)
+    order = db.Column(db.String, default="recent")
+    channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
 
     def __repr__(self):
         return '<Show {}>'.format(self.name)
@@ -126,6 +129,7 @@ class Channel(BaseModel):
     category = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
     image_data = db.Column(db.LargeBinary)
+    shows = db.relationship("Show", backref="channel", lazy=True)
     
     @validates('image_data')
     def validate_image_data(self, key, image_data):

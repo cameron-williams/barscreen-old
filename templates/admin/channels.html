@@ -19,7 +19,7 @@
         <tbody>
           {% for channel in channels %}
           <tr>
-            <td>{{ channel.name }}</td>
+            <td><a href="{{ url_for('admin.channelid', channel_id=channel.id) }}">{{ channel.name }}</a></td>
             <td>{{ channel.category }}</td>
           </tr>
           {% endfor %}
