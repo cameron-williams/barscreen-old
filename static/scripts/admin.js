@@ -2,6 +2,7 @@ $(document).ready(function(){
     // Initialize datatables
     table = $('#users_table').DataTable();
     table = $('#channels_table').DataTable();
+    table = $('#shows_table').DataTable();
 
     /* Handle button for approving users */
     $("#users_table tbody").on('click', 'button', function() {
