@@ -1,0 +1,11 @@
+#content{
+  display: none;
+}
+
+#loader{
+  z-index: 1000;
+  width: 336px;
+  height: 134px;
+  margin: 2em auto;
+  background: url(../images/loading.gif) no-repeat;
+}
