@@ -12,6 +12,7 @@ from models import db, Users, Channel
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
 from PIL import Image
+from urllib import unquote_plus
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -83,11 +84,24 @@ def confirm_email(token):
     return render_template("admin/create_password.html", form=form, token=token)
 
 
-@admin.route("/user")
+@admin.route("/user/<user_id>", methods=["GET", "POST"])
 @login_required
 @requires_admin
-def user():
-    return render_template("admin/user.html")
+def user(user_id):
+    current_user = Users.query.filter_by(id=user_id).first()
+    if not current_user:
+        abort(404, {"error": "User not found"})
+    if request.method == 'POST':
+        data = {unquote_plus(k.split("=")[0]): unquote_plus(k.split("=")[1]) for k in request.get_data().split("&")}
+        if data["name"] in ('confirmed', 'ads'):
+            if data['value'].lower() == 'false':
+                data['value'] = False
+            else:
+                data['value'] = True
+        setattr(current_user, data["name"], data["value"])
+        db.session.commit()
+        return ''
+    return render_template("admin/user.html", current_user=current_user)
 
 
 @admin.route("/channels")
