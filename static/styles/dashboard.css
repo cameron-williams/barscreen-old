@@ -6,6 +6,11 @@ body{
   font-family: 'Source Sans Pro', sans-serif;
 }
 
+nav a{
+  text-decoration: none;
+  color: inherit;
+}
+
 .dash_button{
   color: #232323;
   font-weight: 600;
@@ -754,8 +759,8 @@ nav{
 }
 
 .channel_image{
- height: 10em;
  display: inline-block;
+ height: inherit;
  max-width: 35%;
  overflow: hidden;
 }
@@ -768,11 +773,17 @@ nav{
 .channel_desc{
   display:inline-block;
   vertical-align: top;
-  height: 10em;
-  width: 60%;
+  float: right;
+  min-height: 247.5px;
+  min-width: 65%;
+  width: calc(100% - 330px);
   background-color: #F0F4FF;
   padding: .25em;
   box-sizing: border-box;
+}
+
+.channel_desc h2{
+  margin: 0;
 }
 
 .channel_desc p{
@@ -785,6 +796,7 @@ nav{
 
 .channelselect_container{
   padding: 1em;
+  clear: both;
 }
 
 .channelselect{

@@ -6,13 +6,15 @@ from flask import (
 from views.base import requires_admin
 from sqlalchemy.exc import IntegrityError
 from forms.newchannel import NewchannelForm
+from forms.newshow import NewShowForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users, Channel
+from models import db, Users, Channel, Show
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
 from PIL import Image
 from urllib import unquote_plus
+from base64 import b64encode
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -92,7 +94,8 @@ def user(user_id):
     if not current_user:
         abort(404, {"error": "User not found"})
     if request.method == 'POST':
-        data = {unquote_plus(k.split("=")[0]): unquote_plus(k.split("=")[1]) for k in request.get_data().split("&")}
+        data = {unquote_plus(k.split("=")[0]): unquote_plus(
+            k.split("=")[1]) for k in request.get_data().split("&")}
         if data["name"] in ('confirmed', 'ads'):
             if data['value'].lower() == 'false':
                 data['value'] = False
@@ -108,14 +111,46 @@ def user(user_id):
 @login_required
 @requires_admin
 def channels():
+    """ Route for viewing all channels """
     channels = Channel.query.all()
     return render_template("admin/channels.html", channels=channels)
 
-@admin.route("/channelid")
+
+@admin.route("/channels/<channel_id>", methods=["GET", "POST"])
 @login_required
 @requires_admin
-def channelid():
-    return render_template("admin/channelid.html")
+def channelid(channel_id):
+    """ Specific channel route, allows edits to specified channel. """
+    current_channel = Channel.query.filter_by(id=channel_id).first()
+    img = b64encode(current_channel.image_data)
+    if not current_channel:
+        abort(404, {"error": "No channel by that id. (id:{})".format(channel_id)})
+    return render_template("admin/channelid.html", current_channel=current_channel, image=img)
+
+
+@admin.route("/channels/<channel_id>/addshow", methods=["POST", "GET"])
+@login_required
+@requires_admin
+def addshow(channel_id):
+    """ Add Show route. Adds show to whatever the current channel that is being edited. """
+    error = None
+    form = NewShowForm()
+    if request.method == "POST" and form.validate_on_submit():
+        try:
+            current_channel = Channel.query.filter_by(id=channel_id).first()
+            current_channel.shows.append(Show(
+                name=form.show_name.data,
+                description=form.description.data,
+                lookback=int(form.lookback.data),
+                order=form.order.data,
+            ))
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'duplicate key value violates unique constraint' in str(e):
+                error = 'show name already registered.'
+        flash("Show Created.", category="success")
+    return render_template("admin/addshow.html", form=form, error=error)
 
 
 @admin.route("/addchannel", methods=["POST", "GET"])

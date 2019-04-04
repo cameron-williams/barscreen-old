@@ -28,13 +28,13 @@
       </button>
       <div class="nav_menu">
         <ul>
-          <li><a>Dashboard</a></li>
-          <li><a>Loops</a></li>
-          <li><a>Account</a></li>
+          <li><a href="{{ url_for('dashboard.index') }}">Dashboard</a></li>
+          <li><a href="{{ url_for('dashboard.loops') }}">Loops</a></li>
+          <li><a href="{{ url_for('dashboard.account') }}">Account</a></li>
         </ul>
       </div>
       <div class="account_icon">
-        <a><i class="fas fa-user"></i></a>
+        <a href="{{ url_for('dashboard.account') }}"><i class="fas fa-user"></i></a>
       </div>
     </div>
   </nav>

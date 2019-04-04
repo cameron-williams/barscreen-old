@@ -1,5 +1,5 @@
 {% extends "admin_layout.html" %}
-{% block title %}Channel{% endblock %}
+{% block title %}Admin - Channel{% endblock %}
 {% block head %}
   {{ super() }}
 
@@ -8,18 +8,18 @@
     <div class="section">
       <div class="channel_header">
         <div class="channel_img">
-          <img src="static/images/armchair.png" />
+          <img src="data:;base64,{{ image }}"/>
         </div>
         <div class="channel_title">
-          <h2>Armchair Tourist</h2>
-          <p>Category: <span>Landscape</span></p>
-          <p>ArmchairTourist lets you vicariously enjoy the sights and sounds of well known, and obscure travel locations from around the world. Watch online, on select broadcast channels, in-flight and in hotel rooms around the world. Enjoy our beach scenes, asian markets, European cafes, fountains, skylines and train stations – from around the planet.</p>
+          <h2>{{ current_channel.name }}</h2>
+          <p>Category: <span>{{ current_channel.category }}</span></p>
+          <p>{{ current_channel.description }}</p>
         </div>
       </div>
     </div>
     <div class="section" id="showlist_container">
       <h2>Shows</h2>
-      <button class="dash_button">Add New</button>
+      <a href="{{ url_for('admin.addshow', channel_id=current_channel.id) }}"><button class="dash_button">Add New</button></a>
       <div class="show_list">
         <table id="shows_table" class="display">
           <thead>
@@ -29,10 +29,12 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Landscapes</td>
-              <td>6</td>
-            </tr>
+            {% for show in current_channel.shows %}
+              <tr>
+                <td>{{ show.name }}</td>
+                <td>idk what number to put here</td>
+              </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
