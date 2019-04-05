@@ -17,22 +17,22 @@ nav{
 
 a:link {
   text-decoration: none;
-  color: black;
+  color: #232323;
 }
 
 a:visited {
   text-decoration: none;
-  color: black;
+  color: #232323;
 }
 
 a:hover {
   text-decoration: underline;
-  color: black;
+  color: #232323;
 }
 
 a:active {
   text-decoration: underline;
-  color: black;
+  color: #232323;
 }
 
 .nav_container {
@@ -90,48 +90,62 @@ a:active {
   margin: 0;
 }
 
-/* User Table */
-
-table{
-  width: 100%;
-}
-
-table th{
-  text-align: left;
-}
-
-table td{
-  background-color: #2E39FF22;
-}
-
 /* User Page */
-
-.user_information{
-  margin: 1em 0;
+.user_general{
+    padding: 1em;
+    background-color: #F0F4FF;
+    box-sizing: border-box;
+    width: max-content;
+    border: 1px solid #232323;
 }
 
-.user_information label{
+.user_general h3{
+    font-size: 2em;
+    margin: 0;
+}
+
+.user_general p{
+  padding: .25em;
+}
+
+.user_general p span{
+  width: 100px;
   display: inline-block;
-  width: 20%;
+
 }
 
-.user_information span{
+.user_general p a{
+  padding: .25em;
+  margin-right: 3em;
+  width: 100px;
+  margin-left: 1em;
+}
+
+.user_general a:hover{
+  background-color: #fff;
+}
+
+.user_flags p{
+  font-weight: 600;
+}
+
+.user_flags a{
+  padding: .25em .5em;
+  background-color: #EF9F00;
+}
+
+.user_flags span{
+  width: 150px;
   display: inline-block;
-  width: 30%;
 }
 
-.user_information input{
-  width: 70%;
+.user_flags #confirmed_user{
+  width: inherit;
+  padding: .25em .5em
 }
 
-.user_information button{
-  float: right;
-}
-
-.edit{
-  display:inline-block;
-  width: 40%;
-  float: right;
+.user_flags .btn{
+  margin: 0 1em;
 }
 
 /* Channel Add */

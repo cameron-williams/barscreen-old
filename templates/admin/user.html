@@ -6,34 +6,18 @@
 {% endblock %}
 {% block content %}
 <div class="section">
-  <h2>{{ current_user.company }}</h2>
   <div class="user_information">
-    <table id="user_details" class="display">
-      <thead>
-        <tr>
-          <th>Company</th>
-          <th>Email</th>
-          <th>First Name</th>
-          <th>Last Name</th>
-          <th>Phone Number</th>
-          <th>Confirmed</th>
-          <th>Ads</th>
-          <th>Ads ID?</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td><a href="#" id="company" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new company name">{{ current_user.company }}</a></td>
-          <td><a href="#" id="email" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new email">{{ current_user.email }} </a></td>
-          <td><a href="#" id="first_name" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new first_name">{{ current_user.first_name }}</a></td>
-          <td><a href="#" id="last_name" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new last name">{{ current_user.last_name }}</a></td>
-          <td><a href="#" id="phone_number" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new phone number">{{ current_user.phone_number }}</a></td>
-          <td><a href="#" id="confirmed" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new Confirmed value">{{ current_user.confirmed }}</a></td>
-          <td><a href="#" id="ads" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new Ads value">{{ current_user.ads }}</a></td>
-          <td>Ad ID?</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="user_general">
+      <h3><a href="#" id="company" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new company name">{{ current_user.company }}</a></h3>
+      <p><span>Email:</span><a href="#" id="email" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new email">{{ current_user.email }}</a></p>
+      <p><span>First Name:</span><a href="#" id="first_name" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new first_name">{{ current_user.first_name }}</a></p>
+      <p><span>Last Name:</span><a href="#" id="last_name" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new last name">{{ current_user.last_name }}</a></p>
+      <p><span>Last Name:</span><a href="#" id="phone_number" data-type="text" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new phone number">{{ current_user.phone_number }}</a></p>
+    </div>
+    <div class="user_flags">
+          <p><span>Confirmed: </span><a href="#" id="confirmed" data-type="select" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new Ads value">{{ current_user.confirmed }} <i class="fas fa-caret-down"></i></a></p>
+          <p><span>Approved for ads: </span><a href="#" id="ads" data-type="select" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new Ads value">{{ current_user.ads }} <i class="fas fa-caret-down"></i></a></p>
+    </div>
   </div>
 </div>
 {% endblock %}
