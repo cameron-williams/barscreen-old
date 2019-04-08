@@ -127,6 +127,16 @@ def channelid(channel_id):
         abort(404, {"error": "No channel by that id. (id:{})".format(channel_id)})
     return render_template("admin/channelid.html", current_channel=current_channel, image=img)
 
+@admin.route("/shows/<show_id>", methods=["GET", "POST"])
+@login_required
+@requires_admin
+def showid(show_id):
+    """ Specific channel route, allows edits to specified channel. """
+    current_show = Show.query.filter_by(id=show_id).first()
+    if not current_show:
+        abort(404, {"error": "No channel by that id. (id:{})".format(show_id)})
+    return render_template("admin/showid.html", current_show=current_show)
+
 
 @admin.route("/channels/<channel_id>/addshow", methods=["POST", "GET"])
 @login_required
@@ -142,7 +152,7 @@ def addshow(channel_id):
                 name=form.show_name.data,
                 description=form.description.data,
                 lookback=int(form.lookback.data),
-                order=form.order.data,
+                order=form.order.data
             ))
             db.session.commit()
         except IntegrityError as e:
@@ -196,3 +206,27 @@ def addchannel():
                 db.session.rollback()
                 error = str(e)
     return render_template("admin/addchannel.html", form=form, error=error)
+
+
+    @admin.route("/shows/<show_id>/addclip", methods=["POST", "GET"])
+    @login_required
+    @requires_admin
+    def addclip(show_id):
+        """ Add Clip route. Adds clip to whatever the current show that is being edited. """
+        error = None
+        form = NewClipForm()
+        if request.method == "POST" and form.validate_on_submit():
+            try:
+                current_show = Show.query.filter_by(id=show_id).first()
+                current_show.shows.append(Show(
+                    name=form.clip_name.data,
+                    description=form.description.data,
+                    clip_file=form.clip_file.data
+                ))
+                db.session.commit()
+            except IntegrityError as e:
+                db.session.rollback()
+                if 'duplicate key value violates unique constraint' in str(e):
+                    error = 'show name already registered.'
+            flash("Clip Created.", category="success")
+        return render_template("admin/addclip.html", form=form, error=error)

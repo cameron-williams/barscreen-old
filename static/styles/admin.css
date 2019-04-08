@@ -194,6 +194,14 @@ a:active {
   width: 100%;
 }
 
+.show_settings{
+  padding: .25em 0;
+}
+
+.show_settings p{
+  margin: .25em 0;
+}
+
 #showlist_container{
   margin-top: 0;
 }
