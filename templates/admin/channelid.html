@@ -1,5 +1,5 @@
 {% extends "admin_layout.html" %}
-{% block title %}Admin - Channel{% endblock %}
+{% block title %}Admin - {{ current_channel.name }}{% endblock %}
 {% block head %}
   {{ super() }}
 
@@ -24,14 +24,14 @@
         <table id="shows_table" class="display">
           <thead>
             <tr>
-              <th>Channel</th>
+              <th>Show</th>
               <th>Number of Clips</th>
             </tr>
           </thead>
           <tbody>
             {% for show in current_channel.shows %}
               <tr>
-                <td>{{ show.name }}</td>
+                <td><a href="{{ url_for('admin.showid', show_id=show.id) }}">{{ show.name }}</a></td>
                 <td>idk what number to put here</td>
               </tr>
             {% endfor %}
