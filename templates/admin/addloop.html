@@ -1,0 +1,56 @@
+{% extends "admin_layout.html" %}
+{% block title %}Admin - Add Promo{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="section">
+  <h2>New Loop</h2>
+  <h3>{{ current_user.company }}</h3>
+  <div class="loop_list">
+    <h2>Loop</h2>
+    <ul>
+      <li></li>
+    </ul>
+  </div>
+  <div class="cliptable">
+      <h2>Users</h2>
+      <table id="clip_table" class="display">
+        <thead>
+          <tr>
+            <td>Type</td>
+            <th>Name</th>
+            <th>Channel</th>
+            <th>Add</th>
+            <th style="display: none;">ID</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for promo in promos %}
+          <tr>
+            <td>Promo</td>
+            <td>{{ promo.name }}</td>
+            <td>{{ promo.user.company  }}</td>
+            <td style="display: none;">{{ promo.user.id }}</td>
+            <td><button class="btn">Add</button></td>
+          </tr>
+          {% endfor %}
+          {% for show in shows %}
+          <tr>
+            <td>Show</td>
+            <td>{{ show.name }}</td>
+            <td>{{ show.channel.name  }}</td>
+            <td style="display: none;">{{ show.channel.id }}</td>
+            <td><button class="btn">Add</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+  <div>
+    {% if error %}
+    <p><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

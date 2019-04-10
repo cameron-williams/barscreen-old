@@ -3,6 +3,7 @@ $(document).ready(function(){
     table = $('#users_table').DataTable();
     channels_table = $('#channels_table').DataTable();
     shows_table = $('#shows_table').DataTable();
+    content_table = $('#clip_table').DataTable();
 
     /* Handle button for approving users */
     $("#users_table tbody").on('click', 'button', function() {
@@ -21,4 +22,11 @@ $(document).ready(function(){
             alert("Account already confirmed.")
         }
     });
+
+    $("#clip_table tbody").on('click', 'button', function() {
+        var row_data = content_table.row($(this).parents('tr')).data();
+        var content_name = row_data[1];
+        var content_id = [3]; 
+    });
+
 });

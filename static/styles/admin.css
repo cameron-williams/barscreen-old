@@ -205,3 +205,18 @@ a:active {
 #showlist_container{
   margin-top: 0;
 }
+
+/* Add Loop */
+
+.loop_list{
+  display: inline-block;
+  box-sizing: border-box;
+  width: 300px;
+  float: left;
+}
+
+.cliptable{
+  display: inline-block;
+  box-sizing: border-box;
+  width: calc(100% - 300px);
+}
