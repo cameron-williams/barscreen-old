@@ -10,6 +10,7 @@ from googleapiclient import discovery
 from googleapiclient.errors import HttpError
 from oauth2client.service_account import ServiceAccountCredentials
 from ssl import SSLError
+from google.cloud import storage
 
 # This can be turned into a list of scopes if we start
 # adding more google services to this API
@@ -40,7 +41,8 @@ def get_credentials(delegated_user=None):
     Returns:
         Credentials, the obtained credential.
     """
-    credentials = ServiceAccountCredentials.from_json_keyfile_dict(keyfile_dict=KEYFILE_DICT, scopes=SCOPES)
+    credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+        keyfile_dict=KEYFILE_DICT, scopes=SCOPES)
     if delegated_user:
         credentials = credentials.create_delegated(delegated_user)
     return credentials
@@ -52,7 +54,8 @@ class API:
     """
 
     def __init__(self, credentials=None, delegated_user=None):
-        self.credentials = credentials if credentials else get_credentials(delegated_user=delegated_user)
+        self.credentials = credentials if credentials else get_credentials(
+            delegated_user=delegated_user)
 
     def build(self):
         return discovery.build(self.service, self.version, credentials=self.credentials)
@@ -94,8 +97,8 @@ class Sheets(API):
         sheets_api.spreadsheets().values().append(spreadsheetId=spreadsheet_id, body=body, range=cell_range,
                                                   valueInputOption='RAW').execute()
         # Add formatting as we insert the data ( if apply_formatting is True )
-        apply_formatting and self.batchUpdate(spreadsheet_id=spreadsheet_id) or None
-
+        apply_formatting and self.batchUpdate(
+            spreadsheet_id=spreadsheet_id) or None
 
     def get(self, spreadsheet_id, worksheet_name="Sheet1"):
         """
@@ -105,7 +108,8 @@ class Sheets(API):
         """
         sheets_api = self.build()
 
-        request = sheets_api.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=worksheet_name)
+        request = sheets_api.spreadsheets().values().get(
+            spreadsheetId=spreadsheet_id, range=worksheet_name)
         response = request.execute()
 
         return response
@@ -150,7 +154,8 @@ class Sheets(API):
 
             ],
         }
-        sheets_api.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+        sheets_api.spreadsheets().batchUpdate(
+            spreadsheetId=spreadsheet_id, body=body).execute()
 
     def addSheet(self, spreadsheet_id, sheet_name):
         """
@@ -168,7 +173,8 @@ class Sheets(API):
                 }
             }]
         }
-        sheets_api.spreadsheets().batchUpdate(spreadsheetId=spreadsheet_id, body=body).execute()
+        sheets_api.spreadsheets().batchUpdate(
+            spreadsheetId=spreadsheet_id, body=body).execute()
 
     def copySheet(self, spreadsheet_id, sheet_id, destination_spreadsheet_id):
         """
@@ -181,7 +187,8 @@ class Sheets(API):
         body = {
             "destinationSpreadsheetId": destination_spreadsheet_id
         }
-        sheets_api.spreadsheets().sheets().copyTo(spreadsheetId=spreadsheet_id, sheetId=sheet_id, body=body).execute()
+        sheets_api.spreadsheets().sheets().copyTo(spreadsheetId=spreadsheet_id,
+                                                  sheetId=sheet_id, body=body).execute()
 
 
 class Drive(API):
@@ -244,7 +251,6 @@ class Analytics(API):
     version = 'v4'
 
     def getReport(self, start_date, end_date, view_id, metrics=None, dimensions=None):
-
         """
         getReport method to Analytics API.
         :param start_date: YYYY-MM-DD
@@ -272,10 +278,12 @@ class Analytics(API):
         }
         if metrics:
             for m in metrics:
-                body["reportRequests"][0]["metrics"].append({"expression": "ga:" in m and m or "ga:{}".format(m)})
+                body["reportRequests"][0]["metrics"].append(
+                    {"expression": "ga:" in m and m or "ga:{}".format(m)})
         if dimensions:
             for d in dimensions:
-                body["reportRequests"][0]["dimensions"].append({"name": "ga:" in d and d or "ga:{}".format(d)})
+                body["reportRequests"][0]["dimensions"].append(
+                    {"name": "ga:" in d and d or "ga:{}".format(d)})
         return analytics_api.reports().batchGet(body=body).execute()
 
 
@@ -325,7 +333,8 @@ class Gmail(API):
         gmail_api = self.build()
         attachment_response = gmail_api.users().messages().attachments().get(userId="me", messageId=message_id,
                                                                              id=attachment_id).execute()
-        file_data = base64.urlsafe_b64decode(attachment_response["data"].encode("UTF-8")).split("\n")
+        file_data = base64.urlsafe_b64decode(
+            attachment_response["data"].encode("UTF-8")).split("\n")
         headers = file_data[0].split(",")
         return [{headers[i].strip(): col_val.strip() for i, col_val in enumerate(row.split(","))} for row in
                 file_data[1:]]
@@ -357,13 +366,15 @@ class Gmail(API):
         :return:
         """
         gmail_api = self.build()
-        sender = gmail_api.users().getProfile(userId="me").execute()['emailAddress']
+        sender = gmail_api.users().getProfile(
+            userId="me").execute()['emailAddress']
         if not attachments:
             message = MIMEText(body)
             message['to'] = to
             message['from'] = sender
             message['subject'] = subject
-            formatted_message = {'raw': base64.urlsafe_b64encode(message.as_string())}
+            formatted_message = {
+                'raw': base64.urlsafe_b64encode(message.as_string())}
         else:
             message = MIMEMultipart()
             message['to'] = to
@@ -396,12 +407,41 @@ class Gmail(API):
                 msg.set_payload(fp.read())
                 fp.close()
             filename = os.path.basename(file)
-            msg.add_header('Content-Disposition', 'attachment', filename=filename)
+            msg.add_header('Content-Disposition',
+                           'attachment', filename=filename)
             message.attach(msg)
 
-            formatted_message = {'raw': base64.urlsafe_b64encode(message.as_string())}
+            formatted_message = {
+                'raw': base64.urlsafe_b64encode(message.as_string())}
         try:
-            sent_message = gmail_api.users().messages().send(userId='me', body=formatted_message).execute()
+            sent_message = gmail_api.users().messages().send(
+                userId='me', body=formatted_message).execute()
             return sent_message['id']
         except Exception as err:
             raise ("Err ({}){}".format(type(err), err))
+
+# channel image
+# video files for clips
+# video files for promos
+class GoogleStorage(object):
+    """ Class for interactive with Google Cloud Storage """
+
+    def __init__(self):
+        self.client = storage.Client()
+    
+    def upload_channel_image(self, name, image_data):
+        """ Takes image_data and a name and uploads the channel image """
+        bucket = self.client.get_bucket("cdn.barscreen.tv")
+        blob = bucket.blob("channel_images/{}".format(name))
+        blob.upload_from_string(data=image_data)
+        blob.make_public()
+        return blob.public_url
+    
+    def upload_clip_video(self, name, file):
+        bucket = self.client.get_bucket("cdn.barscreen.tv")
+        if bucket.get_blob("clip_videos/{}".format(name)):
+            raise ValueError("File already exists in cdn.")
+        blob = bucket.blob("clip_videos/{}".format(name))
+        blob.upload_from_file(file)
+        blob.make_public()
+        return blob.public_url

@@ -11,12 +11,13 @@ from forms.newpromo import NewPromoForm
 from forms.newclip import NewClipForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users, Channel, Show, Clip
+from models import db, Users, Channel, Show, Clip, Promo
 from helpers import generate_confirmation_token, confirm_token
-from services.google import Gmail
+from services.google_clients import Gmail, GoogleStorage
 from PIL import Image
 from urllib import unquote_plus
 from base64 import b64encode
+from werkzeug.utils import secure_filename
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -174,13 +175,16 @@ def addclip(channel_id, show_id):
     error = None
     form = NewClipForm()
     if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
         try:
             current_show = Show.query.filter_by(
                 channel_id=channel_id, id=show_id).first()
+            # upload video to storage and save url
+            url = storage.upload_clip_video(name=secure_filename(f.filename), file=form.clip_file.data)
             current_show.clips.append(Clip(
                 name=form.clip_name.data,
                 description=form.description.data,
-                clip_data=form.clip_file.data.read()
+                clip_url=url
             ))
             db.session.commit()
         except IntegrityError as e:

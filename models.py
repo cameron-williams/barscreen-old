@@ -119,7 +119,7 @@ class Clip(BaseModel):
     name = db.Column(db.String, nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer, nullable=False, default=0)
-    clip_data = db.Column(db.LargeBinary)
+    clip_url = db.Column(db.String, nullable=False)
     show_id = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
 
 
