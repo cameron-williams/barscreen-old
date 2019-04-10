@@ -103,6 +103,7 @@ class Show(BaseModel):
     lookback = db.Column(db.Integer, default=1)
     order = db.Column(db.String, default="recent")
     channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
+    clips = db.relationship("Clip", backref="show", lazy=True)
 
     def __repr__(self):
         return '<Show {}>'.format(self.name)
@@ -119,6 +120,7 @@ class Clip(BaseModel):
     description = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer, nullable=False, default=0)
     clip_data = db.Column(db.LargeBinary)
+    show_id = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
 
 
 class Channel(BaseModel):

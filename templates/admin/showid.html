@@ -1,42 +1,43 @@
 {% extends "admin_layout.html" %}
 {% block title %}Admin - Show{% endblock %}
 {% block head %}
-  {{ super() }}
+{{ super() }}
 
 {% endblock %}
 {% block content %}
-    <div class="section">
-      <div class="channel_header">
-          <h2>{{ current_show.name }}</h2>
-          <p>{{ current_show.description }}</p>
-          <div class="show_settings">
-            <p>Order: <span>{{ current_show.order }}</span></p>
-            <p>Lookback: <span>{{ current_show.lookback }}</span></p>
-          </div>
-      </div>
+<div class="section">
+  <div class="channel_header">
+    <h2>{{ current_show.name }}</h2>
+    <p>{{ current_show.description }}</p>
+    <div class="show_settings">
+      <p>Order: <span>{{ current_show.order }}</span></p>
+      <p>Lookback: <span>{{ current_show.lookback }}</span></p>
     </div>
-    <div class="section" id="showlist_container">
-      <h2>Clips</h2>
-      <a href=""><button class="dash_button">Add New</button></a>
-      <div class="show_list">
-        <table id="shows_table" class="display">
-          <thead>
-            <tr>
-              <th>Date Added</th>
-              <th>Clip</th>
-              <th>Duration</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for show in current_show.clips %}
-              <tr>
-                <td>{{ clip.date_created }}</td>
-                <td>{{ clip.name }}</td>
-                <td>{{ clip.clip_data }}</td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-      </div>
-    </div>
+  </div>
+</div>
+<div class="section" id="showlist_container">
+  <h2>Clips</h2>
+  <a href="{{ url_for('admin.addclip', channel_id=channel_id, show_id=current_show.id) }}"><button
+      class="dash_button">Add New</button></a>
+  <div class="show_list">
+    <table id="shows_table" class="display">
+      <thead>
+        <tr>
+          <th>Date Added</th>
+          <th>Clip</th>
+          <th>Duration</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for clip in current_show.clips %}
+        <tr>
+          <td>{{ clip.date_created }}</td>
+          <td>{{ clip.name }}</td>
+          <td>where clip data will go once it's on cdn</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
 {% endblock %}
