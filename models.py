@@ -29,6 +29,7 @@ class Users(BaseModel):
     ads = db.Column(db.BOOLEAN, default=False)
     confirmed = db.Column(db.BOOLEAN, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
+    promos = db.relationship("Promo", backref="user", lazy=True)
     password = db.Column(db.CHAR(128), nullable=True)
     admin = db.Column(db.BOOLEAN, default=False)
 
@@ -44,7 +45,7 @@ class Users(BaseModel):
 
         if admin:
             self.admin = admin
-        
+
         if confirmed_on:
             self.confirmed_on = confirmed_on
 
@@ -65,7 +66,7 @@ class Users(BaseModel):
 
     def get_id(self):
         return str(self.id)
-    
+
     def set_password(self, password):
         self.password = hash_password(password)
         return True
@@ -132,7 +133,7 @@ class Channel(BaseModel):
     description = db.Column(db.String, nullable=False)
     image_data = db.Column(db.LargeBinary)
     shows = db.relationship("Show", backref="channel", lazy=True)
-    
+
     @validates('image_data')
     def validate_image_data(self, key, image_data):
         if not image_data:
@@ -147,3 +148,4 @@ class Promo(BaseModel):
     description = db.Column(db.String, nullable=True)
     duration = db.Column(db.String, nullable=True)
     clip_data = db.Column(db.LargeBinary)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

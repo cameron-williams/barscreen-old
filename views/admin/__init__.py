@@ -133,6 +133,17 @@ def addpromo(user_id):
         flash("Promo Created.", category="success")
     return render_template("admin/addpromo.html", form=form, error=error, current_user=current_user)
 
+
+@admin.route("/user/<user_id>/addloop")
+@login_required
+@requires_admin
+def addloop(user_id):
+    current_user = Users.query.filter_by(id=user_id).first()
+    shows = Show.query.all()
+    promos = Promo.query.filter_by(id=user_id).all()
+    return render_template("admin/addloop.html", current_user=current_user, shows=shows, promos=promos)
+
+
 @admin.route("/channels")
 @login_required
 @requires_admin
