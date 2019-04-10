@@ -18,3 +18,4 @@ oauth2client
 ipython
 pylint
 Pillow
+google-cloud-storage

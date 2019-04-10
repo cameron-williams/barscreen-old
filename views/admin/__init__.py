@@ -11,12 +11,13 @@ from forms.newpromo import NewPromoForm
 from forms.newclip import NewClipForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users, Channel, Show, Clip
+from models import db, Users, Channel, Show, Clip, Promo
 from helpers import generate_confirmation_token, confirm_token
-from services.google import Gmail
+from services.google_clients import Gmail, GoogleStorage
 from PIL import Image
 from urllib import unquote_plus
 from base64 import b64encode
+from werkzeug.utils import secure_filename
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -112,17 +113,19 @@ def user(user_id):
 @login_required
 @requires_admin
 def addpromo(user_id):
-    """ Add Clip route. Adds clip to whatever the current show that is being edited. """
+    """ Add Promo route. Adds clip to whatever the current show that is being edited. """
     error = None
     current_user = Users.query.filter_by(id=user_id).first()
     form = NewPromoForm()
     if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
         try:
             current_user = Users.query.filter_by(id=user_id).first()
+            url = storage.upload_promo_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
                 description=form.description.data,
-                clip_file=form.clip_file.data
+                clip_url=url
             ))
             db.session.commit()
         except IntegrityError as e:
@@ -131,6 +134,17 @@ def addpromo(user_id):
                 error = 'show name already registered.'
         flash("Promo Created.", category="success")
     return render_template("admin/addpromo.html", form=form, error=error, current_user=current_user)
+
+
+@admin.route("/user/<user_id>/addloop")
+@login_required
+@requires_admin
+def addloop(user_id):
+    current_user = Users.query.filter_by(id=user_id).first()
+    shows = Show.query.all()
+    promos = Promo.query.filter_by(id=user_id).all()
+    return render_template("admin/addloop.html", current_user=current_user, shows=shows, promos=promos)
+
 
 @admin.route("/channels")
 @login_required
@@ -147,10 +161,9 @@ def channels():
 def channelid(channel_id):
     """ Specific channel route, allows edits to specified channel. """
     current_channel = Channel.query.filter_by(id=channel_id).first()
-    img = b64encode(current_channel.image_data)
     if not current_channel:
         abort(404, {"error": "No channel by that id. (id:{})".format(channel_id)})
-    return render_template("admin/channelid.html", current_channel=current_channel, image=img)
+    return render_template("admin/channelid.html", current_channel=current_channel)
 
 
 
@@ -174,13 +187,16 @@ def addclip(channel_id, show_id):
     error = None
     form = NewClipForm()
     if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
         try:
             current_show = Show.query.filter_by(
                 channel_id=channel_id, id=show_id).first()
+            # upload video to storage and save url
+            url = storage.upload_clip_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
             current_show.clips.append(Clip(
                 name=form.clip_name.data,
                 description=form.description.data,
-                clip_data=form.clip_file.data.read()
+                clip_url=url
             ))
             db.session.commit()
         except IntegrityError as e:
@@ -224,6 +240,7 @@ def addchannel():
     error = None
 
     if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
         image_file = form.channel_img.data
         image_data = image_file.read()
         image_bytes = BytesIO(image_data)
@@ -238,11 +255,12 @@ def addchannel():
             print(error)
         else:
             try:
+                url = storage.upload_channel_image(name=secure_filename(form.channel_img.data.filename), file=form.channel_img.data)
                 channel = Channel(
                     name=form.channel_name.data,
                     category=form.category.data,
                     description=form.description.data,
-                    image_data=image_data
+                    image_url=url
                 )
                 db.session.add(channel)
 

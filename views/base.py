@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import current_user
 from forms.contact import ContactForm
 from forms.signup import SignupForm
-from services.google import Gmail
+from services.google_clients import Gmail
 from models import Users, db
 from sqlalchemy.exc import IntegrityError
 from functools import wraps

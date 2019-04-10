@@ -19,6 +19,7 @@
           <p><span>Approved for ads: </span><a href="#" id="ads" data-type="select" data-pk="{{ current_user.id }}" data-url="{{ url_for('admin.user', user_id=current_user.id) }}" data-title="Enter new Ads value">{{ current_user.ads }} <i class="fas fa-caret-down"></i></a></p>
     </div>
   </div>
-  <a href="{{ url_for('admin.addpromo', user_id=current_user.id) }}"><button class="dash_button">Add New</button></a>
+  <a href="{{ url_for('admin.addpromo', user_id=current_user.id) }}"><button class="dash_button">Add New Promo</button></a>
+  <a href="{{ url_for('admin.addloop', user_id=current_user.id) }}"><button class="dash_button">Add New Loop</button></a>
 </div>
 {% endblock %}

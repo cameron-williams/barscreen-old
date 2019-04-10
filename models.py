@@ -29,6 +29,7 @@ class Users(BaseModel):
     ads = db.Column(db.BOOLEAN, default=False)
     confirmed = db.Column(db.BOOLEAN, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
+    promos = db.relationship("Promo", backref="user", lazy=True)
     password = db.Column(db.CHAR(128), nullable=True)
     admin = db.Column(db.BOOLEAN, default=False)
 
@@ -44,7 +45,7 @@ class Users(BaseModel):
 
         if admin:
             self.admin = admin
-        
+
         if confirmed_on:
             self.confirmed_on = confirmed_on
 
@@ -65,33 +66,10 @@ class Users(BaseModel):
 
     def get_id(self):
         return str(self.id)
-    
+
     def set_password(self, password):
         self.password = hash_password(password)
         return True
-
-
-class User(BaseModel):
-    """
-    GUI user model
-    """
-    username = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.CHAR(120), nullable=False)
-
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return True
-
-    def get_id(self):
-        return str(self.id)
 
 
 class Show(BaseModel):
@@ -119,7 +97,7 @@ class Clip(BaseModel):
     name = db.Column(db.String, nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer, nullable=False, default=0)
-    clip_data = db.Column(db.LargeBinary)
+    clip_url = db.Column(db.String, nullable=True)
     show_id = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
 
 
@@ -130,9 +108,9 @@ class Channel(BaseModel):
     name = db.Column(db.String, nullable=False, unique=True)
     category = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    image_data = db.Column(db.LargeBinary)
+    image_url = db.Column(db.String, nullable=True)
     shows = db.relationship("Show", backref="channel", lazy=True)
-    
+
     @validates('image_data')
     def validate_image_data(self, key, image_data):
         if not image_data:
@@ -146,4 +124,5 @@ class Promo(BaseModel):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
     duration = db.Column(db.String, nullable=True)
-    clip_data = db.Column(db.LargeBinary)
+    clip_url = db.Column(db.String, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
