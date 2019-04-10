@@ -429,11 +429,11 @@ class GoogleStorage(object):
     def __init__(self):
         self.client = storage.Client()
     
-    def upload_channel_image(self, name, image_data):
+    def upload_channel_image(self, name, image_file):
         """ Takes image_data and a name and uploads the channel image """
         bucket = self.client.get_bucket("cdn.barscreen.tv")
         blob = bucket.blob("channel_images/{}".format(name))
-        blob.upload_from_string(data=image_data)
+        blob.upload_from_file(data=image_file)
         blob.make_public()
         return blob.public_url
     

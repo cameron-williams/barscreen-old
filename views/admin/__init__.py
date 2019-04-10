@@ -255,7 +255,7 @@ def addchannel():
             print(error)
         else:
             try:
-                url = storage.upload_channel_image(name=secure_filename(form.channel_img.data.filename), file=form.channel_img.data)
+                url = storage.upload_channel_image(name=secure_filename(form.channel_img.data.filename), image_file=form.channel_img.data)
                 channel = Channel(
                     name=form.channel_name.data,
                     category=form.category.data,
