@@ -445,3 +445,12 @@ class GoogleStorage(object):
         blob.upload_from_file(file)
         blob.make_public()
         return blob.public_url
+    
+    def upload_promo_video(self, name, file):
+        bucket = self.client.get_bucket("cdn.barscreen.tv")
+        if bucket.get_blob("promo_videos/{}".format(name)):
+            raise ValueError("File already exists in cdn.")
+        blob = bucket.blob("promo_videos/{}".format(name))
+        blob.upload_from_file(file)
+        blob.make_public()
+        return blob.public_url

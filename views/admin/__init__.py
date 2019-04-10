@@ -113,17 +113,19 @@ def user(user_id):
 @login_required
 @requires_admin
 def addpromo(user_id):
-    """ Add Clip route. Adds clip to whatever the current show that is being edited. """
+    """ Add Promo route. Adds clip to whatever the current show that is being edited. """
     error = None
     current_user = Users.query.filter_by(id=user_id).first()
     form = NewPromoForm()
     if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
         try:
             current_user = Users.query.filter_by(id=user_id).first()
+            url = storage.upload_promo_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
                 description=form.description.data,
-                clip_file=form.clip_file.data
+                clip_url=url
             ))
             db.session.commit()
         except IntegrityError as e:
@@ -159,10 +161,9 @@ def channels():
 def channelid(channel_id):
     """ Specific channel route, allows edits to specified channel. """
     current_channel = Channel.query.filter_by(id=channel_id).first()
-    img = b64encode(current_channel.image_data)
     if not current_channel:
         abort(404, {"error": "No channel by that id. (id:{})".format(channel_id)})
-    return render_template("admin/channelid.html", current_channel=current_channel, image=img)
+    return render_template("admin/channelid.html", current_channel=current_channel)
 
 
 
@@ -191,7 +192,7 @@ def addclip(channel_id, show_id):
             current_show = Show.query.filter_by(
                 channel_id=channel_id, id=show_id).first()
             # upload video to storage and save url
-            url = storage.upload_clip_video(name=secure_filename(f.filename), file=form.clip_file.data)
+            url = storage.upload_clip_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
             current_show.clips.append(Clip(
                 name=form.clip_name.data,
                 description=form.description.data,
@@ -239,6 +240,7 @@ def addchannel():
     error = None
 
     if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
         image_file = form.channel_img.data
         image_data = image_file.read()
         image_bytes = BytesIO(image_data)
@@ -253,11 +255,12 @@ def addchannel():
             print(error)
         else:
             try:
+                url = storage.upload_channel_image(name=secure_filename(form.channel_img.data.filename), file=form.channel_img.data)
                 channel = Channel(
                     name=form.channel_name.data,
                     category=form.category.data,
                     description=form.description.data,
-                    image_data=image_data
+                    image_url=url
                 )
                 db.session.add(channel)
 

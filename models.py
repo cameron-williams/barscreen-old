@@ -72,29 +72,6 @@ class Users(BaseModel):
         return True
 
 
-class User(BaseModel):
-    """
-    GUI user model
-    """
-    username = db.Column(db.String, nullable=False, unique=True)
-    password = db.Column(db.CHAR(120), nullable=False)
-
-    def __repr__(self):
-        return '<User {}>'.format(self.username)
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return True
-
-    def get_id(self):
-        return str(self.id)
-
-
 class Show(BaseModel):
     """
     Channel Show Model
@@ -120,7 +97,7 @@ class Clip(BaseModel):
     name = db.Column(db.String, nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
     duration = db.Column(db.Integer, nullable=False, default=0)
-    clip_url = db.Column(db.String, nullable=False)
+    clip_url = db.Column(db.String, nullable=True)
     show_id = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
 
 
@@ -131,7 +108,7 @@ class Channel(BaseModel):
     name = db.Column(db.String, nullable=False, unique=True)
     category = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    image_data = db.Column(db.LargeBinary)
+    image_url = db.Column(db.String, nullable=True)
     shows = db.relationship("Show", backref="channel", lazy=True)
 
     @validates('image_data')
@@ -147,5 +124,5 @@ class Promo(BaseModel):
     name = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
     duration = db.Column(db.String, nullable=True)
-    clip_data = db.Column(db.LargeBinary)
+    clip_url = db.Column(db.String, nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
