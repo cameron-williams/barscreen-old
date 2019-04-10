@@ -129,7 +129,7 @@ def channelid(channel_id):
     return render_template("admin/channelid.html", current_channel=current_channel, image=img)
 
 
-@admin.route("/channels/<channel_id>/shows/<show_id>", methods=["GET", "POST"])
+@admin.route("/channels/<channel_id>/<show_id>", methods=["GET", "POST"])
 @login_required
 @requires_admin
 def showid(channel_id, show_id):
