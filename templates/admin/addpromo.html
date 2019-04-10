@@ -1,0 +1,35 @@
+{% extends "admin_layout.html" %}
+{% block title %}Admin - Add Promo{% endblock %}
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block content %}
+<div class="section">
+  <h2>New Promo</h2>
+  <h3>{{ current_user.company }}</h3>
+  <div class="channel_form_container">
+    <form method="POST" enctype="multipart/form-data">
+      {{ form.csrf_token }}
+      <div class="form_container">
+        <feildset class="form_cname">
+          {{ form.promo_name.label }}{{ form.promo_name }}
+        </feildset>
+        <feildset class="form_description">
+          {{ form.description.label }}{{ form.description }}
+        </feildset>
+        <feildset class="form_clip">
+          {{ form.clip_file.label }}{{ form.clip_file }}
+        </feildset>
+        <feildset class="submit">
+          {{ form.submit }}
+        </feildset>
+      </div>
+    </form>
+  </div>
+  <div>
+    {% if error %}
+    <p><strong>Error:</strong> {{ error }}</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
