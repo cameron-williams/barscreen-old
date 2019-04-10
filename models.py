@@ -142,3 +142,8 @@ class Channel(BaseModel):
             raise AssertionError("Please use  a jpeg or a png file for a channel image")
         return image_data
 
+class Promo(BaseModel):
+    name = db.Column(db.String, nullable=False)
+    description = db.Column(db.String, nullable=True)
+    duration = db.Column(db.String, nullable=True)
+    clip_data = db.Column(db.LargeBinary)
