@@ -8,9 +8,10 @@ from sqlalchemy.exc import IntegrityError
 from forms.newchannel import NewchannelForm
 from forms.newshow import NewShowForm
 from forms.newpromo import NewPromoForm
+from forms.newclip import NewClipForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users, Channel, Show
+from models import db, Users, Channel, Show, Clip
 from helpers import generate_confirmation_token, confirm_token
 from services.google import Gmail
 from PIL import Image
@@ -152,15 +153,42 @@ def channelid(channel_id):
     return render_template("admin/channelid.html", current_channel=current_channel, image=img)
 
 
-@admin.route("/shows/<show_id>", methods=["GET", "POST"])
+
+@admin.route("/channels/<channel_id>/<show_id>", methods=["GET", "POST"])
 @login_required
 @requires_admin
-def showid(show_id):
+def showid(channel_id, show_id):
     """ Specific channel route, allows edits to specified channel. """
-    current_show = Show.query.filter_by(id=show_id).first()
+    current_show = Show.query.filter_by(
+        channel_id=channel_id, id=show_id).first()
     if not current_show:
         abort(404, {"error": "No channel by that id. (id:{})".format(show_id)})
-    return render_template("admin/showid.html", current_show=current_show)
+    return render_template("admin/showid.html", current_show=current_show, channel_id=channel_id)
+
+
+@admin.route("/channels/<channel_id>/<show_id>/addclip", methods=["POST", "GET"])
+@login_required
+@requires_admin
+def addclip(channel_id, show_id):
+    """ Add Clip route. Adds clip to whatever the current show that is being edited. """
+    error = None
+    form = NewClipForm()
+    if request.method == "POST" and form.validate_on_submit():
+        try:
+            current_show = Show.query.filter_by(
+                channel_id=channel_id, id=show_id).first()
+            current_show.clips.append(Clip(
+                name=form.clip_name.data,
+                description=form.description.data,
+                clip_data=form.clip_file.data.read()
+            ))
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'duplicate key value violates unique constraint' in str(e):
+                error = 'show name already registered.'
+        flash("Clip Created.", category="success")
+    return render_template("admin/addclip.html", form=form, error=error)
 
 
 @admin.route("/channels/<channel_id>/addshow", methods=["POST", "GET"])
@@ -231,27 +259,3 @@ def addchannel():
                 db.session.rollback()
                 error = str(e)
     return render_template("admin/addchannel.html", form=form, error=error)
-
-
-    @admin.route("/shows/<show_id>/addclip", methods=["POST", "GET"])
-    @login_required
-    @requires_admin
-    def addclip(show_id):
-        """ Add Clip route. Adds clip to whatever the current show that is being edited. """
-        error = None
-        form = NewClipForm()
-        if request.method == "POST" and form.validate_on_submit():
-            try:
-                current_show = Show.query.filter_by(id=show_id).first()
-                current_show.shows.append(Show(
-                    name=form.clip_name.data,
-                    description=form.description.data,
-                    clip_file=form.clip_file.data
-                ))
-                db.session.commit()
-            except IntegrityError as e:
-                db.session.rollback()
-                if 'duplicate key value violates unique constraint' in str(e):
-                    error = 'show name already registered.'
-            flash("Clip Created.", category="success")
-        return render_template("admin/addclip.html", form=form, error=error)
