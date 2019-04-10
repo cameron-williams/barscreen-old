@@ -7,6 +7,7 @@ from views.base import requires_admin
 from sqlalchemy.exc import IntegrityError
 from forms.newchannel import NewchannelForm
 from forms.newshow import NewShowForm
+from forms.newpromo import NewPromoForm
 from flask_login import login_required
 from forms.password import CreatePassword
 from models import db, Users, Channel, Show
@@ -106,6 +107,29 @@ def user(user_id):
         return ''
     return render_template("admin/user.html", current_user=current_user)
 
+@admin.route("/user/<user_id>/addpromo", methods=["POST", "GET"])
+@login_required
+@requires_admin
+def addpromo(user_id):
+    """ Add Clip route. Adds clip to whatever the current show that is being edited. """
+    error = None
+    current_user = Users.query.filter_by(id=user_id).first()
+    form = NewPromoForm()
+    if request.method == "POST" and form.validate_on_submit():
+        try:
+            current_user = Users.query.filter_by(id=user_id).first()
+            current_user.promos.append(Promo(
+                name=form.promo_name.data,
+                description=form.description.data,
+                clip_file=form.clip_file.data
+            ))
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'duplicate key value violates unique constraint' in str(e):
+                error = 'show name already registered.'
+        flash("Promo Created.", category="success")
+    return render_template("admin/addpromo.html", form=form, error=error, current_user=current_user)
 
 @admin.route("/channels")
 @login_required
@@ -126,6 +150,7 @@ def channelid(channel_id):
     if not current_channel:
         abort(404, {"error": "No channel by that id. (id:{})".format(channel_id)})
     return render_template("admin/channelid.html", current_channel=current_channel, image=img)
+
 
 @admin.route("/shows/<show_id>", methods=["GET", "POST"])
 @login_required
