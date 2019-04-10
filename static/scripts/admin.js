@@ -28,8 +28,7 @@ $(document).ready(function(){
         var content_name = row_data[1];
         var content_id = row_data[3];
         var ul = $("#loop_content");
-        var tr = $("<tr></tr>").append("<td>"+content_name+"</td><td>"+content_id"</td>")
+        var tr = $("<tr></tr>").append("<td>"+content_name+"</td><td>"+content_id+"</td>")
         ul.append(tr);
     });
-
 });
