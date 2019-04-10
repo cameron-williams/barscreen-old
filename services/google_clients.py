@@ -429,18 +429,22 @@ class GoogleStorage(object):
     def __init__(self):
         self.client = storage.Client()
     
-    def upload_channel_image(self, name, image_file):
+    def upload_channel_image(self, name, image_data):
         """ Takes image_data and a name and uploads the channel image """
         bucket = self.client.get_bucket("cdn.barscreen.tv")
+        existing = bucket.get_blob("channel_images/{}".format(name))
+        if existing:
+            return existing.public_url
         blob = bucket.blob("channel_images/{}".format(name))
-        blob.upload_from_file(image_file)
+        blob.upload_from_string(image_data)
         blob.make_public()
         return blob.public_url
     
     def upload_clip_video(self, name, file):
         bucket = self.client.get_bucket("cdn.barscreen.tv")
-        if bucket.get_blob("clip_videos/{}".format(name)):
-            raise ValueError("File already exists in cdn.")
+        existing = bucket.get_blob("clip_videos/{}".format(name))
+        if existing:
+            return existing.public_url
         blob = bucket.blob("clip_videos/{}".format(name))
         blob.upload_from_file(file)
         blob.make_public()
@@ -448,8 +452,9 @@ class GoogleStorage(object):
     
     def upload_promo_video(self, name, file):
         bucket = self.client.get_bucket("cdn.barscreen.tv")
-        if bucket.get_blob("promo_videos/{}".format(name)):
-            raise ValueError("File already exists in cdn.")
+        existing = bucket.get_blob("promo_videos/{}".format(name))
+        if existing:
+            return existing.public_url
         blob = bucket.blob("promo_videos/{}".format(name))
         blob.upload_from_file(file)
         blob.make_public()
