@@ -26,7 +26,10 @@ $(document).ready(function(){
     $("#clip_table tbody").on('click', 'button', function() {
         var row_data = content_table.row($(this).parents('tr')).data();
         var content_name = row_data[1];
-        var content_id = [3]; 
+        var content_id = row_data[3];
+        var ul = $("#loop_content");
+        var tr = $("<tr></tr>").append("<td>"+content_name+"</td><td>"+content_id"</td>")
+        ul.append(tr);
     });
 
 });
