@@ -47,6 +47,7 @@
   position: relative;
   width: 100%;
   font-weight: 600;
+  z-index: -1;
   box-sizing: border-box;
   margin-top: 2em;
   background-color: #EF9F00;

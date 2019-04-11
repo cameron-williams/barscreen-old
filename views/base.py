@@ -71,5 +71,5 @@ def signup():
             flash("Sorry, a user with that email exists already.", category="error")
         except Exception:
             flash("Unknown error has occored. Please try again.", category="error")
-        flash("Thanks, we will be in touch shortly.", category="success")
+        flash("Your account is pending, if you are approved we will be in touch with your credentials. Please check email your email.", category="success")
     return render_template("signup.html", form=form)
