@@ -4,6 +4,7 @@ $(document).ready(function(){
     channels_table = $('#channels_table').DataTable();
     shows_table = $('#shows_table').DataTable();
     content_table = $('#clip_table').DataTable();
+    clip_table = $('#clip_dash').DataTable();
 
     /* Handle button for approving users */
     $("#users_table tbody").on('click', 'button', function() {
@@ -22,6 +23,8 @@ $(document).ready(function(){
             alert("Account already confirmed.")
         }
     });
+
+    /* Adding Loops */
 
     $("#clip_table tbody").on('click', 'button', function() {
         var row_data = content_table.row($(this).parents('tr')).data();

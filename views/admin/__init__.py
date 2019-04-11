@@ -277,3 +277,10 @@ def addchannel():
                 db.session.rollback()
                 error = str(e)
     return render_template("admin/addchannel.html", form=form, error=error)
+
+@admin.route("/clips")
+@login_required
+@requires_admin
+def clips():
+    clips = Clip.query.all()
+    return render_template("admin/clips.html", clips=clips)

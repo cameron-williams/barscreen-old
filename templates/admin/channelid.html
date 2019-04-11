@@ -32,7 +32,7 @@
             {% for show in current_channel.shows %}
               <tr>
                 <td><a href="{{ url_for('admin.showid', channel_id=current_channel.id, show_id=show.id) }}">{{ show.name }}</a></td>
-                <td>idk what number to put here</td>
+                <td>clip number</td>
               </tr>
             {% endfor %}
           </tbody>

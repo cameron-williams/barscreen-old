@@ -71,9 +71,17 @@
 
 .form_container feildset input{
   display: block;
-  font-size: 1.5em;
-  width: 75%;
+  padding: .5em;
+  border-radius: 5px;
+  font-size: 1em;
+  width: 50%;
 }
+
+.form_container feildset input:focus{
+  outline: none;
+  border: 2px solid  #8D9499;
+}
+
 
 .submit input#submit{
 font-weight: 600;
