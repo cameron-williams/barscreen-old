@@ -57,30 +57,58 @@
 
 /* Sign Up */
 
+.signup_copy{
+  margin-top: 4em;
+}
+
+.signup_copy h3{
+  font-weight: 500;
+  font-size: 1.5em;
+}
+
 .form_container{
   margin-top: 2em;
 }
 
 .form_container feildset{
-  display: block;
-  margin-bottom: 1em;
+  display: inline-block;
+  padding: 2em 0;
+  width: calc(50% - .5em);
+  box-sizing: border-box;
+}
+
+.form_container feildset:last-child{
+  display:block;
+  width: inherit;
 }
 
 .form_container feildset label{
   font-weight: 600;
+  display: block;
+  margin-bottom: .5em;
 }
 
 .form_container feildset input{
   display: block;
+  background-color: transparent;
+  -webkit-appearance: none;
+  border-style: solid;
   padding: .5em;
-  border-radius: 5px;
+  border-bottom: 1px solid #232323;
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-left: 2px solid transparent;
   font-size: 1em;
-  width: 50%;
+  box-sizing: border-box;
+  width: 90%;
 }
 
 .form_container feildset input:focus{
   outline: none;
   border: 2px solid  #8D9499;
+  background-color: #fff;
+  border-radius: 5px;
+  box-sizing: border-box;
 }
 
 
@@ -108,7 +136,7 @@ font-family: 'Source Sans Pro', sans-serif;
 }
 
 @media screen and (max-width: 600px) {
-  .form_container feildset input{
+  .form_container feildset{
     width: 100%;
   }
   .submit input#submit{
