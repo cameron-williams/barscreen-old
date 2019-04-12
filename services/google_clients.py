@@ -11,6 +11,7 @@ from googleapiclient.errors import HttpError
 from oauth2client.service_account import ServiceAccountCredentials
 from ssl import SSLError
 from google.cloud import storage
+from google.oauth2 import service_account
 
 # This can be turned into a list of scopes if we start
 # adding more google services to this API
@@ -427,8 +428,10 @@ class GoogleStorage(object):
     """ Class for interactive with Google Cloud Storage """
 
     def __init__(self):
-        self.client = storage.Client()
-    
+        credentials = service_account.Credentials.from_service_account_file('service-account-key.json')
+        self.client = storage.Client(
+            credentials=credentials)
+
     def upload_channel_image(self, name, image_data):
         """ Takes image_data and a name and uploads the channel image """
         bucket = self.client.get_bucket("cdn.barscreen.tv")
@@ -439,7 +442,7 @@ class GoogleStorage(object):
         blob.upload_from_string(image_data)
         blob.make_public()
         return blob.public_url
-    
+
     def upload_clip_video(self, name, file):
         bucket = self.client.get_bucket("cdn.barscreen.tv")
         existing = bucket.get_blob("clip_videos/{}".format(name))
@@ -449,7 +452,7 @@ class GoogleStorage(object):
         blob.upload_from_file(file)
         blob.make_public()
         return blob.public_url
-    
+
     def upload_promo_video(self, name, file):
         bucket = self.client.get_bucket("cdn.barscreen.tv")
         existing = bucket.get_blob("promo_videos/{}".format(name))
