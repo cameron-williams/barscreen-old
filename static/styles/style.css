@@ -16,7 +16,7 @@ body{
 
 nav{
   width: 100%;
-  background-color: #000DFFF2;
+  background-color: #000DFFF8;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5) !important;
   position: fixed;
   top: 0;
@@ -265,24 +265,34 @@ nav{
 
 /* Section Three Set Row */
 
+.text_container{
+  padding: 2em 0;
+}
+
 .text_container h2{
-  font-size: 2.25em;
+  font-size: 2em;
   text-align: center;
+  font-weight: 500;
   color: #232323;
-  margin-bottom: .25em;
+  margin-bottom: .5em;
 }
 
 .text_container h3{
-  font-size: 1.5em;
+  font-size: 1.25em;
   font-weight: 400;
   text-align: center;
   color: #8D9499;
   margin-top: .25em;
 }
 
+.threeset_row{
+  padding-bottom: 4em;
+}
+
 .three_item{
   display: inline-block;
   width: 31.5%;
+  box-sizing: border-box;
   vertical-align: top;
   text-align: center;
   margin-left: 2%;
@@ -293,12 +303,20 @@ nav{
 }
 
 .three_item img{
-  width: 50%;
+  width: 40%;
+  max-width: 80px;
 }
 
 .three_item h3{
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: 600;
+  margin: 1em 0 .25em 0;
+}
+
+.three_item p{
+  font-size: .8em;
+  margin: .25em;
+  color: #8D9499;
 }
 
 /* Section Contact */
@@ -424,6 +442,7 @@ nav{
     }
     .three_item{
       width: 100%;
+      margin-bottom: 1em;
       margin-left: 0%;
     }
   }
