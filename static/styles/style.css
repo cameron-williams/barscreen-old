@@ -5,7 +5,12 @@ body{
   font-family: 'Source Sans Pro', sans-serif;
   background-color: #F0F4FF;
   height: 100%;
-  min-height: 100%;
+}
+
+.site_container{
+  overflow: auto;
+  padding-bottom: 68px;
+  min-height: calc(100% - 100px);
 }
 
 /* Fade in Content */
@@ -442,6 +447,7 @@ nav{
   background-color: #232323;
   clear: both;
   position: relative;
+  margin-top: -68px;
   height: 68px;
 }
 
