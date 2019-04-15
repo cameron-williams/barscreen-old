@@ -3,6 +3,8 @@
 {% block head %}
   {{ super() }}
   <link rel="stylesheet" type="text/css" href="static/styles/signup.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
+  <script src="static/scripts/formmask.js"></script>
 {% endblock %}
 {% block content %}
     <div class="splash_signup" id="signup">
@@ -59,10 +61,5 @@
           </feildset>
         </div>
       </form>
-    </div>
-    <div class="footer">
-      <div class="section">
-        <h4><i class="fa fa-copyright"></i> BarScreen 2019</h4>
-      </div>
     </div>
 {% endblock %}

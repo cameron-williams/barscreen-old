@@ -5,12 +5,15 @@ body{
   font-family: 'Source Sans Pro', sans-serif;
   background-color: #F0F4FF;
   height: 100%;
-  min-height: 100%;
+}
+
+.site_container{
+  overflow: auto;
+  padding-bottom: 68px;
+  min-height: calc(100% - 100px);
 }
 
 /* Fade in Content */
-
-
 
 /*Navigation Bar */
 
@@ -122,6 +125,73 @@ nav{
   background-color: #F0F4FF !important;
 }
 
+/* 404 Page */
+
+.nopage_splash{
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -9999;
+  width: 100%;
+  overflow: hidden;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.nopage_splash:before{
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #232323cc;
+}
+
+#nopage{
+  background-color: #8D9499;
+  height: calc(141px + 2em);
+}
+
+.title {
+  color: #F0F4FF;
+  z-index: 9999;
+  margin-top: calc(64px + 2em);
+  text-transform: uppercase;
+}
+
+.title h3{
+  font-weight: 600;
+  font-size: 2.25em;
+  margin: 0;
+  text-align: center;
+  margin-bottom: 1em;
+}
+
+.nopage_container{
+    padding: 2em 0;
+}
+
+.no_glass{
+  width: 25%;
+  max-width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+}
+
+.nopage_copy h3{
+  color: #8D9499;
+  font-weight: 400;
+  font-size: 1.5em;
+  text-align: center;
+}
+
+
+/* Homepage Start */
 
 /* Splash Section */
 
@@ -377,6 +447,7 @@ nav{
   background-color: #232323;
   clear: both;
   position: relative;
+  margin-top: -68px;
   height: 68px;
 }
 

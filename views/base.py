@@ -24,7 +24,6 @@ def requires_admin(f):
 def index():
     return render_template("index.html")
 
-
 @base.route("/about", methods=["GET"])
 def about():
     return render_template("about.html")
