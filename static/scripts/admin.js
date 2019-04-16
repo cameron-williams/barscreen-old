@@ -35,3 +35,7 @@ $(document).ready(function(){
         ul.append(tr);
     });
 });
+
+$(document).on('click','#loop_content tr',function(){
+  $(this).remove();
+});
