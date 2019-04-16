@@ -30,6 +30,7 @@ class Users(BaseModel):
     confirmed = db.Column(db.BOOLEAN, default=False)
     confirmed_on = db.Column(db.DateTime, nullable=True)
     promos = db.relationship("Promo", backref="user", lazy=True)
+    loops = db.relationship("Loop", backref="user", lazy=True)
     password = db.Column(db.CHAR(128), nullable=True)
     admin = db.Column(db.BOOLEAN, default=False)
 
@@ -125,4 +126,9 @@ class Promo(BaseModel):
     description = db.Column(db.String, nullable=True)
     duration = db.Column(db.String, nullable=True)
     clip_url = db.Column(db.String, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+class Loop(BaseModel):
+    name = db.Column(db.String, nullable=False)
+    playlist = db.Column(db.ARRAY(db.String), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
