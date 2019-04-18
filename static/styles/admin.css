@@ -207,6 +207,9 @@ a:active {
 }
 
 /* Add Loop */
+.section:nth-child(2){
+  margin-top: 10px;
+}
 
 .loop_list{
   display: inline-block;
@@ -239,6 +242,10 @@ a:active {
   padding: .5em 0.25em;
   box-sizing: border-box;
   background-color: #8D949933;
+}
+
+#loop_content th{
+  display: none;
 }
 
 .loop_table tr td:nth-child(2){

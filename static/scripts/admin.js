@@ -23,7 +23,6 @@ $(document).ready(function(){
             alert("Account already confirmed.")
         }
     });
-
     /* Adding Loops */
 
     $("#clip_table tbody").on('click', 'button', function() {
@@ -33,6 +32,21 @@ $(document).ready(function(){
         var ul = $("#loop_content");
         var tr = $("<tr></tr>").append("<td>"+content_name+"</td><td>"+content_id+"</td>")
         ul.append(tr);
+    });
+
+    var array = [];
+    var headers = [];
+    $(".save_container").on('click', 'button', function() {
+        $('#loop_content th').each(function(index, item) {
+          headers[index] = $(item).html();
+          });
+        $('#loop_content tr').has('td').each(function() {
+          var arrayItem = {};
+          $('td', $(this)).each(function(index, item) {
+              arrayItem[headers[index]] = $(item).html();
+          });
+          array.push(arrayItem);
+        });
     });
 });
 
