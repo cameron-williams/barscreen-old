@@ -95,7 +95,11 @@ a:active {
     padding: 1em;
     background-color: #F0F4FF;
     box-sizing: border-box;
-    width: max-content;
+    display: inline-block;
+    margin-bottom: .5em;
+    vertical-align: top;
+    width: 49%;
+    min-width: max-content;
     border: 1px solid #232323;
 }
 
@@ -125,28 +129,41 @@ a:active {
   background-color: #fff;
 }
 
-.user_flags p{
+#user_flags p{
   font-weight: 600;
 }
 
-.user_flags a{
+#user_flags a{
   padding: .25em .5em;
   background-color: #EF9F00;
 }
 
-.user_flags span{
+#user_flags span{
   width: 150px;
   display: inline-block;
 }
 
-.user_flags #confirmed_user{
+#user_flags #confirmed_user{
   width: inherit;
   padding: .25em .5em
 }
 
-.user_flags .btn{
+#user_flags .btn{
   margin: 0 1em;
 }
+
+.add_containers{
+  width: 100%;
+  min-width: max-content;
+  padding: .5em 1em;
+  background-color: #232323;
+  box-sizing: border-box;
+}
+
+.add_containers .dash_button{
+  margin: 0 .5em;
+}
+
 
 /* Channel Add */
 
