@@ -11,7 +11,7 @@ from forms.newpromo import NewPromoForm
 from forms.newclip import NewClipForm
 from flask_login import login_required
 from forms.password import CreatePassword
-from models import db, Users, Channel, Show, Clip, Promo
+from models import db, Users, Channel, Show, Clip, Promo, Loop
 from helpers import generate_confirmation_token, confirm_token
 from services.google_clients import Gmail, GoogleStorage
 from PIL import Image
@@ -145,6 +145,23 @@ def addloop(user_id):
     promos = Promo.query.filter_by(id=user_id).all()
     return render_template("admin/addloop.html", current_user=current_user, shows=shows, promos=promos)
 
+@admin.route("/submit_loop", methods=["POST"])
+@login_required
+@requires_admin
+def submit_loop():
+    req = request.get_json()
+    current_user = Users.query.filter_by(id=req["user_id"]).first()
+    if request.method == "POST":
+        try:
+            current_user.loops.append(Loop(
+                name=req["name"],
+                playlist=req["playlist"]
+            ))
+            db.session.commit()
+        except Exception as err:
+            print(err)
+            abort(400, err)
+    return jsonify({"success": True})
 
 @admin.route("/channels")
 @login_required

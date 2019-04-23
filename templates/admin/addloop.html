@@ -1,7 +1,11 @@
 {% extends "admin_layout.html" %}
 {% block title %}Admin - Add Promo{% endblock %}
 {% block head %}
-{{ super() }}
+  {{ super() }}
+  <script>
+      var post_url = "{{url_for('admin.submit_loop')}}";
+      var user_id = "{{ current_user.id }}";
+  </script>
 {% endblock %}
 {% block content %}
 <div class="section">
@@ -10,16 +14,23 @@
   <div class="save_container">
     <button id="#save_loop" class="dash_button">Submit</button>
   </div>
+  <div class="loop_name_container">
+    <input id="loop_name" placeholder="Loop Name" size="30" />
+  </div>
 </div>
 <div class="section">
   <div class="loop_list">
     <h2>Loop</h2>
     <table class="loop_table" id="loop_table">
-      <tbody id="loop_content">
+      <thead>
         <tr>
          <th>Name</th>
+         <th>Type</th>
          <th>ID</th>
         </tr>
+      <thead>
+      <tbody id="loop_content">
+        
       </tbody>
     </table>
   </div>
@@ -27,7 +38,7 @@
       <table id="clip_table" class="display">
         <thead>
           <tr>
-            <td>Type</td>
+            <th>Type</th>
             <th>Name</th>
             <th>Channel</th>
             <th>Add</th>
