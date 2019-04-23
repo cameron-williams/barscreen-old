@@ -23,16 +23,43 @@ $(document).ready(function(){
             alert("Account already confirmed.")
         }
     });
-
     /* Adding Loops */
 
     $("#clip_table tbody").on('click', 'button', function() {
         var row_data = content_table.row($(this).parents('tr')).data();
         var content_name = row_data[1];
+        var content_type = row_data[0];
         var content_id = row_data[3];
         var ul = $("#loop_content");
-        var tr = $("<tr></tr>").append("<td>"+content_name+"</td><td>"+content_id+"</td>")
+        var tr = $("<tr></tr>").append("<td>"+content_name+"</td><td>"+content_type+"</td><td>"+content_id+"</td>")
         ul.append(tr);
+    });
+
+    var array = [];
+    var headers = [];
+    $(".save_container").on('click', 'button', function() {
+        $('#loop_content').has('tr').each(function() {
+          var loop_type = $('#loop_content td:nth-child(2)').map(function(){
+            return $(this).text();})
+          var loop_id = $('#loop_content td:nth-child(3)').map(function(){
+            return $(this).text();});
+          for (var i=0; i<loop_id.length && i<loop_type.length; i++)
+            array[i] = loop_type[i] + loop_id[i];
+          console.log(array);
+        });
+        var loopname = $("#loop_name").val();
+        console.log(array);
+        console.log("success");
+        console.log(loopname);
+        $.ajax({
+            url: post_url,
+            method: "POST",
+            data: JSON.stringify({"name": loopname, "playlist": array, "user_id": user_id}),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data){alert("Sumbited " + loopname + " successfully.")},
+            error: function(errMsg){alert("Sorry: " + errMsg)},
+        });
     });
 });
 
