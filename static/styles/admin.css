@@ -164,6 +164,44 @@ a:active {
   margin: 0 .5em;
 }
 
+.table_selector{
+  border-top: 1px solid #232323;
+  border-bottom: 1px solid #232323;
+  margin-bottom: 1em;
+}
+
+.table_selector .table_button{
+  margin: 0;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: .75em;
+  padding: .5em 1em;
+  display: inline-block;
+  background-color: #F0F4FF;
+  transition: all 3s;
+}
+
+
+.table_selector .table_button:hover{
+  cursor: pointer;
+  color: #fff;
+  background-color: #000DFF;
+}
+
+.table_container{
+  position: relative;
+}
+
+.table_switcher_loop{
+  position: absolute;
+  width: 100%;
+}
+
+.table_switcher_promo{
+  position: absolute;
+  width: 100%;
+  display: none;
+}
 
 /* Channel Add */
 

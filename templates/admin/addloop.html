@@ -1,5 +1,5 @@
 {% extends "admin_layout.html" %}
-{% block title %}Admin - Add Promo{% endblock %}
+{% block title %}Admin - Add Loop{% endblock %}
 {% block head %}
   {{ super() }}
   <script>
@@ -30,7 +30,7 @@
         </tr>
       <thead>
       <tbody id="loop_content">
-        
+
       </tbody>
     </table>
   </div>
@@ -60,7 +60,7 @@
             <td>Show</td>
             <td>{{ show.name }}</td>
             <td>{{ show.channel.name  }}</td>
-            <td style="display: none;">{{ show.channel.id }}</td>
+            <td style="display: none;">{{ show.id }}</td>
             <td><button class="btn">Add</button></td>
           </tr>
           {% endfor %}

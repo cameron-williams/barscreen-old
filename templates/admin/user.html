@@ -26,7 +26,44 @@
 </div>
 <div class="section">
     <div class="table_selector">
-      <button id="loop_selector">Loops</button>
+        <div class="table_button" id="loop_selector">Loops</div><!--
+      --><div class="table_button" id="promo_selector">Promos</div>
+    </div>
+    <div class="table_container">
+      <div class="table_switcher_loop">
+        <table id="userloop_table" class="display">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Segments</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for l in current_user.loops %}
+            <tr>
+              <td>{{ l.name }}</td>
+              <td>{{ l.playlist|length }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="table_switcher_promo">
+        <table id="userpromo_table" class="display">
+          <thead>
+            <tr>
+              <th>Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for promo in current_user.promos %}
+            <tr>
+              <td><a href="{{ url_for('admin.promoid', promo_id=promo.id, user_id=current_user.id) }}">{{ promo.name }}</a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
     </div>
 </div>
 {% endblock %}

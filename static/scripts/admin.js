@@ -5,6 +5,8 @@ $(document).ready(function(){
     shows_table = $('#shows_table').DataTable();
     content_table = $('#clip_table').DataTable();
     clip_table = $('#clip_dash').DataTable();
+    loop_table = $('#userloop_table').DataTable();
+    loop_table = $('#userpromo_table').DataTable();
 
     /* Handle button for approving users */
     $("#users_table tbody").on('click', 'button', function() {
@@ -23,6 +25,19 @@ $(document).ready(function(){
             alert("Account already confirmed.")
         }
     });
+
+    /* Table Selector between loops and promos for Users */
+
+    $(".table_selector").on('click', '#loop_selector', function() {
+        $(".table_switcher_promo").css("display", "none");
+        $(".table_switcher_loop").css("display", "block");
+    });
+
+    $(".table_selector").on('click', '#promo_selector', function() {
+        $(".table_switcher_promo").css("display", "block");
+        $(".table_switcher_loop").css("display", "none");
+    });
+
     /* Adding Loops */
 
     $("#clip_table tbody").on('click', 'button', function() {
