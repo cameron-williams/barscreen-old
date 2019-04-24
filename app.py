@@ -42,11 +42,13 @@ def create_app():
     from views import base
     from views.dashboard import dashboard
     from views.admin import admin
+    from views.roku import roku
 
     app.register_blueprint(base.base)
     app.register_blueprint(admin, url_prefix="/ad" if LOCAL else None, subdomain="admin" if subdomain_routing else None)
     app.register_blueprint(dashboard, url_prefix="/dash" if LOCAL else None,
                            subdomain="dashboard" if subdomain_routing else None)
+    app.register_blueprint(roku, url_prefix="/roku" if LOCAL else None, subdomain="roku" if subdomain_routing else None)
     return app
 
 

@@ -16,7 +16,8 @@ class BaseModel(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())
-    last_updated = db.Column(db.DateTime, default=db.func.current_timestamp(), onupdate=db.func.current_timestamp())
+    last_updated = db.Column(db.DateTime, default=db.func.current_timestamp(
+    ), onupdate=db.func.current_timestamp())
 
 
 class Users(BaseModel):
@@ -77,12 +78,12 @@ class Show(BaseModel):
     """
     Channel Show Model
     """
-    name = db.Column(db.String, nullable=False, unique=True)
-    description = db.Column(db.String, nullable=False)
-    lookback = db.Column(db.Integer, default=1)
-    order = db.Column(db.String, default="recent")
-    channel_id = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
-    clips = db.relationship("Clip", backref="show", lazy=True)
+    name             = db.Column(db.String, nullable=False, unique=True)
+    description      = db.Column(db.String, nullable=False)
+    lookback         = db.Column(db.Integer, default=1)
+    order            = db.Column(db.String, default="recent")
+    channel_id       = db.Column(db.Integer, db.ForeignKey('channel.id'), nullable=False)
+    clips            = db.relationship("Clip", backref="show", lazy=True)
 
     def __repr__(self):
         return '<Show {}>'.format(self.name)
@@ -95,22 +96,22 @@ class Clip(BaseModel):
     """
     Clip Model
     """
-    name = db.Column(db.String, nullable=False, unique=True)
+    name        = db.Column(db.String, nullable=False, unique=True)
     description = db.Column(db.String, nullable=False)
-    duration = db.Column(db.Integer, nullable=False, default=0)
-    clip_url = db.Column(db.String, nullable=True)
-    show_id = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
+    duration    = db.Column(db.Integer, nullable=False, default=0)
+    clip_url    = db.Column(db.String, nullable=True)
+    show_id     = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
 
 
 class Channel(BaseModel):
     """
     Channel Model
     """
-    name = db.Column(db.String, nullable=False, unique=True)
-    category = db.Column(db.String, nullable=False)
+    name        = db.Column(db.String, nullable=False, unique=True)
+    category    = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=False)
-    image_url = db.Column(db.String, nullable=True)
-    shows = db.relationship("Show", backref="channel", lazy=True)
+    image_url   = db.Column(db.String, nullable=True)
+    shows       = db.relationship("Show", backref="channel", lazy=True)
 
     @validates('image_data')
     def validate_image_data(self, key, image_data):
@@ -118,17 +119,41 @@ class Channel(BaseModel):
             raise AssertionError("No image data provided")
         img_type = imghdr.what('', image_data)
         if img_type != 'jpeg' and img_type != 'png':
-            raise AssertionError("Please use  a jpeg or a png file for a channel image")
+            raise AssertionError(
+                "Please use  a jpeg or a png file for a channel image")
         return image_data
 
+
 class Promo(BaseModel):
-    name = db.Column(db.String, nullable=False)
+    name        = db.Column(db.String, nullable=False)
     description = db.Column(db.String, nullable=True)
-    duration = db.Column(db.String, nullable=True)
-    clip_url = db.Column(db.String, nullable=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    duration    = db.Column(db.String, nullable=True)
+    clip_url    = db.Column(db.String, nullable=True)
+    user_id     = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
 
 class Loop(BaseModel):
-    name = db.Column(db.String, nullable=False)
-    playlist = db.Column(db.ARRAY(db.String), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    name              = db.Column(db.String, nullable=False)
+    playlist          = db.Column(db.ARRAY(db.String), nullable=False)
+    user_id           = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    last_played_clips = db.Column(db.PickleType, nullable=True) # {sid:cid}
+
+
+jsonFeedSchema = {
+    "providerName": "BarscreenTV",
+    "lastUpdated": str,
+    "language": "en",
+    "movies": [],
+    "series": [],
+    "shortFormVideos": [],
+    "tvSpecials": [],
+    "playlists": []
+}
+
+shortFormVideoSchema = {
+    "id": str,
+    "title": str,
+    "content": str,
+    "thumbnail": str,
+    "shortDescription": str,
+}
