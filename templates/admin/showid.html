@@ -32,7 +32,7 @@
         {% for clip in current_show.clips %}
         <tr>
           <td>{{ clip.date_created }}</td>
-          <td>{{ clip.name }}</td>
+          <td><a href="{{ url_for('admin.clipid', clip_id=clip.id, channel_id=channel_id, show_id=current_show.id) }}">{{ clip.name }}</a></td>
           <td>{{ clip.clip_url }}</td>
         </tr>
         {% endfor %}

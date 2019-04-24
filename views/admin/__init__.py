@@ -109,6 +109,18 @@ def user(user_id):
         return ''
     return render_template("admin/user.html", current_user=current_user)
 
+@admin.route("/user/<user_id>/<promo_id>", methods=["GET", "POST"])
+@login_required
+@requires_admin
+def promoid(user_id, promo_id):
+    """ Specific channel route, allows edits to specified channel. """
+    current_promo = Promo.query.filter_by(
+        user_id=user_id, id=promo_id).first()
+    if not current_promo:
+        abort(404, {"error": "No clip by that id. (id:{})".format(show_id)})
+    return render_template("admin/promoid.html", current_promo=current_promo, user_id=user_id)
+
+
 @admin.route("/user/<user_id>/addpromo", methods=["POST", "GET"])
 @login_required
 @requires_admin
@@ -192,8 +204,19 @@ def showid(channel_id, show_id):
     current_show = Show.query.filter_by(
         channel_id=channel_id, id=show_id).first()
     if not current_show:
-        abort(404, {"error": "No channel by that id. (id:{})".format(show_id)})
+        abort(404, {"error": "No show by that id. (id:{})".format(show_id)})
     return render_template("admin/showid.html", current_show=current_show, channel_id=channel_id)
+
+@admin.route("/channels/<channel_id>/<show_id>/<clip_id>", methods=["GET", "POST"])
+@login_required
+@requires_admin
+def clipid(channel_id, show_id, clip_id):
+    """ Specific channel route, allows edits to specified channel. """
+    current_clip = Clip.query.filter_by(
+        show_id=show_id, id=clip_id).first()
+    if not current_clip:
+        abort(404, {"error": "No clip by that id. (id:{})".format(show_id)})
+    return render_template("admin/clipid.html", current_clip=current_clip, show_id=show_id, channel_id=channel_id)
 
 
 @admin.route("/channels/<channel_id>/<show_id>/addclip", methods=["POST", "GET"])
