@@ -154,7 +154,7 @@ def addpromo(user_id):
 def addloop(user_id):
     current_user = Users.query.filter_by(id=user_id).first()
     shows = Show.query.all()
-    promos = Promo.query.filter_by(id=user_id).all()
+    promos = Promo.query.filter_by(user_id=user_id).all()
     return render_template("admin/addloop.html", current_user=current_user, shows=shows, promos=promos)
 
 @admin.route("/submit_loop", methods=["POST"])
