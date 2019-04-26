@@ -41,7 +41,7 @@ def login():
 
 
 @login_required
-@roku.route("/get_loops")
+@roku.route("/get_loops", methods=["GET"])
 def get_loops():
     loops = [
         {"name": loop.name, "image_url": loop.image_url, "id": loop.id}
