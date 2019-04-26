@@ -5,7 +5,9 @@ import random
 from flask import (
     Blueprint, request, redirect, url_for, abort, jsonify
 )
-from models import db, Loop, Show, Clip, Promo, jsonFeedSchema, shortFormVideoSchema
+from flask_login import login_required, login_user, current_user
+from models import db, Loop, Show, Clip, Promo, jsonFeedSchema, shortFormVideoSchema, Users
+from helpers import verify_password, confirm_token
 
 roku = Blueprint('roku', __name__, static_folder='../../static')
 
@@ -22,6 +24,33 @@ def to_shortform_spec(media):
     return _body
 
 
+@roku.route("/login", methods=["POST"])
+def login():
+    req = request.get_json()
+    if not req:
+        abort(400, "Post data can not be empty.")
+    if not req.get("email") or not req.get("password"):
+        abort(400, "Missing fields. Post data must include an email and password field.")
+    # try and match user off given email
+    matched_user = Users.query.filter_by(email=req["email"]).first()
+    # double check password matches hash
+    if not verify_password(matched_user.password, req["password"]):
+        abort(401, "invalid credentials")
+    login_user(matched_user)
+    return jsonify({"status": "success", "message": "logged in successfully"})
+
+
+@login_required
+@roku.route("/get_loops")
+def get_loops():
+    loops = [
+        {"name": loop.name, "image_url": loop.image_url, "id": loop.id}
+        for loop in db.session.query(Loop).filter(Loop.user_id == current_user.id).all()
+    ]
+    return jsonify({"status": "success", "loops": loops})
+
+
+@login_required
 @roku.route("/pubs/<publisher_id>/loop/<loop_id>")
 def get_loop(publisher_id, loop_id):
     """ Takes the pub id/loop id and returns a json payload that matches the feed spec """
@@ -39,7 +68,7 @@ def get_loop(publisher_id, loop_id):
     # copy the json schema to make adjustments to
     json_feed = jsonFeedSchema.copy()
     json_feed["lastUpdated"] = loop.last_updated
-    
+
     # iterate playlist and add clips as needed
     for i in loop.playlist:
         media_id = re.search(r'\d+', i).group()
@@ -82,7 +111,8 @@ def get_loop(publisher_id, loop_id):
                     else:
                         # get next clip in selection based off last played clip id (or start at overflow to start)
                         try:
-                            clip = clip_selection[clip_selection.index(last_clip_id)+1]
+                            clip = clip_selection[clip_selection.index(
+                                last_clip_id)+1]
                         except IndexError:
                             clip = clip_selection[0]
 
