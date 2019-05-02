@@ -2,10 +2,10 @@ import re
 from os import urandom
 from binascii import hexlify
 import random
+from functools import wraps
 from flask import (
-    Blueprint, request, redirect, url_for, abort, jsonify
+    Blueprint, request, redirect, url_for, abort, jsonify, g
 )
-from flask_login import login_required, login_user, current_user
 from models import db, Loop, Show, Clip, Promo, jsonFeedSchema, shortFormVideoSchema, Users
 from helpers import verify_password, confirm_token
 
@@ -36,13 +36,18 @@ def login():
     # double check password matches hash
     if not verify_password(matched_user.password, req["password"]):
         abort(401, "invalid credentials")
-    login_user(matched_user)
-    return jsonify({"status": "success", "message": "logged in successfully"})
+    if not matched_user.api_key:
+        matched_user.api_key = hexlify(urandom(32))
+        db.session.commit()
+    return jsonify({"status": "success", "api_key": matched_user.api_key})
 
 
-@login_required
 @roku.route("/get_loops", methods=["GET"])
 def get_loops():
+    api_key = request.args.get("api_key")
+    current_user = db.session.query(Users).filter(Users.api_key == api_key).first()
+    if not api_key or not current_user:
+        abort(404)
     loops = [
         {"name": loop.name, "image_url": loop.image_url, "id": loop.id}
         for loop in db.session.query(Loop).filter(Loop.user_id == current_user.id).all()
@@ -50,10 +55,14 @@ def get_loops():
     return jsonify({"status": "success", "loops": loops})
 
 
-@login_required
-@roku.route("/pubs/<publisher_id>/loop/<loop_id>")
+@roku.route("/pubs/loops/<loop_id>")
 def get_loop(publisher_id, loop_id):
     """ Takes the pub id/loop id and returns a json payload that matches the feed spec """
+    api_key = request.args.get("api_key")
+    current_user = db.session.query(Users).filter(Users.api_key == api_key).first()
+    if not api_key or not current_user:
+        abort(404)
+    publisher_id = current_user.id
     # grab loop from db (or 404)
     loop = db.session.query(Loop).filter(
         Loop.id == loop_id, Loop.user_id == publisher_id).first()
