@@ -34,6 +34,7 @@ class Users(BaseModel):
     loops = db.relationship("Loop", backref="user", lazy=True)
     password = db.Column(db.CHAR(128), nullable=True)
     admin = db.Column(db.BOOLEAN, default=False)
+    api_key = db.Column(db.String, nullable=True)
 
     def __init__(self, first_name, last_name, phone_number, email, company, confirmed_on=None, admin=None, password=None, ads=False, confirmed=False):
         self.first_name = first_name

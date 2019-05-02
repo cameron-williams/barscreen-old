@@ -37,7 +37,9 @@ def login():
     if not verify_password(matched_user.password, req["password"]):
         abort(401, "invalid credentials")
     login_user(matched_user)
-    return jsonify({"status": "success", "message": "logged in successfully"})
+    if not matched_user.api_key:
+        matched_user.api_key = hexlify(urandom(32))
+    return jsonify({"status": "success", "api_key": matched_user.api_key})
 
 
 @login_required
