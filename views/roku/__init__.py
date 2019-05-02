@@ -56,7 +56,7 @@ def get_loops():
 
 
 @roku.route("/pubs/loops/<loop_id>")
-def get_loop(publisher_id, loop_id):
+def get_loop(loop_id):
     """ Takes the pub id/loop id and returns a json payload that matches the feed spec """
     api_key = request.args.get("api_key")
     current_user = db.session.query(Users).filter(Users.api_key == api_key).first()
