@@ -266,6 +266,12 @@ a:active {
   margin-top: 10px;
 }
 
+.loop_name_container label{
+  font-size: .75em;
+  margin-right: .25em;
+}
+
+
 .loop_list{
   display: inline-block;
   box-sizing: border-box;

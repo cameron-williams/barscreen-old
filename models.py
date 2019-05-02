@@ -137,6 +137,7 @@ class Loop(BaseModel):
     playlist          = db.Column(db.ARRAY(db.String), nullable=False)
     user_id           = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     last_played_clips = db.Column(db.PickleType, nullable=True) # {sid:cid}
+    image_url         = db.Column(db.String, nullable=True)
 
 
 jsonFeedSchema = {
