@@ -86,7 +86,7 @@ def confirm_email(token):
         db.session.commit()
         flash("Password set successfully.", category="success")
         return redirect(url_for('dashboard.index'))
-    return render_template("admin/create_password.html", form=form, token=token)
+    return render_template("dashboard/password.html", form=form, token=token)
 
 
 @admin.route("/user/<user_id>", methods=["GET", "POST"])
@@ -108,6 +108,7 @@ def user(user_id):
         db.session.commit()
         return ''
     return render_template("admin/user.html", current_user=current_user)
+
 
 @admin.route("/user/<user_id>/<promo_id>", methods=["GET", "POST"])
 @login_required
@@ -157,6 +158,7 @@ def addloop(user_id):
     promos = Promo.query.filter_by(user_id=user_id).all()
     return render_template("admin/addloop.html", current_user=current_user, shows=shows, promos=promos)
 
+
 @admin.route("/submit_loop", methods=["POST"])
 @login_required
 @requires_admin
@@ -174,6 +176,7 @@ def submit_loop():
             print(err)
             abort(400, err)
     return jsonify({"success": True})
+
 
 @admin.route("/channels")
 @login_required
@@ -205,6 +208,7 @@ def showid(channel_id, show_id):
     if not current_show:
         abort(404, {"error": "No show by that id. (id:{})".format(show_id)})
     return render_template("admin/showid.html", current_show=current_show, channel_id=channel_id)
+
 
 @admin.route("/channels/<channel_id>/<show_id>/<clip_id>", methods=["GET", "POST"])
 @login_required
@@ -316,6 +320,7 @@ def addchannel():
                 db.session.rollback()
                 error = str(e)
     return render_template("admin/addchannel.html", form=form, error=error)
+
 
 @admin.route("/clips")
 @login_required
