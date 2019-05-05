@@ -85,16 +85,12 @@ nav{
   user-select: none;
 }
 
-.nav_menu ul li:last-child{
-  display: none;
-}
-
-.nav_menu ul li:hover{
+.nav_menu ul a li:hover{
   cursor: pointer;
   background-color: #000000aa;
 }
 
-.nav_menu ul li:active{
+.nav_menu ul a li:active{
   box-sizing: border-box;
    -moz-box-sizing: border-box;
    -webkit-box-sizing: border-box;
