@@ -48,8 +48,6 @@ def create_app():
     app.register_blueprint(admin, url_prefix="/ad" if LOCAL else None, subdomain="admin" if subdomain_routing else None)
     app.register_blueprint(dashboard, url_prefix="/dash" if LOCAL else None,
                            subdomain="dashboard" if subdomain_routing else None)
-    print("/roku" if LOCAL else None)
-    print("roku" if subdomain_routing else None)
     app.register_blueprint(roku, url_prefix="/roku" if LOCAL else None, subdomain="roku" if subdomain_routing else None)
     return app
 
