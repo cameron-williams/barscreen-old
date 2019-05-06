@@ -93,7 +93,7 @@ def get_loop(loop_id):
             show = Show.query.filter_by(id=media_id).first()
             # more in depth, add clip from show based on settings
             clip_selection = db.session.query(Clip).filter(
-                Clip.show_id == show.id).all()[:show.lookback]
+                Clip.show_id == show.id).order_by(Clip.id.desc()).all()[:show.lookback]
             clip = None
 
             # skip if no clips
@@ -127,6 +127,7 @@ def get_loop(loop_id):
 
             # set last played clip for current show to currently selected clip
             loop.last_played_clips[show.id] = clip.id
+            db.session.commit()
             json_feed["shortFormVideos"].append(to_shortform_spec(clip))
     # add playlist for current shortFormVideos
     playlist = {
