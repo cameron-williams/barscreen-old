@@ -9,7 +9,7 @@ from forms.newchannel import NewchannelForm
 from forms.newshow import NewShowForm
 from forms.newpromo import NewPromoForm
 from forms.newclip import NewClipForm
-from flask_login import login_required
+from flask_login import login_required, logout_user
 from forms.password import CreatePassword
 from models import db, Users, Channel, Show, Clip, Promo, Loop
 from helpers import generate_confirmation_token, confirm_token
@@ -328,3 +328,10 @@ def addchannel():
 def clips():
     clips = Clip.query.all()
     return render_template("admin/clips.html", clips=clips)
+
+
+@admin.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('dashboard.login'))

@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, render_template, request, flash, redirect, url_for, abort
 )
-from flask_login import login_required, login_user, current_user
+from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
 from forms.password import CreatePassword
 from models import Users, db
@@ -97,3 +97,10 @@ def account():
 @login_required
 def channel():
     return render_template("dashboard/channel.html")
+
+
+@dashboard.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('dashboard.login'))
