@@ -79,7 +79,7 @@ nav{
 
 .nav_menu ul li{
   display: inline-block;
-  padding: .5em .25em;
+  padding: .5em .5em;
   -moz-user-select: none;
   -webkit-user-select: none;
   user-select: none;
@@ -262,18 +262,25 @@ nav{
   padding: 1em;
 }
 
+.loops_container{
+  padding: .5em 0;
+  border-bottom: 1px solid #F0F4FF;
+}
+
 .loops_container ul{
   list-style: none;
-  display: flex;
-  justify-content: space-between;
   padding: 0;
+  margin: 0;
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: calc(20% - 8px) calc(20% - 8px) calc(20% - 8px) calc(20% - 8px) calc(20% - 8px);
 }
 
 .loops_container ul li{
   display: inline-block;
   background-color: #F0F4FF;
+  width: 100%;
   position: relative;
-  margin-right: .5em;
 }
 
 .loops_container ul li:hover{
@@ -303,7 +310,7 @@ nav{
 }
 
 .loops_container ul li img{
-  width: 120%;
+  width: 100%;
 }
 
 .loop_title{
@@ -334,7 +341,6 @@ nav{
   padding: .2em 1em;
   text-decoration: none;
   transition: background-color .3s;
-  border: 1px solid #F0F4FF;
 }
 
 .pagination a.active {

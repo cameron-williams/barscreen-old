@@ -124,4 +124,7 @@
   .grid_wrapper{
     display: block;
   }
+  .grid_box{
+    margin-bottom: 1em;
+  }
 }

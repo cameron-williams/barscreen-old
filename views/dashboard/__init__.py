@@ -77,7 +77,6 @@ def confirm_email(token):
 @dashboard.route("/loops")
 @login_required
 def loops():
-    print(current_user)
     return render_template("dashboard/loops.html")
 
 

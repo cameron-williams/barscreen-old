@@ -3,6 +3,7 @@
 {% block h3title %}Loops{% endblock %}
 {% block head %}
   {{ super() }}
+  <script src="{{ url_for('static', filename='scripts/looppagination.js') }}" type="text/javascript"></script>
 {% endblock %}
 {% block content %}
   <div class="createnew_wrapper">
@@ -13,51 +14,20 @@
   <div class="loops_wrapper">
     <div class="loops_container">
       <ul>
-        <li>
+        {% for l in current_user.loops %}
+        <li class="loop_item">
           <div class="loop_image">
-            <img src="static/images/vice.jpeg">
+            <img src="{{ l.image_url }}">
           </div>
           <div class="loop_title">
-            <h3>Week Days</h3>
-            <p>23:00</p>
+            <h3>{{ l.name }}</h3>
+            <p>{{ l.playlist|length }}</p>
           </div>
         </li>
-        <li>
-          <div class="loop_image">
-            <img src="static/images/vice.jpeg">
-          </div>
-          <div class="loop_title">
-            <h3>Week Days</h3>
-            <p>23:00</p>
-          </div>
-        </li>
-        <li>
-          <div class="loop_image">
-            <img src="static/images/vice.jpeg">
-          </div>
-          <div class="loop_title">
-            <h3>Week Days</h3>
-            <p>23:00</p>
-          </div>
-        </li>
-        <li>
-          <div class="loop_image">
-            <img src="static/images/vice.jpeg">
-          </div>
-          <div class="loop_title">
-            <h3>Week Days</h3>
-            <p>23:00</p>
-          </div>
-        </li>
+        {% endfor %}
       </ul>
     </div>
     <div class="pagination">
-      <a href="#">&laquo;</a>
-      <a href="#">1</a>
-      <a href="#" class="active">2</a>
-      <a href="#">3</a>
-      <a href="#">4</a>
-      <a href="#">&raquo;</a>
     </div>
   </div>
 {% endblock %}
