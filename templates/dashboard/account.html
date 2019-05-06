@@ -7,11 +7,11 @@
 {% block content %}
   <div class="account_container">
     <div class="account_info">
-      <h2>Company Name</h2>
-      <p>Email: <span>pub@pub.net</span></p>
-      <p>First Name: <span>Jerry</span></p>
-      <p>Last Name: <span>Lewis</span></p>
-      <p>Phone: <span>7782223333</span></p>
+      <h2>{{ current_user.company }}</h2>
+      <p>Email: <span>{{ current_user.email }}</span></p>
+      <p>First Name: <span>{{ current_user.first_name }}</span></p>
+      <p>Last Name: <span>{{ current_user.last_name }}</span></p>
+      <p>Phone: <span>{{ current_user.phone_number }}</span></p>
       <button class="dash_button">Change Password</button>
     </div>
   </div>
