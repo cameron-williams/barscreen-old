@@ -6,7 +6,7 @@ from functools import wraps
 from flask import (
     Blueprint, request, redirect, url_for, abort, jsonify, g
 )
-from models import db, Loop, Show, Clip, Promo, jsonFeedSchema, shortFormVideoSchema, Users
+from models import db, Loop, Show, Clip, Promo, shortFormVideoSchema, Users
 from helpers import verify_password, confirm_token
 
 roku = Blueprint('roku', __name__, static_folder='../../static')
@@ -45,7 +45,8 @@ def login():
 @roku.route("/get_loops", methods=["GET"])
 def get_loops():
     api_key = request.args.get("api_key")
-    current_user = db.session.query(Users).filter(Users.api_key == api_key).first()
+    current_user = db.session.query(Users).filter(
+        Users.api_key == api_key).first()
     if not api_key or not current_user:
         abort(404)
     loops = [
@@ -59,7 +60,8 @@ def get_loops():
 def get_loop(loop_id):
     """ Takes the pub id/loop id and returns a json payload that matches the feed spec """
     api_key = request.args.get("api_key")
-    current_user = db.session.query(Users).filter(Users.api_key == api_key).first()
+    current_user = db.session.query(Users).filter(
+        Users.api_key == api_key).first()
     if not api_key or not current_user:
         abort(404)
     publisher_id = current_user.id
@@ -69,13 +71,19 @@ def get_loop(loop_id):
     if not loop:
         abort(404)
 
-    last_played = loop.last_played_clips
-    if not last_played:
-        last_played = {}
-        loop.last_played_clips = last_played
+    last_played = loop.get_last_played_clips()
 
     # copy the json schema to make adjustments to
-    json_feed = jsonFeedSchema.copy()
+    json_feed = {
+        "providerName": "BarscreenTV",
+        "lastUpdated": str,
+        "language": "en",
+        "movies": [],
+        "series": [],
+        "shortFormVideos": [],
+        "tvSpecials": [],
+        "playlists": []
+    }
     json_feed["lastUpdated"] = loop.last_updated
 
     # iterate playlist and add clips as needed
@@ -120,13 +128,14 @@ def get_loop(loop_id):
                     else:
                         # get next clip in selection based off last played clip id (or start at overflow to start)
                         try:
-                            clip = clip_selection[clip_selection.index(
+                            clip = clip_selection[[c.id for c in clip_selection].index(
                                 last_clip_id)+1]
                         except IndexError:
                             clip = clip_selection[0]
 
             # set last played clip for current show to currently selected clip
-            loop.last_played_clips[show.id] = clip.id
+            last_played[show.id] = clip.id
+            loop.set_last_played_clips(last_played)
             db.session.commit()
             json_feed["shortFormVideos"].append(to_shortform_spec(clip))
     # add playlist for current shortFormVideos
