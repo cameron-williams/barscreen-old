@@ -836,6 +836,12 @@ nav{
 
 /* Media Query */
 
+@media screen and (max-width: 800px) {
+  .loops_container ul{
+    grid-template-columns: calc(25% - 7.5px) calc(25% - 7.5px) calc(25% - 7.5px) calc(25% - 7.5px);
+  }
+}
+
 @media screen and (max-width: 600px) {
   /* Navigation */
   .hamburger{
@@ -874,4 +880,9 @@ nav{
     margin: .5em;
     width: calc(50% - 2em);
   }
+  /* Main loop Page */
+  .loops_container ul{
+    grid-template-columns: calc(33% - 7px) calc(33% - 7px) calc(33% - 7px);
+  }
+
 }

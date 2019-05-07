@@ -24,4 +24,15 @@ $(document).ready(function() {
 	    showPage(parseInt($(this).text()))
 	});
 
+  var fourWide = window.matchMedia("(max-width: 800px)");
+  var threeWide = window.matchMedia("(max-width: 600px)")
+  if (fourWide.matches){
+      // Screen is less than 480px
+      listSize = 4;
+  }
+  if (fourWide.matches){
+      // Screen is less than 480px
+      listSize = 3;
+  }
+
 })
