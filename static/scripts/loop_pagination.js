@@ -27,11 +27,11 @@ $(document).ready(function() {
   var fourWide = window.matchMedia("(max-width: 800px)");
   var threeWide = window.matchMedia("(max-width: 600px)")
   if (fourWide.matches){
-      // Screen is less than 480px
+      // Screen is less than 800px
       listSize = 4;
   }
   if (fourWide.matches){
-      // Screen is less than 480px
+      // Screen is less than 600px
       listSize = 3;
   }
 
