@@ -30,7 +30,7 @@ $(document).ready(function() {
       // Screen is less than 800px
       listSize = 4;
   }
-  if (fourWide.matches){
+  if (threeWide.matches){
       // Screen is less than 600px
       listSize = 3;
   }
