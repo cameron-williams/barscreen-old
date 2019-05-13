@@ -337,6 +337,7 @@ nav{
 
 .pagination a {
   color: #232323;
+  box-sizing: border-box;
   float: left;
   padding: .2em 1em;
   text-decoration: none;
@@ -557,18 +558,27 @@ nav{
 
 .content_more{
   position: absolute;
-  color: #232323;
+  color: #8D9499;
   width: 1.75em;
-  height: 4.5em;
+  height: calc(100% - 28px);
   display: inline-block;
+  -webkit-transition: all .5s ease-in-out;
+  -moz-transition: all .5s ease-in-out;
+  -ms-transition: all .5s ease-in-out;
+  -o-transition: all .5s ease-in-out;
+  transition: all .5s ease-in-out;
+}
+
+.content_more:hover{
+  cursor: pointer;
+  color: #232323;
+  background:#EF9F00aa;
 }
 
 .content_arrow{
   font-size: 3em;
-  line-height: 4.5em;
-  background-color: #EF9F0055;
   display: inline-block;
-  float: right;
+  height: 100%;
   -webkit-transition: all 1s ease-in-out;
   -moz-transition: all 1s ease-in-out;
   -ms-transition: all  1s ease-in-out;
@@ -576,14 +586,34 @@ nav{
   transition: all 1s ease-in-out;
 }
 
-.content_arrow:hover{
-  cursor: pointer;
-  background:#EF9F00aa;
+.content_arrow i{
+  position: absolute;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+/* Pagination for content rows */
+
+.createPagination{
+  margin-top: .25em;
+  display: block;
+  padding-right: 40px;
+}
+
+.createPagination a{
+  width: 2em;
+  height: .5em;
+  background-color: #ddd;
+  border: 1px solid #F0F4FF;
+}
+
+.createPagination a:hover:not(.active){
+  border: 1px solid transparent;
 }
 
 
-.content_arrow i{
-  line-height: 1.5em;
+.createPagination a span{
+  display: none;
 }
 
 /* Channel Information */
@@ -845,6 +875,10 @@ nav{
   .loops_container ul{
     grid-template-columns: calc(25% - 7.5px) calc(25% - 7.5px) calc(25% - 7.5px) calc(25% - 7.5px);
   }
+  /*Creat Dashboard Lists */
+  .content_display ul{
+    grid-template-columns: calc(25% - 3.75px) calc(25% - 3.75px) calc(25% - 3.75px) calc(25% - 3.75px);
+  }
 }
 
 @media screen and (max-width: 600px) {
@@ -889,5 +923,8 @@ nav{
   .loops_container ul{
     grid-template-columns: calc(33% - 7px) calc(33% - 7px) calc(33% - 7px);
   }
-
+  /*Creat Dashboard Lists */
+  .content_display ul{
+    grid-template-columns: calc(33% - 3.5px) calc(33% - 3.5px) calc(33% - 3.5px);
+  }
 }
