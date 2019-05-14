@@ -18,6 +18,7 @@ from PIL import Image
 from urllib import unquote_plus
 from base64 import b64encode
 from werkzeug.utils import secure_filename
+from moviepy.editor import *
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -132,9 +133,11 @@ def addpromo(user_id):
     form = NewPromoForm()
     if request.method == "POST" and form.validate_on_submit():
         storage = GoogleStorage()
+        clip = VideoFileClip(form.clip_file)
         try:
             current_user = Users.query.filter_by(id=user_id).first()
             url = storage.upload_promo_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
+            img = storage.upload_promo_image(name=secure_filename(form.clip_file.data.filename), file=clip.save_frame(t=5))
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
                 description=form.description.data,

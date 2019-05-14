@@ -473,3 +473,14 @@ class GoogleStorage(object):
         blob.upload_from_string(image_data)
         blob.make_public()
         return blob.public_url
+
+    def upload_promo_image(self, name, image_data):
+        """ Takes image_data and a name and uploads the channel image """
+        bucket = self.client.get_bucket("cdn.barscreen.tv")
+        existing = bucket.get_blob("promo_images/{}".format(name))
+        if existing:
+            return existing.public_url
+        blob = bucket.blob("promo_images/{}".format(name))
+        blob.upload_from_string(image_data)
+        blob.make_public()
+        return blob.public_url
