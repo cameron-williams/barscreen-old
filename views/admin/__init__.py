@@ -14,6 +14,7 @@ from forms.password import CreatePassword
 from models import db, Users, Channel, Show, Clip, Promo, Loop
 from helpers import generate_confirmation_token, confirm_token
 from services.google_clients import Gmail, GoogleStorage
+from services.imaging import get_still_from_video_file
 from PIL import Image
 from urllib import unquote_plus
 from base64 import b64encode
@@ -118,7 +119,7 @@ def promoid(user_id, promo_id):
     current_promo = Promo.query.filter_by(
         user_id=user_id, id=promo_id).first()
     if not current_promo:
-        abort(404, {"error": "No clip by that id. (id:{})".format(show_id)})
+        abort(404, {"error": "No promo by that id. (id:{})".format(promo_id)})
     return render_template("admin/promoid.html", current_promo=current_promo, user_id=user_id)
 
 
@@ -134,12 +135,20 @@ def addpromo(user_id):
         storage = GoogleStorage()
         try:
             current_user = Users.query.filter_by(id=user_id).first()
-            url = storage.upload_promo_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
+            fn = secure_filename(form.clip_file.data.filename)
+            url = storage.upload_promo_video(name=fn, file=form.clip_file.data)
+            
+            # save vid and get still from it
+            form.clip_file.data.save('/tmp/{}'.format(fn))
+            still_img_path = get_still_from_video_file("/tmp/{}".format(fn), 10)
+            still_url = storage.upload_promo_image(name=fn, image_data=open(still_img_path).read())
+            
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
                 description=form.description.data,
-                clip_url=url
+                clip_url=url,
             ))
+            
             db.session.commit()
         except IntegrityError as e:
             db.session.rollback()
