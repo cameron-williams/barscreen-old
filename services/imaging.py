@@ -6,7 +6,7 @@ import subprocess
 import urllib2
 
 
-if not subprocess.check_output(["command -v ffmpeg"], shell=True):
+if os.system("command -v ffmpeg") != 0:
     print("Error: FFMPEG not found. Please install it before using the imaging tools. (brew install ffmpeg or apt-get install ffmpeg)")
 
 
@@ -28,8 +28,7 @@ def get_still_from_video_url(video_url, timestamp, output="/var/tmp/frameshot.pn
     if os.path.isfile(output):
         os.remove(output)
     # use ffmpeg to get still from video at timestamp
-    subprocess.check_output(
-        ["ffmpeg -ss {t} -i {f} -vframes 1 -s 540x405 -f image2 {o}".format(t=timestamp, f=fn, o=output)], shell=True)
+    os.system("ffmpeg -ss {t} -i {f} -vframes 1 -s 540x405 -f image2 {o}".format(t=timestamp, f=fn, o=output))
     # if no output assume something went wrong
     if not os.path.isfile(output):
         raise ValueError(
@@ -52,8 +51,7 @@ def get_still_from_video_file(path, timestamp, output="/var/tmp/frameshot.png"):
     if os.path.isfile(output):
         os.remove(output)
     # use ffmpeg to get still from video at timestamp
-    subprocess.check_output(
-        ["ffmpeg -ss {t} -i {f} -vframes 1 -s 540x405 -f image2 {o}".format(t=timestamp, f=path, o=output)], shell=True)
+    os.system("ffmpeg -ss {t} -i {f} -vframes 1 -s 540x405 -f image2 {o}".format(t=timestamp, f=path, o=output))
     # if no output assume something went wrong
     if not os.path.isfile(output):
         raise ValueError(
