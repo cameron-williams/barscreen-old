@@ -7,7 +7,10 @@ import urllib2
 
 
 try:
-    ffmpeg = subprocess.check_output(["which", "ffmpeg"]).replace("\n", "")
+    if os.path.exists("/usr/bin/ffmpeg"):
+        ffmpeg = "/usr/bin/ffmpeg"
+    else:
+        ffmpeg = subprocess.check_output(["which", "ffmpeg"]).replace("\n", "")
 except subprocess.CalledProcessError:
     print("Error: FFMPEG not found. Please install it before using the imaging tools. (brew install ffmpeg or apt-get install ffmpeg)")
 
