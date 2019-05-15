@@ -135,7 +135,7 @@ def addpromo(user_id):
         storage = GoogleStorage()
         try:
             current_user = Users.query.filter_by(id=user_id).first()
-            fn = secure_filename(form.clip_file.data.filename).split(".")
+            fn = secure_filename(form.clip_file.data.filename)
             url = storage.upload_promo_video(name=fn, file=form.clip_file.data)
 
             # save vid and get still from it
