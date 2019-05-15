@@ -130,6 +130,7 @@ class Promo(BaseModel):
     description = db.Column(db.String, nullable=True)
     duration    = db.Column(db.String, nullable=True)
     clip_url    = db.Column(db.String, nullable=True)
+    image_url   = db.Column(db.String, nullable=True)
     user_id     = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 

@@ -137,18 +137,21 @@ def addpromo(user_id):
             current_user = Users.query.filter_by(id=user_id).first()
             fn = secure_filename(form.clip_file.data.filename)
             url = storage.upload_promo_video(name=fn, file=form.clip_file.data)
-            
+
             # save vid and get still from it
             form.clip_file.data.save('/tmp/{}'.format(fn))
-            still_img_path = get_still_from_video_file("/tmp/{}".format(fn), 10)
-            still_url = storage.upload_promo_image(name=fn, image_data=open(still_img_path).read())
-            
+            still_img_path = get_still_from_video_file(
+                "/tmp/{}".format(fn), 10)
+            still_url = storage.upload_promo_image(
+                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
                 description=form.description.data,
                 clip_url=url,
+                image_url=still_url,
             ))
-            
+
             db.session.commit()
         except IntegrityError as e:
             db.session.rollback()
@@ -244,7 +247,8 @@ def addclip(channel_id, show_id):
             current_show = Show.query.filter_by(
                 channel_id=channel_id, id=show_id).first()
             # upload video to storage and save url
-            url = storage.upload_clip_video(name=secure_filename(form.clip_file.data.filename), file=form.clip_file.data)
+            url = storage.upload_clip_video(name=secure_filename(
+                form.clip_file.data.filename), file=form.clip_file.data)
             current_show.clips.append(Clip(
                 name=form.clip_name.data,
                 description=form.description.data,
@@ -307,7 +311,8 @@ def addchannel():
             print(error)
         else:
             try:
-                url = storage.upload_channel_image(name=secure_filename(form.channel_img.data.filename), image_data=image_data)
+                url = storage.upload_channel_image(name=secure_filename(
+                    form.channel_img.data.filename), image_data=image_data)
                 channel = Channel(
                     name=form.channel_name.data,
                     category=form.category.data,
