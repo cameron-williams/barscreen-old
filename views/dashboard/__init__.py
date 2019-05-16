@@ -4,7 +4,7 @@ from flask import (
 from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
 from forms.password import CreatePassword
-from models import Users, db
+from models import Users, db, Channel, Show, Clip, Promo, Loop
 from helpers import verify_password, confirm_token
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
@@ -83,7 +83,11 @@ def loops():
 @dashboard.route("/create")
 @login_required
 def create():
-    return render_template("dashboard/create.html")
+    trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
+    entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
+    sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
+    news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
+    return render_template("dashboard/create.html", trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 
 @dashboard.route("/account")

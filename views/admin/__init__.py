@@ -141,7 +141,7 @@ def addpromo(user_id):
             # save vid and get still from it
             form.clip_file.data.save('/tmp/{}'.format(fn))
             still_img_path = get_still_from_video_file(
-                "/tmp/{}".format(fn), 10, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
+                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
             still_url = storage.upload_promo_image(
                 name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
 
@@ -306,7 +306,7 @@ def addchannel():
         width = size[0]
         height = size[1]
 
-        if width != 540 and height != 405:
+        if width != 512 and height != 288:
             error = 'invalid image size'
             print(error)
         else:

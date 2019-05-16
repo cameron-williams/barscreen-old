@@ -16,9 +16,12 @@ $(document).ready(function() {
 
 $(lists).each(function() {
     var contentCount = $(this).find('ul li').length
+    var listPresent = $(this).find('ul').has("li").length ? "Yes" : "No"
     var pageCount =  contentCount / listSize;
     if (contentCount < listSize)
       $(this).find(".content_more").hide()
+    if (listPresent == "No")
+      $(this).parent(".content_row").hide()
     var $e = $(this)
     var $f =  $(this).find('.content_item')
        for(var i = 0 ; i<pageCount;i++){

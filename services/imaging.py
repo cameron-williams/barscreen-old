@@ -33,7 +33,7 @@ def get_still_from_video_url(video_url, timestamp, output="/var/tmp/frameshot.pn
     if os.path.isfile(output):
         os.remove(output)
     # use ffmpeg to get still from video at timestamp
-    subprocess.check_output([ffmpeg, "-ss", str(timestamp), "-i", fn, "-vframes", "1", "-s", "540x405", "-f", "image2", output])
+    subprocess.check_output([ffmpeg, "-ss", str(timestamp), "-i", fn, "-vframes", "1", "-s", "512x288", "-f", "image2", output])
     # if no output assume something went wrong
     if not os.path.isfile(output):
         raise ValueError(
@@ -56,7 +56,7 @@ def get_still_from_video_file(path, timestamp, output="/var/tmp/frameshot.png"):
     if os.path.isfile(output):
         os.remove(output)
     # use ffmpeg to get still from video at timestamp
-    subprocess.check_output([ffmpeg, "-ss", str(timestamp), "-i", path, "-vframes", "1", "-s", "540x405", "-f", "image2", output])
+    subprocess.check_output([ffmpeg, "-ss", str(timestamp), "-i", path, "-vframes", "1", "-s", "512x288", "-f", "image2", output])
     # if no output assume something went wrong
     if not os.path.isfile(output):
         raise ValueError(

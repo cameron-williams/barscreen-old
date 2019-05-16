@@ -55,102 +55,16 @@
           <div class="content_display">
             <div class="contentList_container">
               <ul>
+                {% for promo in current_user.promos %}
                 <li class="content_item">
                   <div class="content_img">
-                    <img src="static/images/menu.png">
+                    <img src="{{ promo.image_url }}">
                   </div>
                   <div class="content_title">
-                    <span>Fall Menu</span>
+                    <span>{{ promo.name }}</span>
                   </div>
                 </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
-                <li class="content_item">
-                  <div class="content_img">
-                    <img src="static/images/menu.png">
-                  </div>
-                  <div class="content_title">
-                    <span>Fall Menu</span>
-                  </div>
-                </li>
+                {% endfor %}
               </ul>
             </div>
             <div class="content_more">
@@ -171,38 +85,16 @@
         <div class="content_display">
           <div class="contentList_container">
             <ul>
+              {% for trend in trends %}
               <li class="content_item">
                 <div class="content_img">
-                  <img src="static/images/redbull.png">
+                  <img src="{{ trend.image_url }}">
                 </div>
                 <div class="content_title">
-                  <span>Vice News</span>
+                  <span>{{ trend.name }}</span>
                 </div>
               </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/redbull.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="content_more">
@@ -255,38 +147,16 @@
         <div class="content_display">
           <div class="contentList_container">
             <ul>
+              {% for new in news %}
               <li class="content_item">
                 <div class="content_img">
-                  <img src="static/images/menu.png">
+                  <img src="{{ new.image_url }}">
                 </div>
                 <div class="content_title">
-                  <span>Fall Menu</span>
+                  <span>{{ new.name }}</span>
                 </div>
               </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="content_more">
@@ -304,78 +174,16 @@
         <div class="content_display">
           <div class="contentList_container">
             <ul>
+              {% for sport in sports %}
               <li class="content_item">
                 <div class="content_img">
-                  <img src="static/images/menu.png">
+                  <img src="{{ sport.image_url }}">
                 </div>
                 <div class="content_title">
-                  <span>Fall Menu</span>
+                  <span>{{ sport.name }}</span>
                 </div>
               </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="content_more">
@@ -393,38 +201,16 @@
         <div class="content_display">
           <div class="contentList_container">
             <ul>
+              {% for entertainment in entertainments %}
               <li class="content_item">
                 <div class="content_img">
-                  <img src="static/images/menu.png">
+                  <img src="{{ entertainment.image_url }}">
                 </div>
                 <div class="content_title">
-                  <span>Fall Menu</span>
+                  <span>{{ entertainment.name }}</span>
                 </div>
               </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
-              <li class="content_item">
-                <div class="content_img">
-                  <img src="static/images/menu.png">
-                </div>
-                <div class="content_title">
-                  <span>Fall Menu</span>
-                </div>
-              </li>
+              {% endfor %}
             </ul>
           </div>
           <div class="content_more">
