@@ -638,9 +638,8 @@ nav{
 
 .channel_information h3{
   margin: 0;
-  background-color: #232323aa;
-  color: #EF9F00;
-  font-weight: 600;
+  color: #232323;
+  font-weight: 800;
 }
 
 .channel_shows{
@@ -653,6 +652,8 @@ nav{
 
 .channel_shows h3{
   margin: 0;
+  font-weight: 600;
+  color: #232323;
 }
 
 .channel_shows ul{
@@ -682,13 +683,11 @@ nav{
 }
 
 .channel_shows ul li:hover{
-  background-color: #EF9F00;
   cursor: pointer;
 }
 
 .channel_shows ul li:hover button{
-  background-color: #232323;
-  color: #EF9F00;
+  
 }
 
 .channel_shows ul li button{
