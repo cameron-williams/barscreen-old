@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, redirect, url_for, abort
+    Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
 )
 from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
@@ -88,6 +88,13 @@ def create():
     sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
     news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
     return render_template("dashboard/create.html", trends=trends, entertainments=entertainments, sports=sports, news=news)
+
+@dashboard.route("/create/get_channel", methods=["POST"])
+@login_required
+def get_channel():
+    req = request.get_json()
+    current_channel = Channel.query.filter_by(id=req["channel_id"]).first()
+    return jsonify({'data': render_template('dashboard/channelmod.html', current_channel=current_channel)})
 
 
 @dashboard.route("/account")
