@@ -4,6 +4,10 @@
 {% block head %}
   {{ super() }}
   <script src="{{ url_for('static', filename='scripts/loopCreate_pagination.js') }}" type="text/javascript"></script>
+  <script src="{{ url_for('static', filename='scripts/loopCreate_channel.js') }}" type="text/javascript"></script>
+  <script>
+      var post_url = "{{url_for('dashboard.get_channel')}}";
+  </script>
 {% endblock %}
 {% block content %}
   <div class="creation_dashboard">
@@ -86,7 +90,8 @@
           <div class="contentList_container">
             <ul>
               {% for trend in trends %}
-              <li class="content_item">
+              <li class="content_item content_channel">
+                <div class="content_id">{{ trend.id }}</div>
                 <div class="content_img">
                   <img src="{{ trend.image_url }}">
                 </div>
@@ -105,41 +110,6 @@
           <div class="pagination createPagination"></div>
         </div>
       </div>
-      <div class="channel">
-        <div class="channel_container">
-          <div class="channel_information">
-            <h3>Redbull TV</h3>
-            <p>Go beyond the ordinary with exclusive videos & live events from around the world.</p>
-            <p>Last upload: <span>yesterday</span></p>
-            <button class=dash_button>Explore Channel</button>
-          </div>
-          <div class="channel_shows">
-            <h3>Shows</h3>
-            <ul>
-              <li>Quick Break <button class="dash_button">Add</button>
-                <div class="show_info">
-                  <div class="show_desc">
-                    <p>Quick clips showing the best highlights from extreme sports and live events.</p>
-                    <p>Number of clips: <span>14</p>
-                    <p>Last upload: <span>yesterday</p>
-                  </div>
-                  <div class="show_clip">
-                    <div class="clip_container">
-                      <img src="static/images/surf.jpeg">
-                      <i class="fas fa-play" id="play"></i>
-                      <p id="clip_length">2:34</p>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li>Winter <button class="dash_button">Add</button></li>
-              <li>Climbing <button class="dash_button">Add</button></li>
-              <li>Music <button class="dash_button">Add</button></li>
-              <li>MotoGP <button class="dash_button">Add</button></li>
-            </ul>
-        </div>
-      </div>
-      </div>
       <div class="content_row">
         <div class="row_title">
           <h4>News</h4>
@@ -148,7 +118,8 @@
           <div class="contentList_container">
             <ul>
               {% for new in news %}
-              <li class="content_item">
+              <li class="content_item content_channel">
+                <div class="content_id">{{ new.id }}</div>
                 <div class="content_img">
                   <img src="{{ new.image_url }}">
                 </div>
@@ -175,7 +146,8 @@
           <div class="contentList_container">
             <ul>
               {% for sport in sports %}
-              <li class="content_item">
+              <li class="content_item content_channel">
+                <div class="content_id">{{ sport.id }}</div>
                 <div class="content_img">
                   <img src="{{ sport.image_url }}">
                 </div>
@@ -202,7 +174,8 @@
           <div class="contentList_container">
             <ul>
               {% for entertainment in entertainments %}
-              <li class="content_item">
+              <li class="content_item content_channel">
+                <div class="content_id">{{ entertainment.id }}</div>
                 <div class="content_img">
                   <img src="{{ entertainment.image_url }}">
                 </div>

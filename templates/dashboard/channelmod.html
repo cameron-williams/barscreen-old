@@ -1,0 +1,32 @@
+<div class="channel" id="show">
+  <div class="channel_container">
+    <div class="channel_information">
+      <h3>{{ current_channel.name }}</h3>
+      <p>{{ current_channel.description }}</p>
+      <p>Last upload: <span>yesterday</span></p>
+      <button class=dash_button>Explore Channel</button>
+    </div>
+    <div class="channel_shows">
+      <h3>Shows</h3>
+      <ul>
+        {% for show in current_channel.shows %}
+        <li>{{ show.name }} <button class="dash_button">Add</button>
+          <div class="show_info">
+            <div class="show_desc">
+              <p>{{ show.name }}</p>
+              <p>Number of clips: <span>{{ show.clips|length }}</p>
+            </div>
+            <div class="show_clip">
+              <div class="clip_container">
+                <img src="static/images/surf.jpeg">
+                <i class="fas fa-play" id="play"></i>
+                <p id="clip_length">2:34</p>
+              </div>
+            </div>
+          </div>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>

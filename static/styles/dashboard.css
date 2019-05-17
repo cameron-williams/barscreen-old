@@ -520,6 +520,10 @@ nav{
   display: inline-block;
 }
 
+.content_display ul li .content_id{
+  display: none;
+}
+
 .content_display ul li:hover{
   cursor: pointer;
 }
@@ -543,7 +547,8 @@ nav{
 }
 
 .content_title{
-  height: .75em;
+  height: 1em;
+  line-height: 1em;
   overflow: hidden;
 }
 
@@ -626,10 +631,19 @@ nav{
   overflow: scroll;
 }
 
+#show{
+    display:block;
+}
+
+
 .channel_information{
   width: 50%;
   height: calc(100% - 2em);
   display: inline-block;
+}
+
+.channel_information p{
+  font-size: .85em;
 }
 
 .channel_container{
@@ -687,7 +701,7 @@ nav{
 }
 
 .channel_shows ul li:hover button{
-  
+
 }
 
 .channel_shows ul li button{
