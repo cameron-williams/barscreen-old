@@ -3,7 +3,6 @@ $(document).ready(function() {
     $(document).find(".channel").hide()
     $t = $(this)
     var channel_id = $(this).find(".content_id").text();
-    console.log(channel_id)
     $.ajax({
         url: post_url,
         method: "POST",
@@ -19,3 +18,13 @@ $(document).ready(function() {
     })
   });
 })
+
+$(document).delegate(".show_item",'click',function(){
+  $("show_item").hide();
+  if ($(this).find(".show_info").is(':visible'))
+    {
+      $(this).find(".show_info").hide();
+    }else{
+      $(this).find(".show_info").show();
+    }
+});

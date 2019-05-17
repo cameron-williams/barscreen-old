@@ -10,10 +10,10 @@
       <h3>Shows</h3>
       <ul>
         {% for show in current_channel.shows %}
-        <li>{{ show.name }} <button class="dash_button">Add</button>
+        <li class="show_item">{{ show.name }} <button class="dash_button">Add</button>
           <div class="show_info">
             <div class="show_desc">
-              <p>{{ show.name }}</p>
+              <p>{{ show.description }}</p>
               <p>Number of clips: <span>{{ show.clips|length }}</p>
             </div>
             <div class="show_clip">
