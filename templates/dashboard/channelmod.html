@@ -18,9 +18,15 @@
             </div>
             <div class="show_clip">
               <div class="clip_container">
-                <img src="static/images/surf.jpeg">
-                <i class="fas fa-play" id="play"></i>
-                <p id="clip_length">2:34</p>
+                <video id='my-video' class='video-js' controls preload='auto' width='100%' height='auto'
+                poster='MY_VIDEO_POSTER.jpg' data-setup='{}'>
+                  <source src='{{ show.clips[0].clip_url }}' type='video/mp4'>
+                  <p class='vjs-no-js'>
+                    To view this video please enable JavaScript, and consider upgrading to a web browser that
+                    <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>
+                  </p>
+                </video>
+                <script src='https://vjs.zencdn.net/7.5.4/video.js'></script>
               </div>
             </div>
           </div>

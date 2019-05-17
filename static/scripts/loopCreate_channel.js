@@ -17,6 +17,7 @@ $(document).ready(function() {
         error: function(errMsg){alert("Error find channel: " + errMsg)},
     })
   });
+  
 })
 
 $(document).delegate(".show_item",'click',function(){
