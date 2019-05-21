@@ -39,7 +39,7 @@ $(document).ready(function(){
     });
 
     /* Adding Loops */
-
+    /* Creating Loop Item */
     $("#clip_table tbody").on('click', 'button', function() {
         var row_data = content_table.row($(this).parents('tr')).data();
         var content_name = row_data[1];
@@ -50,6 +50,7 @@ $(document).ready(function(){
         ul.append(tr);
     });
 
+    /* Saving Loop */
     var array = [];
     var headers = [];
     $(".save_container").on('click', 'button', function() {
