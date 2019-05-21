@@ -87,7 +87,7 @@ def create():
     entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
     sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
     news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
-    return render_template("dashboard/create.html", trends=trends, entertainments=entertainments, sports=sports, news=news)
+    return render_template("dashboard/create.html", current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 @dashboard.route("/create/get_channel", methods=["POST"])
 @login_required

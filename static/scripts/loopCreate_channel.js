@@ -46,8 +46,36 @@ $(document).ready(function() {
     }
   });
 
-  ('#save_button').on('click',function(){
-
+  var array = [];
+  $('#save_button').on('click',function(){
+    $('#playlist').has('li').each(function() {
+      var loop_type = $(this).find('h5').map(function(){
+        return $(this).text();})
+      var loop_id = $(this).find('span').map(function(){
+        return $(this).text();});
+      for (var i=0; i<loop_id.length && i<loop_type.length; i++)
+        array[i] = loop_type[i] + loop_id[i];
+    });
+    console.log(array);
+    var loopname = $(".title_input span").text();
+    console.log(loopname);
+    if ( loopname.length < 1 || $('#playlist').children().length < 1 ){
+        if ( loopname.length < 1){
+          alert("Please Give your Loop a Title.");
+        }else{
+          alert("Please Add Shows and Promos to your Loop.");
+        }
+      }else{
+        $.ajax({
+            url: save_url,
+            method: "POST",
+            data: JSON.stringify({"name": loopname, "playlist": array, "user_id": user_id}),
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data){alert("Sumbited " + loopname + " successfully.")},
+            error: function(errMsg){alert("Sorry: " + errMsg)},
+        });
+      }
   });
 })
 
@@ -74,12 +102,12 @@ $(document).delegate(".playlist_add",'click',function(){
   var ul = $(".playlist_list ul");
   if ( $(this).find("div.promo_id").length ) {
     var loopItem_id = $(this).find(".promo_id").text();
-    var loopItem_type = "promo";
+    var loopItem_type = "Promo";
     var loopItem_img = $(this).find(".content_img img").attr('src');
     var loopItem_name = $(this).find(".content_title span").text();
   } else {
     var loopItem_id = $(this).parent().find(".show_id").text();
-    var loopItem_type = "show";
+    var loopItem_type = "Show";
     var loopItem_img = $(this).parent().find(".clip_container video").attr('poster');
     var loopItem_name = $(this).parent().find(".show_name").text();
   }
