@@ -393,8 +393,30 @@ nav{
 
 .playlist_title h3 i{
   float: right;
+  cursor: pointer;
   line-height: 1.25em;
   vertical-align: bottom;
+}
+
+
+
+.title_input{
+  display: inline-block;
+}
+
+.title_input input{
+  font-size: .65em;
+}
+
+.playlist_title .title_input span{
+  display: none;
+  font-size: .85em;
+  color: #232323;
+}
+
+#title_edit1{
+  display: none;
+  font-size: .8em;
 }
 
 .playlist_title span{
@@ -420,47 +442,47 @@ nav{
   padding:0;
 }
 
-.playlist_item{
+.playlist_list ul li{
   padding: .5em 0;
   position: relative;
 }
 
-.playlist_item:hover{
+.playlist_list ul li:hover{
   cursor: pointer;
   background-color: #8D949911;
 }
 
-.playlist_item:first-child{
+.playlist_list ul li:first-child{
   margin-top: .5em;
 }
 
-.playlist_item .playlist_image{
-  width: 50%;
+.playlist_list ul li div{
   display: inline-block;
-  height: 4.5em;
-  overflow: hidden;
-}
-
-.playlist_item .playlist_image img{
-  width: 120%;
-  min-height: 4.5em;
-  margin-left: -10%;
-}
-
-.playlist_item .playlist_desc{
-  display: inline-block;
-  max-width: 48%;
   vertical-align: top;
+  width: 49%;
 }
 
-.playlist_item .playlist_desc h4{
+.playlist_list ul li div:first-child{
+  width: calc(49% - 5px);
+  margin-right: 5px;
+}
+
+.playlist_list ul li div span{
+  display: none;
+}
+
+.playlist_list ul img{
+  width: 100%;
+}
+
+.playlist_list ul h4{
   margin: 0;
+  font-size: .9em;
   vertical-align: top;
   font-weight: 600;
-
 }
 
-.playlist_item h5{
+.playlist_list ul h5{
   margin: 0;
   font-weight: 400;
 }
@@ -526,6 +548,14 @@ nav{
 
 .content_display ul li:hover{
   cursor: pointer;
+}
+
+.content_item .promo_id{
+  display: none;
+}
+
+.show_item .show_id{
+  display: none;
 }
 
 .content_display ul li:hover .content_img img{
@@ -743,7 +773,6 @@ nav{
 .show_clip .clip_container{
   width: 100%;
   overflow: hidden;
-  height: 5em;
   color: #EF9F00;
   position: relative;
 }

@@ -102,6 +102,7 @@ class Clip(BaseModel):
     duration    = db.Column(db.Integer, nullable=False, default=0)
     clip_url    = db.Column(db.String, nullable=True)
     show_id     = db.Column(db.Integer, db.ForeignKey('show.id'), nullable=False)
+    image_url   = db.Column(db.String, nullable=True)
 
 
 class Channel(BaseModel):

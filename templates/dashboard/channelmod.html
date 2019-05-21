@@ -10,7 +10,8 @@
       <h3>Shows</h3>
       <ul>
         {% for show in current_channel.shows %}
-        <li class="show_item">{{ show.name }} <button class="dash_button">Add</button>
+        <li class="show_item"><span class="show_name">{{ show.name }}</span> <button class="dash_button playlist_add">Add</button>
+          <div class="show_id"> {{ show.id }}</div>
           <div class="show_info">
             <div class="show_desc">
               <p>{{ show.description }}</p>
@@ -18,7 +19,7 @@
             </div>
             <div class="show_clip">
               <div class="clip_container">
-                <video id='my-video' class='video-js' controls preload='auto' width='100%' height='auto'
+                <video id='my-video' class='video-js vjs-default-skin vjs-16-9' controls preload='auto'
                 poster='MY_VIDEO_POSTER.jpg' data-setup='{}'>
                   <source src='{{ show.clips[0].clip_url }}' type='video/mp4'>
                   <p class='vjs-no-js'>

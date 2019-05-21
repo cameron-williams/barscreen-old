@@ -15,39 +15,16 @@
   <div class="creation_dashboard">
     <div class="playlist_col">
       <div class="playlist_title">
-        <h3>Week Days <i class="fas fa-pen"></i></h3>
+        <h3>
+          <div class="title_input"><span></span><input placeholder="Title"/></div>
+          <i id="title_edit1" class="fas fa-pen"></i>
+          <i id="title_edit2"class="far fa-check-circle"></i>
+        </h3>
         <span class="length">14:30</span><span>&#183;</span><span class="age">1 week ago</span>
-        <button class="dash_button">Save</button>
+        <button class="dash_button" id="save_button">Save</button>
       </div>
       <div class="playlist_list">
         <ul>
-          <li class="playlist_item">
-            <div class="playlist_image">
-              <img src="static/images/vice.jpeg" />
-            </div>
-            <div class="playlist_desc">
-              <h4>Daily News Update</h4>
-              <h5>Vice News</h5>
-            </div>
-          </li>
-          <li class="playlist_item">
-            <div class="playlist_image">
-              <img src="static/images/menu.png" />
-            </div>
-            <div class="playlist_desc">
-              <h4>Fall Menu</h4>
-              <h5>Promo Segment</h5>
-            </div>
-          </li>
-          <li class="playlist_item">
-            <div class="playlist_image">
-              <img src="static/images/redbull.png" />
-            </div>
-            <div class="playlist_desc">
-              <h4>Quick Break</h4>
-              <h5>Redbull TV</h5>
-            </div>
-          </li>
         </ul>
       </div>
     </div>
@@ -62,7 +39,8 @@
             <div class="contentList_container">
               <ul>
                 {% for promo in current_user.promos %}
-                <li class="content_item">
+                <li class="content_item playlist_add">
+                  <div class="promo_id">{{ promo.id }}</div>
                   <div class="content_img">
                     <img src="{{ promo.image_url }}">
                   </div>

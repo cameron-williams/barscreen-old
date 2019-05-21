@@ -249,10 +249,19 @@ def addclip(channel_id, show_id):
             # upload video to storage and save url
             url = storage.upload_clip_video(name=secure_filename(
                 form.clip_file.data.filename), file=form.clip_file.data)
+
+            # save vid and get still from it
+            form.clip_file.data.save('/tmp/{}'.format(fn))
+            still_img_path = get_still_from_video_file(
+                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
+            still_url = storage.upload_clip_image(
+                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+
             current_show.clips.append(Clip(
                 name=form.clip_name.data,
                 description=form.description.data,
-                clip_url=url
+                clip_url=url,
+                image_url=still_url,
             ))
             db.session.commit()
         except IntegrityError as e:
