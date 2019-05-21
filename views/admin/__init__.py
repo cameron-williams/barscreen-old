@@ -246,6 +246,7 @@ def addclip(channel_id, show_id):
         try:
             current_show = Show.query.filter_by(
                 channel_id=channel_id, id=show_id).first()
+            fn = secure_filename(form.clip_file.data.filename)
             # upload video to storage and save url
             url = storage.upload_clip_video(name=secure_filename(
                 form.clip_file.data.filename), file=form.clip_file.data)
