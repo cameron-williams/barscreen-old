@@ -99,6 +99,7 @@ def editloop(loop_id):
     current_loop = Loop.query.filter_by(id=loop_id).first()
     if not current_loop:
         abort(404, {"error": "No channel by that id. (id:{})".format(loop_id)})
+    
     return render_template("dashboard/editloop.html", current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 
