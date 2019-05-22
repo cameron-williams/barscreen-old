@@ -173,7 +173,6 @@ def addloop(user_id):
 
 @admin.route("/submit_loop", methods=["POST"])
 @login_required
-@requires_admin
 def submit_loop():
     req = request.get_json()
     current_user = Users.query.filter_by(id=req["user_id"]).first()

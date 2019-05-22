@@ -80,14 +80,27 @@ def loops():
     return render_template("dashboard/loops.html")
 
 
-@dashboard.route("/create")
+@dashboard.route("/loops/addloop")
 @login_required
-def create():
+def addloop():
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
     entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
     sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
     news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
-    return render_template("dashboard/create.html", trends=trends, entertainments=entertainments, sports=sports, news=news)
+    return render_template("dashboard/addloop.html", current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+
+@dashboard.route("/loops/<loop_id>")
+@login_required
+def editloop(loop_id):
+    trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
+    entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
+    sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
+    news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
+    current_loop = Loop.query.filter_by(id=loop_id).first()
+    if not current_loop:
+        abort(404, {"error": "No channel by that id. (id:{})".format(loop_id)})
+    return render_template("dashboard/editloop.html", current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+
 
 @dashboard.route("/create/get_channel", methods=["POST"])
 @login_required

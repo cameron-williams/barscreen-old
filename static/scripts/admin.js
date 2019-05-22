@@ -52,7 +52,6 @@ $(document).ready(function(){
 
     /* Saving Loop */
     var array = [];
-    var headers = [];
     $(".save_container").on('click', 'button', function() {
         $('#loop_content').has('tr').each(function() {
           var loop_type = $('#loop_content td:nth-child(2)').map(function(){

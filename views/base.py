@@ -66,6 +66,22 @@ def signup():
             )
             db.session.add(user)
             db.session.commit()
+            g = Gmail(delegated_user="cam@barscreen.tv")
+            msg = """
+                New Sign Up:
+                First Name: {}
+                Last Name: {}
+                Email: {}
+                Phone Number: {}
+                Company: {}""".format(
+                form.first_name.data,
+                form.last_name.data,
+                form.email.data,
+                form.phone.data,
+                form.message.data,
+            )
+            g.send_email(to="info@barscreen.tv",
+                         subject="New Sign Up", body=msg)
         except IntegrityError:
             flash("Sorry, a user with that email exists already.", category="error")
         except Exception:

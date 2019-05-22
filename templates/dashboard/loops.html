@@ -8,22 +8,25 @@
 {% block content %}
   <div class="createnew_wrapper">
     <div class="createnew">
-      <a href="{{ url_for('dashboard.create') }}"><button class="dash_button"><i class="fas fa-plus-circle"></i> Add New</button></a>
+      <a href="{{ url_for('dashboard.addloop') }}"><button class="dash_button"><i class="fas fa-plus-circle"></i> Add New</button></a>
     </div>
   </div>
   <div class="loops_wrapper">
     <div class="loops_container">
       <ul>
         {% for l in current_user.loops %}
+        <a href="{{ url_for('dashboard.editloop', loop_id=l.id) }}">
         <li class="loop_item">
-          <div class="loop_image">
-            <img src="{{ l.image_url }}">
-          </div>
-          <div class="loop_title">
-            <h3>{{ l.name }}</h3>
-            <p>{{ l.playlist|length }}</p>
-          </div>
+            <div class="loop_image">
+              <img src="{{ l.image_url }}">
+            </div>
+
+            <div class="loop_title">
+              <h3>{{ l.name }}</h3>
+              <p>{{ l.playlist|length }}</p>
+            </div>
         </li>
+        </a>
         {% endfor %}
       </ul>
     </div>

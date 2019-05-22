@@ -20,8 +20,8 @@
             <div class="show_clip">
               <div class="clip_container">
                 <video id='my-video' class='video-js vjs-default-skin vjs-16-9' controls preload='auto'
-                poster='MY_VIDEO_POSTER.jpg' data-setup='{}'>
-                  <source src='{{ show.clips[0].clip_url }}' type='video/mp4'>
+                poster='{{ show.clips[-1].image_url }}' data-setup='{}'>
+                  <source src='{{ show.clips[-1].clip_url }}' type='video/mp4'>
                   <p class='vjs-no-js'>
                     To view this video please enable JavaScript, and consider upgrading to a web browser that
                     <a href='https://videojs.com/html5-video-support/' target='_blank'>supports HTML5 video</a>

@@ -276,6 +276,22 @@ nav{
   grid-template-columns: calc(20% - 8px) calc(20% - 8px) calc(20% - 8px) calc(20% - 8px) calc(20% - 8px);
 }
 
+.loops_container ul a{
+  color: #232323;
+}
+
+.loops_container ul a:visited{
+  color: #232323;
+}
+
+.loops_container ul a:hover{
+  color: #232323;
+}
+
+.loops_container ul a:focus{
+  color: #232323;
+}
+
 .loops_container ul li{
   display: inline-block;
   background-color: #F0F4FF;
