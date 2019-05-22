@@ -78,13 +78,13 @@ def signup():
                 form.last_name.data,
                 form.email.data,
                 form.phone.data,
-                form.message.data,
+                form.company.data,
             )
             g.send_email(to="info@barscreen.tv",
                          subject="New Sign Up", body=msg)
         except IntegrityError:
             flash("Sorry, a user with that email exists already.", category="error")
         except Exception:
-            flash("Unknown error has occored. Please try again.", category="error")
+            flash("Unknown error has occurred. Please try again.", category="error")
         flash("Your account is pending, if you are approved we will be in touch with your credentials. Please check email your email.", category="success")
     return render_template("signup.html", form=form)
