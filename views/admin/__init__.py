@@ -177,10 +177,18 @@ def submit_loop():
     req = request.get_json()
     current_user = Users.query.filter_by(id=req["user_id"]).first()
     if request.method == "POST":
+        # write file locally
+        with open("/tmp/uploaded_image.png", "wb") as f:
+            f.write(req["image_data"].split(",")[-1].decode("base64"))
+        # upload file to cdn
+        storage = GoogleStorage()
+        image_url = storage.upload_loop_image(req["name"] + ".png", open("/tmp/uploaded_image.png").read())
+        print(image_url)
         try:
             current_user.loops.append(Loop(
                 name=req["name"],
-                playlist=req["playlist"]
+                playlist=req["playlist"],
+                image_url=image_url
             ))
             db.session.commit()
         except Exception as err:
