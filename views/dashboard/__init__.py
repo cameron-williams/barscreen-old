@@ -1,14 +1,14 @@
 from flask import (
-    Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort
+    Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort, json
 )
 from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
 from forms.password import CreatePassword
 from models import Users, db, Channel, Show, Clip, Promo, Loop
 from helpers import verify_password, confirm_token
+import re
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
-
 
 @dashboard.route("/")
 @login_required
@@ -96,10 +96,23 @@ def editloop(loop_id):
     entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
     sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
     news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
+    loop_playlist = []
     current_loop = Loop.query.filter_by(id=loop_id).first()
     if not current_loop:
         abort(404, {"error": "No channel by that id. (id:{})".format(loop_id)})
-    return render_template("dashboard/editloop.html", current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+    for i in current_loop.playlist:
+        media_id = re.search(r'\d+', i).group()
+        if 'promo' in i.lower():
+            promo = db.session.query(Promo).filter(Promo.id == media_id).first()
+            # if promo
+            if not promo:
+                continue
+            loop_playlist.append({'id':promo.id, 'name':promo.name, 'image_url':promo.image_url, 'type':'promo'})
+        else:
+            show = Show.query.filter_by(id=media_id).first()
+            loop_playlist.append({'id':show.id, 'name':show.name, 'image_url':show.clips[-1].image_url, 'type':'show'})
+        print(json.dumps(loop_playlist))
+    return render_template("dashboard/editloop.html", loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 
 @dashboard.route("/create/get_channel", methods=["POST"])
