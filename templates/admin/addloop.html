@@ -1,11 +1,11 @@
 {% extends "admin_layout.html" %}
 {% block title %}Admin - Add Loop{% endblock %}
 {% block head %}
-  {{ super() }}
-  <script>
-      var post_url = "{{url_for('admin.submit_loop')}}";
-      var user_id = "{{ current_user.id }}";
-  </script>
+{{ super() }}
+<script>
+  var post_url = "{{url_for('admin.submit_loop')}}";
+  var user_id = "{{ current_user.id }}";
+</script>
 {% endblock %}
 {% block content %}
 <div class="section">
@@ -16,7 +16,11 @@
   </div>
   <div class="loop_name_container">
     <div><label for="loop_img">Name:</label><input id="loop_name" placeholder="Loop Name" size="30" /></div>
-    <div><label for="loop_img">Image:</label><input id="loop_img" type="file"></div>
+    <div>
+      <label for="loop_img">Image:</label>
+      <input id="loop_img" type="file">
+      <p id="loop_img_data" hidden></p>
+    </div>
   </div>
 </div>
 <div class="section">
@@ -25,54 +29,54 @@
     <table class="loop_table" id="loop_table">
       <thead>
         <tr>
-         <th>Name</th>
-         <th>Type</th>
-         <th>ID</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>ID</th>
         </tr>
-      <thead>
-      <tbody id="loop_content">
+        <thead>
+        <tbody id="loop_content">
 
-      </tbody>
+        </tbody>
     </table>
   </div>
   <div class="cliptable">
-      <table id="clip_table" class="display">
-        <thead>
-          <tr>
-            <th>Type</th>
-            <th>Name</th>
-            <th>Channel</th>
-            <th>Add</th>
-            <th style="display: none;">ID</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for promo in promos %}
-          <tr>
-            <td>Promo</td>
-            <td>{{ promo.name }}</td>
-            <td>{{ promo.user.company }}</td>
-            <td style="display: none;">{{ promo.id }}</td>
-            <td><button class="btn">Add</button></td>
-          </tr>
-          {% endfor %}
-          {% for show in shows %}
-          <tr>
-            <td>Show</td>
-            <td>{{ show.name }}</td>
-            <td>{{ show.channel.name  }}</td>
-            <td style="display: none;">{{ show.id }}</td>
-            <td><button class="btn">Add</button></td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+    <table id="clip_table" class="display">
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Name</th>
+          <th>Channel</th>
+          <th>Add</th>
+          <th style="display: none;">ID</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for promo in promos %}
+        <tr>
+          <td>Promo</td>
+          <td>{{ promo.name }}</td>
+          <td>{{ promo.user.company }}</td>
+          <td style="display: none;">{{ promo.id }}</td>
+          <td><button class="btn">Add</button></td>
+        </tr>
+        {% endfor %}
+        {% for show in shows %}
+        <tr>
+          <td>Show</td>
+          <td>{{ show.name }}</td>
+          <td>{{ show.channel.name  }}</td>
+          <td style="display: none;">{{ show.id }}</td>
+          <td><button class="btn">Add</button></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
-  <div>
-    {% if error %}
-    <p><strong>Error:</strong> {{ error }}</p>
-    {% endif %}
-  </div>
+</div>
+<div>
+  {% if error %}
+  <p><strong>Error:</strong> {{ error }}</p>
+  {% endif %}
+</div>
 </div>
 {% endblock %}
