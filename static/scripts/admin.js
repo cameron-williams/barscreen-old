@@ -25,7 +25,10 @@ $(document).ready(function () {
   loop_table = $('#userpromo_table').DataTable();
 
   // Add listener for file upload to get b64 img data.
-  document.getElementById("loop_img").addEventListener("change", readFile);
+  if (document.getElementById("loop_img")) {
+    document.getElementById("loop_img").addEventListener("change", readFile);
+  }
+  
 
   /* Handle button for approving users */
   $("#users_table tbody").on('click', 'button', function () {
