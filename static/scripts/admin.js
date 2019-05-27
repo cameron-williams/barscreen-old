@@ -13,7 +13,6 @@ function readFile() {
 
 }
 
-
 $(document).ready(function () {
   // Initialize datatables
   table = $('#users_table').DataTable();
@@ -28,7 +27,7 @@ $(document).ready(function () {
   if (document.getElementById("loop_img")) {
     document.getElementById("loop_img").addEventListener("change", readFile);
   }
-  
+
 
   /* Handle button for approving users */
   $("#users_table tbody").on('click', 'button', function () {
