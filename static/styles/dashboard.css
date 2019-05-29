@@ -926,6 +926,11 @@ nav{
 }
 
 /* Add Promo */
+.promo_form_container{
+  padding: .5em;
+  background-color: #F0F4FF;
+  border: 1px solid #232323aa;
+}
 
 .promo_form_container feildset{
   display: block;
@@ -945,6 +950,10 @@ nav{
   background-color: #EF9F00;
   padding: .5em 1em;
   border: none;
+}
+
+.promo_form_container #submit:hover{
+  cursor: pointer;
 }
 
 /* Media Query */
