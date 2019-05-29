@@ -5,6 +5,7 @@
   {{ super() }}
 {% endblock %}
 {% block content %}
+<div class = account_container>
   <div class="promo_form_container">
     <form method="POST" enctype="multipart/form-data">
       {{ form.csrf_token }}
@@ -28,4 +29,5 @@
     <div class="thumbnail">
     </div>
   </div>
+</div>
 {% endblock %}
