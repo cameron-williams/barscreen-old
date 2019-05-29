@@ -414,8 +414,6 @@ nav{
   vertical-align: bottom;
 }
 
-
-
 .title_input{
   display: inline-block;
 }
@@ -925,6 +923,28 @@ nav{
 
 .cliplibrary .show_clip .clip_container{
   height: inherit;
+}
+
+/* Add Promo */
+
+.promo_form_container feildset{
+  display: block;
+  margin: 1em 0;
+}
+
+.promo_form_container feildset label{
+  display: inline-block;
+  width: 30%;
+  max-width: 200px;
+  vertical-align: top;
+}
+
+.promo_form_container #submit{
+  color: #232323;
+  font-weight: 600;
+  background-color: #EF9F00;
+  padding: .5em 1em;
+  border: none;
 }
 
 /* Media Query */

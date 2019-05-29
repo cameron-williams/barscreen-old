@@ -1,5 +1,5 @@
 {% extends "admin_layout.html" %}
-{% block title %}Admin - Add Loop{% endblock %}
+{% block title %}Admin - Edit Loop{% endblock %}
 {% block head %}
 {{ super() }}
 <script>
@@ -14,18 +14,18 @@
 <div class="section">
   <h2>Edit Loop</h2>
   <h2>{{ current_loop.name }}</h2>
-  <div class="save_container">
+  <div class="edit_container">
     <button id="#save_loop" class="dash_button">Submit</button>
   </div>
   <div class="loop_name_container">
     <div><label for="loop_img">Name:</label><input id="loop_name" placeholder="Loop Name" value="{{ current_loop.name }}" size="30" /></div>
     <div>
-      <div class="loop_img_container">
-        <img src="{{ current_loop.image_url }}"
-      </div>
       <label for="loop_img">Image:</label>
       <input id="loop_img" type="file">
       <p id="loop_img_data" hidden></p>
+      <div class="loop_img_container">
+        <img src="{{ current_loop.image_url }}"
+      </div>
     </div>
   </div>
 </div>

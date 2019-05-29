@@ -4,6 +4,7 @@ from flask import (
 from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
 from forms.password import CreatePassword
+from forms.newpromo import NewPromoForm
 from models import Users, db, Channel, Show, Clip, Promo, Loop
 from helpers import verify_password, confirm_token
 import re
@@ -113,6 +114,41 @@ def editloop(loop_id):
             loop_playlist.append({'id':show.id, 'name':show.name, 'image_url':show.clips[-1].image_url, 'type':'show'})
         print(json.dumps(loop_playlist))
     return render_template("dashboard/editloop.html", loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+
+
+@dashboard.route("/addpromo", methods=["POST", "GET"])
+@login_required
+def addpromo():
+    """ Add Promo route. Adds clip to whatever the current show that is being edited. """
+    error = None
+    form = NewPromoForm()
+    if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
+        try:
+            fn = secure_filename(form.clip_file.data.filename)
+            url = storage.upload_promo_video(name=fn, file=form.clip_file.data)
+
+            # save vid and get still from it
+            form.clip_file.data.save('/tmp/{}'.format(fn))
+            still_img_path = get_still_from_video_file(
+                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
+            still_url = storage.upload_promo_image(
+                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+
+            current_user.promos.append(Promo(
+                name=form.promo_name.data,
+                description=form.description.data,
+                clip_url=url,
+                image_url=still_url,
+            ))
+
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'duplicate key value violates unique constraint' in str(e):
+                error = 'show name already registered.'
+        flash("Promo Created.", category="success")
+    return render_template("dashboard/addpromo.html", form=form, error=error, current_user=current_user)
 
 
 @dashboard.route("/create/get_channel", methods=["POST"])

@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
   $.each(loop_playlist, function(index, value) {
-    var playlist_item = '<li><div><img src="'+value.image_url+'"/></div><div><span>'+value.id+'</span><h4>'+value.name+'</h4><h5>'+value.name+'</h5></div></li>';
+    var playlist_item = '<li><div><img src="'+value.image_url+'"/></div><div><span>'+value.id+'</span><h4>'+value.name+'</h4><h5>'+value.type+'</h5></div></li>';
     $(".playlist_list ul").append(playlist_item);
   });
 
@@ -53,6 +53,7 @@ $(document).ready(function() {
   });
 
   var array = [];
+  var image_data = null;
   $('#save_button').on('click',function(){
     $('#playlist').has('li').each(function() {
       var loop_type = $(this).find('h5').map(function(){
@@ -74,8 +75,8 @@ $(document).ready(function() {
       }else{
         $.ajax({
             url: save_url,
-            method: "POST",
-            data: JSON.stringify({"loop_id": loop_id, "name": loopname, "playlist": array, "user_id": user_id}),
+            method: "PUT",
+            data: JSON.stringify({"loop_id": loop_id, "name": loopname, "playlist": array, "user_id": user_id, "image_data": image_data}),
             dataType: "json",
             contentType: "application/json",
             success: function(data){alert("Sumbited " + loopname + " successfully.")},
