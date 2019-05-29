@@ -317,3 +317,11 @@ a:active {
 .loop_table tr td:first-child{
   display: table-cell;
 }
+
+.loop_img_container{
+  max-width: 200px;
+}
+
+.loop_img_container img{
+  width: 100%;
+}
