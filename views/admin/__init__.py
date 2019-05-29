@@ -230,7 +230,7 @@ def submit_loop():
             loop.name = req["name"]
         if req["playlist"] != loop.playlist:
             loop.playlist = req["playlist"]
-        if image_url != loop.image_url:
+        if image_url and image_url != loop.image_url:
             loop.image_url = image_url
         db.session.commit()
     return jsonify({"success": True})
