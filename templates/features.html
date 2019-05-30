@@ -101,7 +101,9 @@
     <div class="contact_row">
       <div class="contact">
         <h2>Want more information?</h2>
-        <button>Contact Us</button>
+        <a href="{{ url_for('base.contact') }}">
+          <button>Contact Us</button>
+        </a>  
       </div>
     </div>
 {% endblock %}

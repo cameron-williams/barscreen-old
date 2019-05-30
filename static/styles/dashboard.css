@@ -831,18 +831,106 @@ nav{
 }
 
 .account_info{
-  padding: .5em;
+  padding: 1em;
   background-color: #F0F4FF;
-  border: 1px solid #232323aa;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.account_info h2{
+.account_menu{
+  display: inline-block;
+  width: 20%;
+  min-width: 200px;
+  box-sizing: border-box;
+}
+
+.account_menu ul{
+  list-style: none;
+  padding: none;
+  padding-inline-start: 0;
   margin: 0;
+}
+
+.account_menu ul li{
+  padding: .5em 0;
+}
+
+.account_menu ul li:hover{
+  cursor: pointer;
+}
+
+.account_menu ul li:first-child{
+  padding-top: 0;
+}
+
+.acc_menu_active{
   font-weight: 600;
 }
 
-.account_info span{
-  margin-left: .5em;
+.account_content{
+  display: inline-block;
+  vertical-align: top;
+  width: calc(80% - 1em);
+  max-width: calc(100% - 210px);
+  box-sizing: border-box;
+}
+
+.account_content fieldset{
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.account_content fieldset label{
+  display: block;
+  font-weight: 600;
+  font-size: .8em;
+  margin-bottom: .5em;
+}
+
+.account_content fieldset input{
+  padding: .5em;
+  font-size: 1em;
+  color: #232323;
+  background-color: #F0F4FF;
+  border: 1px solid  #8D9499;
+  border-radius: 5px;
+  width: 50%;
+  min-width: max-content;
+  box-sizing: border-box;
+}
+
+.account_content fieldset input:focus{
+  outline: none;
+  border: 1px solid  #EF9F00;
+}
+
+.account_content button{
+  margin-bottom: 1em;
+  font-size: .8em;
+}
+
+.account_content p{
+  margin: 0;
+  margin-bottom: 1em;
+}
+
+.account_content p a{
+  text-decoration: none;
+  color: #EF9F00;
+}
+
+.account_content p a:hover{
+  color: #DA9100;
+}
+
+.border_break{
+  width: 100%;
+  margin-bottom: 1em;
+  border-bottom: 1px solid #232323;
 }
 
 /* Channel Information */

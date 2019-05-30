@@ -3,16 +3,49 @@
 {% block h3title %}Account{% endblock %}
 {% block head %}
   {{ super() }}
+  <script src="{{ url_for('static', filename='scripts/dash_account.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 {% endblock %}
 {% block content %}
-  <div class="account_container">
-    <div class="account_info">
-      <h2>{{ current_user.company }}</h2>
-      <p>Email: <span>{{ current_user.email }}</span></p>
-      <p>First Name: <span>{{ current_user.first_name }}</span></p>
-      <p>Last Name: <span>{{ current_user.last_name }}</span></p>
-      <p>Phone: <span>{{ current_user.phone_number }}</span></p>
-      <button class="dash_button">Change Password</button>
+  <div class="account_info">
+    <div class="account_menu">
+      <ul>
+        <li class="acc_menu_active">Profile</li>
+        <li>Login</li>
+        <li>Billing</li>
+      </ul>
+    </div>
+    <div class="account_content">
+      <div class="account_modal" id="Profile">
+        <form>
+          <fieldset class="form_cname">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" required="required" class="form_input" value="{{ current_user.first_name }}" style>
+          </fieldset>
+          <fieldset class="form_cname">
+            <label for="lname">Last Name</label>
+            <input type="text" id="lname" required="required" class="form_input" value="{{ current_user.last_name }}" style>
+          </fieldset>
+          <fieldset class="form_cname">
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" required="required" class="form_input" value="{{ current_user.phone_number }}" style>
+          </fieldset>
+          <button class="dash_button">Save</button>
+      </div>
+      <div class="account_modal" style="display:none;" id="Login">
+        <form>
+          <fieldset class="form_cname">
+            <label for="fname">Email</label>
+            <input type="text" id="email" required="required" class="form_input" value="{{ current_user.email }}" style>
+          </fieldset>
+          <button class="dash_button">Save</button>
+          <div class="border_break"></div>
+          <p>Send an email to reset your password.</p>
+          <button class="dash_button">Change Password</button>
+      </div>
+      <div class="account_modal" style="display:none;" id="Billing">
+        <p>Please reach out to <a href="mailto:info@barscreen.tv">info@barscreen.tv</a> to sort out the details of your invoicing.</p>
+      </div>
     </div>
   </div>
 {% endblock %}
