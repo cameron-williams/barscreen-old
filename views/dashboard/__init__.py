@@ -164,6 +164,34 @@ def get_channel():
 def account():
     return render_template("dashboard/account.html")
 
+@dashboard.route("/editprofile", methods=["POST"])
+@login_required
+def editprofile():
+    req = request.get_json()
+    user = Users.query.filter_by(id=req["user_id"]).first()
+    if request.method == "POST":
+        if req["first_name"] != user.first_name:
+            user.first_name = req["first_name"]
+        if req["last_name"] != user.last_name:
+            user.last_name = req["last_name"]
+        if req["phone_number"] != user.phone_number:
+            user.phone_number = req["phone_number"]
+        db.session.commit()
+    return jsonify({"success": True})
+
+
+@dashboard.route("/editemail", methods=["POST"])
+@login_required
+def editemail():
+    req = request.get_json()
+    user = Users.query.filter_by(id=req["user_id"]).first()
+    if request.method == "POST":
+        if req["email"] != user.email:
+            user.email = req["email"]
+        db.session.commit()
+    return jsonify({"success": True})
+
+
 
 @dashboard.route("/channel")
 @login_required
