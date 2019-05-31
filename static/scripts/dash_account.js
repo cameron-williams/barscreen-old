@@ -46,4 +46,21 @@ $(document).ready(function(){
     e.preventDefault();
   });
 
+  $('#password_save').click(function(e) {
+    var email = $('#Login').find('#email').val();
+    $('#Login').find('p').hide()
+    var success_message = $('<p>An email has been sent with a link to reset your password</p>')
+    console.log(email);
+    $.ajax({
+        url: password_url,
+        method: "POST",
+        data: JSON.stringify({"email": email}),
+        dataType: "json",
+        contentType: "application/json",
+        success: success_message.hide().appendTo('#Login').fadeIn(),
+        error: function(errMsg){alert("Sorry: " + errMsg)},
+    });
+    e.preventDefault();
+  });
+
 });
