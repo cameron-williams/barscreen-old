@@ -6,7 +6,7 @@ from forms.login import LoginForm
 from forms.password import CreatePassword
 from forms.newpromo import NewPromoForm
 from models import Users, db, Channel, Show, Clip, Promo, Loop
-from helpers import verify_password, confirm_token
+from helpers import verify_password, confirm_token, InvalidTokenError
 import re
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
@@ -53,7 +53,7 @@ def confirm_email(token):
     # try and confirm token, abort to signup if invalid or expired
     try:
         email = confirm_token(token)
-    except:
+    except InvalidTokenError:
         flash('The confirmation link is invalid or has expired.', category='danger')
         return redirect(url_for('base.signup'))
 

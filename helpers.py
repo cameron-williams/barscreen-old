@@ -5,6 +5,10 @@ SECRET_KEY = "97e5782c0ef1621d168ed4229ac95f148d1d09a9abaa490d7349d363f16cc7b3"
 SECURITY_PASSWORD_SALT = '86343d47f9f472d4d992a87faf8e831e83e3a6659bea49d2bed48dd6f0b4e1be'
 
 
+class InvalidTokenError(Exception):
+    pass
+
+
 def generate_confirmation_token(email):
     """ Generates a password creation token """
     serializer = URLSafeTimedSerializer(SECRET_KEY)
@@ -21,7 +25,7 @@ def confirm_token(token, expiration=3600):
             max_age=expiration
         )
     except Exception:
-        return False
+        raise InvalidTokenError("Token is expired.")
     return email
 
 
