@@ -6,7 +6,8 @@ from forms.login import LoginForm
 from forms.password import CreatePassword
 from forms.newpromo import NewPromoForm
 from models import Users, db, Channel, Show, Clip, Promo, Loop
-from helpers import verify_password, confirm_token
+from services.google_clients import Gmail, GoogleStorage
+from helpers import verify_password, confirm_token, generate_confirmation_token
 import re
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
@@ -61,9 +62,6 @@ def confirm_email(token):
     user = Users.query.filter_by(email=email).first()
     if not user:
         abort(400, 'Invalid token.')
-    if user.confirmed:
-        flash('Account already confirmed. Please log in.', category="success")
-        return redirect(url_for('dashboard.login'))
 
     # if form submit, add new password to user and redirect them to dashboard
     if request.method == "POST" and form.validate_on_submit():
@@ -73,6 +71,24 @@ def confirm_email(token):
         flash("Password set successfully.", category="success")
         return redirect(url_for('dashboard.index'))
     return render_template("dashboard/password.html", form=form, token=token)
+
+
+@dashboard.route("/change_password", methods=["POST"])
+def change_password():
+    req = request.get_json()
+    existing_user = Users.query.filter_by(email=req["email"]).first()
+    # create gmail client
+    gmail = Gmail(delegated_user="info@barscreen.tv")
+    # generate password token
+    password_token = generate_confirmation_token(existing_user.email)
+
+    # Fill in email body and send email
+    email_body = """Please click on the link to reset your BarScreen password. Link: {}""".format(
+        url_for('dashboard.confirm_email', token=password_token),
+    )
+    gmail.send_email(to=existing_user.email,
+                     subject="BarScreen Account", body=email_body)
+    return jsonify({"success": True})
 
 
 @dashboard.route("/loops")
@@ -190,7 +206,6 @@ def editemail():
             user.email = req["email"]
         db.session.commit()
     return jsonify({"success": True})
-
 
 
 @dashboard.route("/channel")
