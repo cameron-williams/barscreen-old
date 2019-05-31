@@ -913,6 +913,13 @@ nav{
   font-size: .8em;
 }
 
+.account_content h5{
+  font-weight: 400;
+  font-size: 1em;
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
 .account_content p{
   margin: 0;
   margin-bottom: 1em;

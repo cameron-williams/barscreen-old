@@ -6,6 +6,7 @@
   <script>
       var profile_url = "{{url_for('dashboard.editprofile')}}";
       var email_url = "{{url_for('dashboard.editemail')}}";
+      var password_url = "{{url_for('dashboard.change_password')}}";
       var user_id = "{{ current_user.id }}";
   </script>
   <script src="{{ url_for('static', filename='scripts/dash_account.js') }}"></script>
@@ -45,7 +46,7 @@
           </fieldset>
           <button class="dash_button" id="email_save">Save</button>
           <div class="border_break"></div>
-          <p>Send an email to reset your password.</p>
+          <h5>Reset the password for this account.</h5>
           <button class="dash_button" id="password_save">Change Password</button>
       </div>
       <div class="account_modal" style="display:none;" id="Billing">
