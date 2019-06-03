@@ -91,6 +91,19 @@ form{
   color: #8D9499;
 }
 
+.form_container .forgot_password:hover{
+  color: #EF9F00;
+  cursor: pointer;
+}
+
+.form_message p{
+  margin: 0;
+}
+
+.form_email input#reset_email{
+  width: 95%;
+}
+
 .signin input#submit{
   width:100%;
   padding-top: .5em;
@@ -103,6 +116,23 @@ form{
 }
 
 .signin input#submit:hover{
+  cursor: pointer;
+  background-color: #F1B02E;
+}
+
+
+.signin input#reset_submit{
+  width:100%;
+  padding-top: .5em;
+  padding-bottom: .5em;
+  border: none;
+  font-size: 1em;
+  background-color: #EF9F00;
+  color: #232323;
+  font-weight: 600;
+}
+
+.signin input#reset_submit:hover{
   cursor: pointer;
   background-color: #F1B02E;
 }
