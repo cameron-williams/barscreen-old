@@ -1,5 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Sarabun:400,800|Source+Sans+Pro:400,600,900');
 
+*,
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
 body{
   margin: 0;
   background-color: #8D9499;
@@ -26,6 +34,49 @@ nav a{
 .dash_button:hover{
   background-color: #F1B02E;
   cursor: pointer;
+}
+
+fieldset{
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: none;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+fieldset label{
+  display: block;
+  font-weight: 600;
+  font-size: .8em;
+  margin-bottom: .5em;
+}
+
+fieldset input{
+  padding: .5em;
+  font-size: 1em;
+  color: #232323;
+  background-color: #F0F4FF;
+  border: 1px solid  #8D9499;
+  border-radius: 5px;
+  width: 50%;
+  min-width: max-content;
+  box-sizing: border-box;
+}
+
+fieldset textarea{
+  padding: .5em;
+  font-size: 1em;
+  color: #232323;
+  background-color: #F0F4FF;
+  border: 1px solid  #8D9499;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+fieldset input:focus{
+  outline: none;
+  border: 1px solid  #EF9F00;
 }
 
 select{
@@ -143,6 +194,76 @@ nav{
 }
 /*End Nav Bar */
 
+/* Modal Stylings */
+
+.modal {
+    position: absolute;
+    z-index: 10000; /* 1 */
+    top: 0;
+    left: 0;
+    visibility: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+.modal.is-visible {
+    visibility: visible;
+}
+
+.modal-overlay {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: hsla(0, 0%, 0%, 0.5);
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.3s, opacity 0.3s;
+}
+
+.modal.is-visible .modal-overlay {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0s;
+}
+
+.modal-wrapper{
+  position: absolute;
+  z-index: 9999;
+  top: 6em;
+  left: 50%;
+  width: 60%;
+  margin-left: -30%;
+  background-color: #F0F4FF;
+  box-shadow: 0 0 1.5em hsla(0, 0%, 0%, 0.35);
+}
+
+.modal-transition{
+  transition: all 0.3s 0.12s;
+  transform: translateY(-10%);
+  opacity: 0;
+}
+
+.modal.is-visible .modal-transition {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.modal_title_container{
+  width: 100%;
+  padding: 1em .5em;
+  border-bottom: 1px solid #232323;
+}
+
+.modal_title_container h4{
+  font-size: 1.25em;
+  font-weight: 600;
+  margin: 0;
+}
+
+
 /* Title */
 
 .title_container{
@@ -200,7 +321,6 @@ nav{
   list-style: none;
   display: flex;
   justify-content: space-between;
-
 }
 
 .account_stats ul li{
@@ -875,39 +995,6 @@ nav{
   box-sizing: border-box;
 }
 
-.account_content fieldset{
-  display: block;
-  margin: 0;
-  padding: 0;
-  border: none;
-  width: 100%;
-  margin-bottom: 1em;
-}
-
-.account_content fieldset label{
-  display: block;
-  font-weight: 600;
-  font-size: .8em;
-  margin-bottom: .5em;
-}
-
-.account_content fieldset input{
-  padding: .5em;
-  font-size: 1em;
-  color: #232323;
-  background-color: #F0F4FF;
-  border: 1px solid  #8D9499;
-  border-radius: 5px;
-  width: 50%;
-  min-width: max-content;
-  box-sizing: border-box;
-}
-
-.account_content fieldset input:focus{
-  outline: none;
-  border: 1px solid  #EF9F00;
-}
-
 .account_content button{
   margin-bottom: 1em;
   font-size: .8em;
@@ -1021,35 +1108,116 @@ nav{
 }
 
 /* Add Promo */
-.promo_form_container{
+
+.promo_modal{
+  position: relative;
+  width: 100%;
+  height: 100%;
   padding: .5em;
-  background-color: #F0F4FF;
-  border: 1px solid #232323aa;
 }
 
-.promo_form_container feildset{
+.promo_img_preview a{
+  font-weight: 600;
+  cursor: pointer;
   display: block;
-  margin: 1em 0;
+  padding: .5em;
+  font-size: 1em;
+  color: #232323;
+  background-color: #F0F4FF;
+  border: 1px solid #8D9499;
+  border-radius: 5px;
 }
 
-.promo_form_container feildset label{
+.promo_img_preview a:hover{
+  cursor: pointer;
+  color: #EF9F00;
+  border: 1px solid #EF9F00;
+}
+
+.promo_img_preview a i{
+  margin-right: .5em;
+}
+
+.promo_modal .promo_img_preview{
+  width: 200px;
+  height: 100%;
+  min-height: 100px;
   display: inline-block;
-  width: 30%;
-  max-width: 200px;
+  position: relative;
   vertical-align: top;
 }
 
-.promo_form_container #submit{
-  color: #232323;
-  font-weight: 600;
-  background-color: #EF9F00;
-  padding: .5em 1em;
-  border: none;
+.promo_modal .promo_form_container{
+  width: calc(100% - 210px);
+  display: inline-block;
+  float: right;
+  vertical-align: top;
 }
 
-.promo_form_container #submit:hover{
+.promo_modal #promo_file{
+  position: absolute;
+  min-width: auto;
+  width: 200px;
+  z-index: 1000;
+  height: 100%;
+  padding: 0;
+  opacity: 0;
   cursor: pointer;
+  left: 0;
 }
+
+.promo_img{
+  padding: .25em .25em .25em 0;
+  width: 200px;
+  height: 120px;
+  position: relative;
+}
+
+.after_overlay::after{
+    content: "+";
+    position: absolute;
+    top: 0;
+    font-size: 5em;
+    line-height: 120px;
+    font-weight: 600;
+    text-align: center;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #8D9499aa;
+    z-index: -100;
+}
+
+#promo_preview{
+  width: 100%;
+}
+
+.promo_img_preview fieldset{
+  margin-bottom: .5em;
+}
+
+.promo_modal video{
+  display: none;
+}
+
+.promo_modal canvas{
+  display: none;
+}
+
+.promo_form_container fieldset input{
+  width: 100%;
+}
+
+.promo_form_container fieldset textarea{
+  width: 100%;
+}
+
+.promo_button{
+  text-align: right;
+  display: block;
+  clear: both;
+}
+
 
 /* Media Query */
 
