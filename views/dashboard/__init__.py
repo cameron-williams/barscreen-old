@@ -183,6 +183,7 @@ def get_channel():
 def account():
     return render_template("dashboard/account.html")
 
+
 @dashboard.route("/editprofile", methods=["POST"])
 @login_required
 def editprofile():
