@@ -112,11 +112,11 @@ def addloop():
     if request.method == "POST" and form.validate_on_submit():
         storage = GoogleStorage()
         try:
-            fn = secure_filename(form.clip_file.data.filename)
+            fn = secure_filename(form.promo_file.data.filename)
             url = storage.upload_promo_video(name=fn, file=form.promo_file.data)
 
             # save vid and get still from it
-            form.clip_file.data.save('/tmp/{}'.format(fn))
+            form.promo_file.data.save('/tmp/{}'.format(fn))
             still_img_path = get_still_from_video_file(
                 "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
             still_url = storage.upload_promo_image(
