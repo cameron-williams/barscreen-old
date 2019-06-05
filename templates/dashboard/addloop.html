@@ -185,11 +185,13 @@
           <h4 class="modal_title">Add Promo</h4>
         </div>
         <div class="promo_modal" id="Profile">
+          <form method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }}
           <div class="promo_img_preview">
             <fieldset>
               <label for="promo_file">File</label>
               <a><i class="fas fa-upload"></i>File Upload
-                <input id="promo_file" type="file" id="promo_file">
+                {{ form.promo_file }}
               </a>
               <video width="512" height="288" class="promo_video" controls>
                 <source type="video/mp4">
@@ -201,21 +203,18 @@
             </div>
           </div>
           <div class="promo_form_container">
-            <form>
               <fieldset>
-                <label for="title">Title</label>
-                <input type="text" id="name" required="required" class="form_input">
+                {{ form.promo_name.label }}{{ form.promo_name }}
               </fieldset>
               <fieldset>
-                <label for="description">Description</label>
-                <textarea rows="4" id="description" required="required" class="form_input"></textarea>
+                {{ form.description.label }}{{ form.description }}
               </fieldset>
-            </form>
         </div>
         <div class=promo_button>
           <button class="dash_button" id="promo_cancel">Cancel</button>
-          <button class="dash_button" id="promo_save">Add</button>
+          {{ form.submit(class_="dash_button") }}
         </div>
+        </form>
       </div>
     </div>
   </div>

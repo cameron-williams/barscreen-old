@@ -4,7 +4,7 @@ from flask import (
 from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
 from forms.password import CreatePassword
-from forms.newpromo import NewPromoForm
+from forms.dash_newpromo import DashNewPromoForm
 from models import Users, db, Channel, Show, Clip, Promo, Loop
 from services.imaging import get_still_from_video_file
 from werkzeug.utils import secure_filename
@@ -100,14 +100,43 @@ def loops():
     return render_template("dashboard/loops.html")
 
 
-@dashboard.route("/loops/addloop")
+@dashboard.route("/loops/addloop", methods=["POST", "GET"])
 @login_required
 def addloop():
+    error = None
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
     entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
     sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
     news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
-    return render_template("dashboard/addloop.html", current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+    form = DashNewPromoForm()
+    if request.method == "POST" and form.validate_on_submit():
+        storage = GoogleStorage()
+        try:
+            fn = secure_filename(form.clip_file.data.filename)
+            url = storage.upload_promo_video(name=fn, file=form.promo_file.data)
+
+            # save vid and get still from it
+            form.clip_file.data.save('/tmp/{}'.format(fn))
+            still_img_path = get_still_from_video_file(
+                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
+            still_url = storage.upload_promo_image(
+                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+
+            current_user.promos.append(Promo(
+                name=form.promo_name.data,
+                description=form.description.data,
+                clip_url=url,
+                image_url=still_url,
+            ))
+
+            db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()
+            if 'duplicate key value violates unique constraint' in str(e):
+                error = 'show name already registered.'
+        flash("Promo Created.", category="success")
+    return render_template("dashboard/addloop.html", form=form, error=error, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+
 
 @dashboard.route("/loops/<loop_id>")
 @login_required
