@@ -165,8 +165,8 @@ def loops():
     return render_template("dashboard/loops.html")
 
 
-@dashboard.route("/loops/addloop", methods=["POST", "GET"])
-@crossdomain(origin="*", headers="*", methods=["POST", "GET"])
+@dashboard.route("/loops/addloop", methods=["POST", "GET", "OPTIONS"])
+@crossdomain(origin="*", headers="*", methods=["POST", "GET", "OPTIONS"])
 @login_required
 def addloop():
     error = None

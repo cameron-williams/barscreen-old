@@ -198,8 +198,8 @@ def editloop(user_id, loop_id):
     return render_template("admin/editloop.html", loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, shows=shows, promos=promos)
 
 
-@admin.route("/submit_loop", methods=["POST", "PUT"])
-@crossdomain(origin="*", methods=["POST", "PUT"])
+@admin.route("/submit_loop", methods=["POST", "PUT", "OPTIONS"])
+@crossdomain(origin="*", methods=["POST", "PUT", "OPTIONS"])
 @login_required
 def submit_loop():
     req = request.get_json()
