@@ -1,66 +1,63 @@
 """
-Imaging Tools
+Imaging Tools.
 """
 import os
-import subprocess
-import urllib2
+import cv2
 
 
-try:
-    if os.path.exists("/usr/bin/ffmpeg"):
-        ffmpeg = "/usr/bin/ffmpeg"
-    else:
-        ffmpeg = subprocess.check_output(["which", "ffmpeg"]).replace("\n", "")
-except subprocess.CalledProcessError:
-    print("Error: FFMPEG not found. Please install it before using the imaging tools. (brew install ffmpeg or apt-get install ffmpeg)")
-
-
-def get_still_from_video_url(video_url, timestamp, output="/var/tmp/frameshot.png"):
+def screencap_from_video(video_path):
     """
-    Takes a video url, a timestamp, and an optional output path/name.
-    Downloads the video from the url, takes an image still from given timestamp, and
-    saves it as given output.
+    Takes a video path. Will open that video and captures a frame from
+    5 seconds in for a preview image. This image is saved in the same directory
+    as the video but as an image instead.
     """
-    assert isinstance(timestamp, (int, float)
-                      ), 'invalid option for timestmap, must be int or float.'
-    fn = "/var/tmp/tmp_vid.mp4"
-    # check if vid exists locally
-    if not os.path.isfile(fn):
-        rsp = urllib2.urlopen(video_url)
-        with open(fn, 'wb') as f:
-            f.write(rsp.read())
-    # if output exists already delete it as ffmpeg will prompt and hang if it does exist
-    if os.path.isfile(output):
-        os.remove(output)
-    # use ffmpeg to get still from video at timestamp
-    subprocess.check_output([ffmpeg, "-ss", str(timestamp), "-i", fn, "-vframes", "1", "-s", "512x288", "-f", "image2", output])
-    # if no output assume something went wrong
-    if not os.path.isfile(output):
-        raise ValueError(
-            "Tried to get still image but output doesn't exist after running ffmpeg, please check server logs.")
-    # remove video source
-    os.remove(fn)
-    return output
+    assert os.path.isfile(video_path), "No file found at '{}'".format(video_path)
+    video = cv2.VideoCapture(video_path)
 
+    # Get video filename.
+    video_filename = video_path.split("/")[-1].split(".")[0]
 
-def get_still_from_video_file(path, timestamp, output="/var/tmp/frameshot.png"):
-    """
-    Takes a path for a locally stored video, takes a screenshot from the given timestamp and
-    saves it as the output path/file.
-    """
-    assert isinstance(timestamp, (int, float)
-                      ), 'invalid option for timestamp, must be int or float.'
-    if not os.path.isfile(path):
-        raise ValueError("No file found at {}".format(path))
-    # if output exists already delete it as ffmpeg will prompt and hang if it does exist
-    if os.path.isfile(output):
-        os.remove(output)
-    # use ffmpeg to get still from video at timestamp
-    subprocess.check_output([ffmpeg, "-ss", str(timestamp), "-i", path, "-vframes", "1", "-s", "512x288", "-f", "image2", output])
-    # if no output assume something went wrong
-    if not os.path.isfile(output):
-        raise ValueError(
-            "Tried to get still image but output doesn't exist after running ffmpeg, please check server logs.")
-    # remove video source
-    os.remove(path)
-    return output
+    ## Figure out what frame to capture from given video.
+    # Get fps of video, as well as total number of frames.
+    video_fps = video.get(cv2.CAP_PROP_FPS)
+    video_frame_count = video.get(cv2.CAP_PROP_FRAME_COUNT)
+
+    # Get the frame number to capture (5 seconds * video frames per second)
+    frame_to_capture = round(5 * video_fps)
+
+    # If for some reason the frame to capture is over the total frame count, just set it to 1/4 through the total frame count.
+    if frame_to_capture > video_frame_count:
+        frame_to_capture = round(video_frame_count / 4)
+
+    # Holds the finished image path.
+    video_path = os.path.dirname(video_path)
+    image_path = None
+
+    # Read through the video and capture the correct frame.
+    current_frame = 0
+    while(True):
+        ret, frame = video.read()
+
+        if ret:
+            # Wait till we are the on the frame that we want to capture.
+            if current_frame == frame_to_capture:
+                # Resize/write image and break loop.
+                image_path = "{}/{}_frame.png".format(video_path, video_filename)
+                frame = cv2.resize(frame, (512, 288))
+                cv2.imwrite(image_path, frame)
+                break
+
+            current_frame += 1
+        else:
+            break
+    
+    # Release video and destroy all cv2 windows.
+    video.release()
+    cv2.destroyAllWindows()
+
+    # Ensure we actually wrote the image.
+    if not image_path:
+        raise ValueError("unable to get frame from video")
+    
+    # Return newly created image path.
+    return image_path

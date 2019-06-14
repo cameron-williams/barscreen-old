@@ -39,6 +39,8 @@ def hash_password(password):
 
 def verify_password(stored_password, provided_password):
     """Verify a stored password against one provided by user"""
+    if not stored_password or not provided_password:
+        return False
     pwdhash = hashlib.pbkdf2_hmac('sha512',
                                   provided_password.encode('utf-8'),
                                   SECRET_KEY.encode('ascii'),

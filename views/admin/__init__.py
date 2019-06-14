@@ -14,7 +14,7 @@ from forms.password import CreatePassword
 from models import db, Users, Channel, Show, Clip, Promo, Loop
 from helpers import generate_confirmation_token, confirm_token
 from services.google_clients import Gmail, GoogleStorage
-from services.imaging import get_still_from_video_file
+from services.imaging import screencap_from_video
 from PIL import Image
 from urllib import unquote_plus
 from base64 import b64encode
@@ -141,10 +141,9 @@ def addpromo(user_id):
 
             # save vid and get still from it
             form.clip_file.data.save('/tmp/{}'.format(fn))
-            still_img_path = get_still_from_video_file(
-                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
+            image_path = screencap_from_video("/tmp/{}".format(fn))
             still_url = storage.upload_promo_image(
-                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+                name=image_path.split("/")[-1], image_data=open(image_path).read())
 
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
@@ -154,7 +153,7 @@ def addpromo(user_id):
             ))
 
             db.session.commit()
-        except IntegrityError as e:
+        except Exception as err:
             db.session.rollback()
             if 'duplicate key value violates unique constraint' in str(e):
                 error = 'show name already registered.'
@@ -204,7 +203,7 @@ def submit_loop():
     req = request.get_json()
     current_user = Users.query.filter_by(id=req["user_id"]).first()
     image_url = None
-    if req["image_data"]:
+    if req.get("image_data"):
         # write file locally
         with open("/tmp/uploaded_image.png", "wb") as f:
             f.write(req["image_data"].split(",")[-1].decode("base64"))
