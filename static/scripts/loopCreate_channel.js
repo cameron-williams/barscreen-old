@@ -1,5 +1,98 @@
 $(document).ready(function() {
 
+  image_creator = function(){
+      var thumbnails = []
+      var canvas = $("#loop_canvas");
+      var img = $("#loop_preview");
+      var ctx = canvas.get(0).getContext("2d");
+      ctx.clearRect(0, 0, 540, 405);
+      $('#playlist').find('img').each(function(){
+        thumbnails.push($(this).attr("src"));
+      });
+      if (thumbnails.length >= 4){
+          var image1 = new Image();
+          var image2 = new Image();
+          var image3 = new Image();
+          var image4 = new Image();
+          image1.crossOrigin = "";
+          image2.crossOrigin = "";
+          image3.crossOrigin = "";
+          image4.crossOrigin = "";
+          image1.src = thumbnails[0]
+          image2.src = thumbnails[1]
+          image3.src = thumbnails[2]
+          image4.src = thumbnails[3]
+          image1.onload = function() {
+          ctx.drawImage(image1, 0, 0, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+          image2.onload = function() {
+          ctx.drawImage(image2, 270, 0, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+          image3.onload = function() {
+          ctx.drawImage(image3, 0, 205.5, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+          image4.onload = function() {
+          ctx.drawImage(image4, 270, 205.5, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+      }
+      if (thumbnails.length == 3){
+          var image1 = new Image();
+          var image2 = new Image();
+          var image3 = new Image();
+          image1.crossOrigin = "";
+          image2.crossOrigin = "";
+          image3.crossOrigin = "";
+          image1.src = thumbnails[0]
+          image2.src = thumbnails[1]
+          image3.src = thumbnails[2]
+          ctx.fillStyle = "#232323";
+          ctx.fillRect(0, 0, 540, 405);
+          image1.onload = function() {
+          ctx.drawImage(image1, 0, 0, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+          image2.onload = function() {
+          ctx.drawImage(image2, 270, 0, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+          image3.onload = function() {
+          ctx.drawImage(image3, 135, 205.5, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+      }
+      if (thumbnails.length == 2){
+          var image1 = new Image();
+          var image2 = new Image();
+          image1.crossOrigin = "";
+          image2.crossOrigin = "";
+          image1.src = thumbnails[0]
+          image2.src = thumbnails[1]
+          ctx.fillStyle = "#232323";
+          ctx.fillRect(0, 0, 540, 405);
+          image1.onload = function() {
+          ctx.drawImage(image1, 0, 0, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+          image2.onload = function() {
+          ctx.drawImage(image2, 270, 205.5, 270, 205.5);
+          img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+      }
+      if (thumbnails.length == 1){
+          var image1 = new Image();
+          image1.crossOrigin = "";
+          image1.src = thumbnails[0]
+          image1.onload = function() {
+            ctx.drawImage(image1, 0, 0, 540, 405);
+            img.attr("src", canvas[0].toDataURL("image/png"));
+          }
+        }
+    };
+
   $(".content_channel").click(function() {
     $(document).find(".channel").hide()
     $t = $(this)
@@ -82,6 +175,7 @@ $(document).ready(function() {
     });
     console.log(array);
     var loopname = $(".title_input span").text();
+    var image_url = $("#loop_preview").attr("src");
     console.log(loopname);
     if ( loopname.length < 1 || $('#playlist').children().length < 1 ){
         if ( loopname.length < 1){
@@ -93,7 +187,7 @@ $(document).ready(function() {
         $.ajax({
             url: save_url,
             method: "POST",
-            data: JSON.stringify({"name": loopname, "playlist": array, "user_id": user_id}),
+            data: JSON.stringify({"name": loopname, "playlist": array, "image_data": image_url, "user_id": user_id}),
             dataType: "json",
             contentType: "application/json",
             success: function(data){alert("Sumbited " + loopname + " successfully.")},
@@ -135,66 +229,14 @@ $(document).delegate(".playlist_add",'click',function(){
     var loopItem_img = $(this).parent().find(".clip_container video").attr('poster');
     var loopItem_name = $(this).parent().find(".show_name").text();
   }
-  var playlist_item = '<li><div><img crossOrigin="*" src="'+loopItem_img+'"/></div><div><span>'+loopItem_id+'</span><h4>'+loopItem_name+'</h4><h5>'+loopItem_type+'</h5></div></li>';
+  var playlist_item = '<li><div><img src="'+loopItem_img+'"/></div><div><span>'+loopItem_id+'</span><h4>'+loopItem_name+'</h4><h5>'+loopItem_type+'</h5></div></li>';
   ul.append(playlist_item);
-  $(function() {
-      var thumbnails = []
-      var canvas = $("#loop_canvas");
-      var img = $("#loop_preview");
-      var ctx = canvas.get(0).getContext("2d");
-      ctx.clearRect(0, 0, 540, 405);
-      $('#playlist').find('img').each(function(){
-        thumbnails.push($(this).attr("src"));
-      });
-      if (thumbnails.length >= 4){
-          var image1 = new Image();
-          var image2 = new Image();
-          var image3 = new Image();
-          var image4 = new Image();
-          image1.src = thumbnails[0]
-          image2.src = thumbnails[1]
-          image3.src = thumbnails[2]
-          image4.src = thumbnails[3]
-          ctx.drawImage(image1, 0, 0, 270, 205.5)
-          ctx.drawImage(image2, 270, 0, 270, 205.5)
-          ctx.drawImage(image3, 0, 205.5, 270, 205.5)
-          ctx.drawImage(image4, 270, 205.5, 270, 205.5)
-      }
-      if (thumbnails.length == 3){
-          var image1 = new Image();
-          var image2 = new Image();
-          var image3 = new Image();
-          image1.src = thumbnails[0]
-          image2.src = thumbnails[1]
-          image3.src = thumbnails[2]
-          ctx.fillStyle = "#232323";
-          ctx.fillRect(0, 0, 540, 405);
-          ctx.drawImage(image1, 0, 0, 270, 205.5)
-          ctx.drawImage(image2, 270, 0, 270, 205.5)
-          ctx.drawImage(image3, 135, 205.5, 270, 205.5)
-      }
-      if (thumbnails.length == 2){
-          var image1 = new Image();
-          var image2 = new Image();
-          image1.src = thumbnails[0]
-          image2.src = thumbnails[1]
-          ctx.fillStyle = "#232323";
-          ctx.fillRect(0, 0, 540, 405);
-          ctx.drawImage(image1, 0, 0, 270, 205.5)
-          ctx.drawImage(image2, 270, 205.5, 270, 205.5)
-      }
-      if (thumbnails.length == 1){
-          var image1 = new Image();
-          img.crossOrigin = "use-credentials";
-          image1.src = thumbnails[0]
-          ctx.drawImage(image1, 0, 0, 540, 405);
-      }
-      img.attr("src", canvas[0].toDataURL("image/png"));
-    });
+  image_creator();
 });
 
 $(document).on('click','.playlist_list ul li',function(){
   $(this).remove();
+  image_creator();
 });
 
 /* Promo Video Preview */
