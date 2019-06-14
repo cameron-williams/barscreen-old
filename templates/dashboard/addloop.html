@@ -23,7 +23,8 @@
           <i id="title_edit2"class="far fa-check-circle"></i>
         </h3>
         <div class="playlist_image">
-          
+          <img id="loop_preview"/>
+          <canvas id="loop_canvas" width="540" height="405"></canvas>
         </div>
         <button class="dash_button" id="save_button">Save</button>
       </div>
@@ -198,7 +199,7 @@
               <video width="512" height="288" class="promo_video" controls>
                 <source type="video/mp4">
               </video>
-              <canvas width="512" height="288"></canvas>
+              <canvas id="promo_canvas" width="512" height="288"></canvas>
             </fieldset>
             <div class="promo_img after_overlay">
               <img id="promo_preview"/>
