@@ -198,7 +198,7 @@ def editloop(user_id, loop_id):
     return render_template("admin/editloop.html", loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, shows=shows, promos=promos)
 
 
-@admin.route("/submit_loop", methods=["POST", "PUT", "OPTIONS"])
+@admin.route("/submit_loop", methods=["POST", "PUT"])
 @login_required
 def submit_loop():
     req = request.get_json()
@@ -213,7 +213,6 @@ def submit_loop():
         image_url = storage.upload_loop_image(req["name"] + ".png", open("/tmp/uploaded_image.png").read())
     if request.method == "POST":
         # write file locally
-        print(image_url)
         try:
             current_user.loops.append(Loop(
                 name=req["name"],
@@ -222,7 +221,6 @@ def submit_loop():
             ))
             db.session.commit()
         except Exception as err:
-            print(err)
             abort(400, err)
     if request.method == "PUT":
         loop = Loop.query.filter_by(id=req["loop_id"]).first()

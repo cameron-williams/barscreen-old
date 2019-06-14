@@ -20,6 +20,7 @@ from functools import update_wrapper
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
 
+
 def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):
     """
     Decorator that adds support for CORS to a route.
@@ -91,7 +92,8 @@ def login():
     form = LoginForm()
     if request.method == "POST" and form.validate_on_submit():
         # try and match user off given email
-        matched_user = db.session.query(Users).filter(Users.email==form.email.data).first()
+        matched_user = db.session.query(Users).filter(
+            Users.email == form.email.data).first()
         if not matched_user:
             flash("Invalid email or password.", "error")
             return redirect(url_for("dashboard.index"))
@@ -165,14 +167,17 @@ def loops():
     return render_template("dashboard/loops.html")
 
 
-@dashboard.route("/loops/addloop", methods=["POST", "GET", "OPTIONS"])
+@dashboard.route("/loops/addloop", methods=["POST", "GET"])
 @login_required
 def addloop():
     error = None
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
-    entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
-    sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
-    news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
+    entertainments = Channel.query.order_by(Channel.id.desc()).filter(
+        (Channel.category).like('Entertainment')).all()
+    sports = Channel.query.order_by(Channel.id.desc()).filter(
+        (Channel.category).like('Sports')).all()
+    news = Channel.query.order_by(Channel.id.desc()).filter(
+        (Channel.category).like('News')).all()
     form = DashNewPromoForm()
     if request.method == "POST" and form.validate_on_submit():
         storage = GoogleStorage()
@@ -186,7 +191,8 @@ def addloop():
             image_path = screencap_from_video("/tmp/{}".format(fn))
 
             # save video locally
-            url = storage.upload_promo_video(name=fn, file=form.promo_file.data)
+            url = storage.upload_promo_video(
+                name=fn, file=form.promo_file.data)
 
             screencap_url = storage.upload_promo_image(
                 name=image_path.split("/")[-1], image_data=open(image_path).read())
@@ -199,22 +205,64 @@ def addloop():
             ))
 
             db.session.commit()
-            flash("Loop created successfully.", category="success")
+            flash("Promo created successfully.", category="success")
 
         except Exception as err:
             print(err)
-            logging.error("error uploading new loop: {} {}".format(type(err), err))
-            flash("Error creating new loop. Please try again in a few minutes", category="error")
+            logging.error(
+                "error uploading new loop: {} {}".format(type(err), err))
+            flash(
+                "Error creating new loop. Please try again in a few minutes", category="error")
     return render_template("dashboard/addloop.html", form=form, error=error, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
+
+
+@dashboard.route("/submit_loop", methods=["POST", "PUT"])
+@login_required
+def submit_loop():
+    req = request.get_json()
+    current_user = Users.query.filter_by(id=req["user_id"]).first()
+    image_url = None
+    if req.get("image_data"):
+        # write file locally
+        with open("/tmp/uploaded_image.png", "wb") as f:
+            f.write(req["image_data"].split(",")[-1].decode("base64"))
+        # upload file to cdn
+        storage = GoogleStorage()
+        image_url = storage.upload_loop_image(
+            req["name"] + ".png", open("/tmp/uploaded_image.png").read())
+    if request.method == "POST":
+        # write file locally
+        try:
+            current_user.loops.append(Loop(
+                name=req["name"],
+                playlist=req["playlist"],
+                image_url=image_url
+            ))
+            db.session.commit()
+        except Exception as err:
+            abort(400, err)
+    if request.method == "PUT":
+        loop = Loop.query.filter_by(id=req["loop_id"]).first()
+        if req["name"] != loop.name:
+            loop.name = req["name"]
+        if req["playlist"] != loop.playlist:
+            loop.playlist = req["playlist"]
+        if image_url and image_url != loop.image_url:
+            loop.image_url = image_url
+        db.session.commit()
+    return jsonify({"success": True})
 
 
 @dashboard.route("/loops/<loop_id>")
 @login_required
 def editloop(loop_id):
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
-    entertainments = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Entertainment')).all()
-    sports = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('Sports')).all()
-    news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
+    entertainments = Channel.query.order_by(Channel.id.desc()).filter(
+        (Channel.category).like('Entertainment')).all()
+    sports = Channel.query.order_by(Channel.id.desc()).filter(
+        (Channel.category).like('Sports')).all()
+    news = Channel.query.order_by(Channel.id.desc()).filter(
+        (Channel.category).like('News')).all()
     loop_playlist = []
     current_loop = Loop.query.filter_by(id=loop_id).first()
     form = DashNewPromoForm()
@@ -223,14 +271,17 @@ def editloop(loop_id):
     for i in current_loop.playlist:
         media_id = re.search(r'\d+', i).group()
         if 'promo' in i.lower():
-            promo = db.session.query(Promo).filter(Promo.id == media_id).first()
+            promo = db.session.query(Promo).filter(
+                Promo.id == media_id).first()
             # if promo
             if not promo:
                 continue
-            loop_playlist.append({'id':promo.id, 'name':promo.name, 'image_url':promo.image_url, 'type':'promo'})
+            loop_playlist.append(
+                {'id': promo.id, 'name': promo.name, 'image_url': promo.image_url, 'type': 'promo'})
         else:
             show = Show.query.filter_by(id=media_id).first()
-            loop_playlist.append({'id':show.id, 'name':show.name, 'image_url':show.clips[-1].image_url, 'type':'show'})
+            loop_playlist.append({'id': show.id, 'name': show.name,
+                                  'image_url': show.clips[-1].image_url, 'type': 'show'})
         print(json.dumps(loop_playlist))
     return render_template("dashboard/editloop.html", form=form, loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
