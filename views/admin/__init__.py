@@ -19,10 +19,64 @@ from PIL import Image
 from urllib import unquote_plus
 from base64 import b64encode
 from werkzeug.utils import secure_filename
+from datetime import timedelta
+from functools import update_wrapper
 import re
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
+def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):
+    """
+    Decorator that adds support for CORS to a route.
+
+    origin: Access-Control-Allow-Origin
+    methods: Access-Control-Allow-Methods
+    headers: Access-Control-Allow-Headers
+    max_age: Access-Control-Max-Age
+    attach_to_all: Attach CORS headers to responses for all methods
+    automatic_options: Handle OPTIONS pre-flight response
+    """
+    if methods is not None:
+        methods = ', '.join(sorted(x.upper() for x in methods))
+    if headers is not None and not isinstance(headers, basestring):
+        headers = ', '.join(x.upper() for x in headers)
+    if not isinstance(origin, basestring):
+        origin = ', '.join(origin)
+    if isinstance(max_age, timedelta):
+        max_age = max_age.total_seconds()
+
+    def get_methods():
+        if methods is not None:
+            return methods
+
+        options_resp = app.make_default_options_response()
+        return options_resp.headers['allow']
+
+    def decorator(f):
+        def wrapped_function(*args, **kwargs):
+            if automatic_options and request.method == 'OPTIONS':
+                resp = app.make_default_options_response()
+            else:
+                resp = make_response(f(*args, **kwargs))
+            if not attach_to_all and request.method != 'OPTIONS':
+                return resp
+
+            h = resp.headers
+
+            h['Access-Control-Allow-Origin'] = origin
+            h['Access-Control-Allow-Methods'] = get_methods()
+            h['Access-Control-Max-Age'] = str(max_age)
+            if headers is not None:
+                h['Access-Control-Allow-Headers'] = headers
+
+            # Cancel Strict-Transport-Security if still enabled
+            h['Strict-Transport-Security'] = 'max-age=0'
+
+            return resp
+
+        f.provide_automatic_options = False
+        return update_wrapper(wrapped_function, f)
+    return decorator
 
 @admin.route("/")
 @login_required
@@ -200,6 +254,7 @@ def editloop(user_id, loop_id):
 
 @admin.route("/submit_loop", methods=["POST", "PUT"])
 @login_required
+@crossdomain(origin="*", headers="*", methods="*")
 def submit_loop():
     req = request.get_json()
     current_user = Users.query.filter_by(id=req["user_id"]).first()
