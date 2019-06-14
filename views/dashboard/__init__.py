@@ -223,41 +223,6 @@ def editloop(loop_id):
     return render_template("dashboard/editloop.html", form=form, loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 
-@dashboard.route("/addpromo", methods=["POST", "GET"])
-@login_required
-def addpromo():
-    """ Add Promo route. Adds clip to whatever the current show that is being edited. """
-    error = None
-    form = NewPromoForm()
-    if request.method == "POST" and form.validate_on_submit():
-        storage = GoogleStorage()
-        try:
-            fn = secure_filename(form.clip_file.data.filename)
-            url = storage.upload_promo_video(name=fn, file=form.clip_file.data)
-
-            # save vid and get still from it
-            form.clip_file.data.save('/tmp/{}'.format(fn))
-            still_img_path = get_still_from_video_file(
-                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
-            still_url = storage.upload_promo_image(
-                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
-
-            current_user.promos.append(Promo(
-                name=form.promo_name.data,
-                description=form.description.data,
-                clip_url=url,
-                image_url=still_url,
-            ))
-
-            db.session.commit()
-        except IntegrityError as e:
-            db.session.rollback()
-            if 'duplicate key value violates unique constraint' in str(e):
-                error = 'show name already registered.'
-        flash("Promo Created.", category="success")
-    return render_template("dashboard/addpromo.html", form=form, error=error, current_user=current_user)
-
-
 @dashboard.route("/create/get_channel", methods=["POST"])
 @login_required
 def get_channel():
