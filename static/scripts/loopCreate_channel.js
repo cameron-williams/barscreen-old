@@ -188,8 +188,13 @@ $(document).ready(function() {
             url: save_url,
             method: "POST",
             data: JSON.stringify({"name": loopname, "playlist": array, "image_data": image_url, "user_id": user_id}),
-            dataType: "json",
+            dataType: "jsonp",
             contentType: "application/json",
+            headers: {
+                       "Access-Control-Allow-Origin": "*",
+                       "Access-Control-Allow-Methods": "*",
+                       "Access-Control-Allow-Headers": "*"
+                    },
             success: function(data){alert("Sumbited " + loopname + " successfully.")},
             error: function(errMsg){alert("Sorry: " + errMsg)},
         });
