@@ -24,7 +24,10 @@
           <i id="title_edit1" style="display:inline-block;" class="fas fa-pen"></i>
           <i id="title_edit2" style="display:none;" class="far fa-check-circle"></i>
         </h3>
-        <span class="length">14:30</span><span>&#183;</span><span class="age">1 week ago</span>
+        <div class="playlist_image">
+          <img id="loop_preview"/>
+          <canvas id="loop_canvas" width="540" height="405"></canvas>
+        </div>
         <button class="dash_button" id="save_button">Save</button>
       </div>
       <div class="playlist_list">
@@ -38,7 +41,7 @@
       <div class="content_row">
           <div class="row_title">
             <h3>Custom Promos</h3>
-            <a href="{{ url_for('dashboard.addpromo') }}"><button class="dash_button">Add New</button></a>
+            <button id="add_promo" class="dash_button">Add New</button>
           </div>
           <div class="content_display">
             <div class="contentList_container">
@@ -178,6 +181,46 @@
           </div>
           <div class="pagination createPagination"></div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class ="modal">
+    <div class="modal-overlay modal-toggle"></div>
+      <div class="modal-wrapper modal-transition">
+        <div class="modal_title_container">
+          <h4 class="modal_title">Add Promo</h4>
+        </div>
+        <div class="promo_modal" id="Profile">
+          <form method="POST" enctype="multipart/form-data">
+            {{ form.csrf_token }}
+          <div class="promo_img_preview">
+            <fieldset>
+              <label for="promo_file">File</label>
+              <a><i class="fas fa-upload"></i>File Upload
+                {{ form.promo_file }}
+              </a>
+              <video width="512" height="288" class="promo_video" controls>
+                <source type="video/mp4">
+              </video>
+              <canvas id="promo_canvas" width="512" height="288"></canvas>
+            </fieldset>
+            <div class="promo_img after_overlay">
+              <img id="promo_preview"/>
+            </div>
+          </div>
+          <div class="promo_form_container">
+              <fieldset>
+                {{ form.promo_name.label }}{{ form.promo_name }}
+              </fieldset>
+              <fieldset>
+                {{ form.description.label }}{{ form.description }}
+              </fieldset>
+        </div>
+        <div class=promo_button>
+          <button class="dash_button" id="promo_cancel">Cancel</button>
+          {{ form.submit(class_="dash_button") }}
+        </div>
+        </form>
       </div>
     </div>
   </div>

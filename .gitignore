@@ -4,3 +4,5 @@
 .DS_Store
 venv/
 .vscode
+exec-1/
+.exec-1

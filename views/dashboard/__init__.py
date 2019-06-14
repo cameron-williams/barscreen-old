@@ -1,5 +1,5 @@
 from flask import (
-    Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort, json
+    Blueprint, render_template, request, flash, jsonify, redirect, url_for, abort, json, make_response
 )
 from flask_login import login_required, login_user, current_user, logout_user
 from forms.login import LoginForm
@@ -13,8 +13,66 @@ from services.google_clients import Gmail, GoogleStorage
 from helpers import verify_password, confirm_token, generate_confirmation_token, InvalidTokenError
 import re
 import logging
+from flask import current_app as app
+from datetime import timedelta
+from functools import update_wrapper
+
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
+
+def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):
+    """
+    Decorator that adds support for CORS to a route.
+
+    origin: Access-Control-Allow-Origin
+    methods: Access-Control-Allow-Methods
+    headers: Access-Control-Allow-Headers
+    max_age: Access-Control-Max-Age
+    attach_to_all: Attach CORS headers to responses for all methods
+    automatic_options: Handle OPTIONS pre-flight response
+    """
+    if methods is not None:
+        methods = ', '.join(sorted(x.upper() for x in methods))
+    if headers is not None and not isinstance(headers, basestring):
+        headers = ', '.join(x.upper() for x in headers)
+    if not isinstance(origin, basestring):
+        origin = ', '.join(origin)
+    if isinstance(max_age, timedelta):
+        max_age = max_age.total_seconds()
+
+    def get_methods():
+        if methods is not None:
+            return methods
+
+        options_resp = app.make_default_options_response()
+        return options_resp.headers['allow']
+
+    def decorator(f):
+        def wrapped_function(*args, **kwargs):
+            if automatic_options and request.method == 'OPTIONS':
+                resp = app.make_default_options_response()
+            else:
+                resp = make_response(f(*args, **kwargs))
+            if not attach_to_all and request.method != 'OPTIONS':
+                return resp
+
+            h = resp.headers
+
+            h['Access-Control-Allow-Origin'] = origin
+            h['Access-Control-Allow-Methods'] = get_methods()
+            h['Access-Control-Max-Age'] = str(max_age)
+            if headers is not None:
+                h['Access-Control-Allow-Headers'] = headers
+
+            # Cancel Strict-Transport-Security if still enabled
+            h['Strict-Transport-Security'] = 'max-age=0'
+
+            return resp
+
+        f.provide_automatic_options = False
+        return update_wrapper(wrapped_function, f)
+    return decorator
+
 
 @dashboard.route("/")
 @login_required
@@ -109,6 +167,7 @@ def loops():
 
 @dashboard.route("/loops/addloop", methods=["POST", "GET"])
 @login_required
+@crossdomain(origin="*", headers="*", methods="*")
 def addloop():
     error = None
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
@@ -159,6 +218,7 @@ def editloop(loop_id):
     news = Channel.query.order_by(Channel.id.desc()).filter((Channel.category).like('News')).all()
     loop_playlist = []
     current_loop = Loop.query.filter_by(id=loop_id).first()
+    form = DashNewPromoForm()
     if not current_loop:
         abort(404, {"error": "No channel by that id. (id:{})".format(loop_id)})
     for i in current_loop.playlist:
@@ -173,42 +233,7 @@ def editloop(loop_id):
             show = Show.query.filter_by(id=media_id).first()
             loop_playlist.append({'id':show.id, 'name':show.name, 'image_url':show.clips[-1].image_url, 'type':'show'})
         print(json.dumps(loop_playlist))
-    return render_template("dashboard/editloop.html", loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
-
-
-@dashboard.route("/addpromo", methods=["POST", "GET"])
-@login_required
-def addpromo():
-    """ Add Promo route. Adds clip to whatever the current show that is being edited. """
-    error = None
-    form = NewPromoForm()
-    if request.method == "POST" and form.validate_on_submit():
-        storage = GoogleStorage()
-        try:
-            fn = secure_filename(form.clip_file.data.filename)
-            url = storage.upload_promo_video(name=fn, file=form.clip_file.data)
-
-            # save vid and get still from it
-            form.clip_file.data.save('/tmp/{}'.format(fn))
-            still_img_path = get_still_from_video_file(
-                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
-            still_url = storage.upload_promo_image(
-                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
-
-            current_user.promos.append(Promo(
-                name=form.promo_name.data,
-                description=form.description.data,
-                clip_url=url,
-                image_url=still_url,
-            ))
-
-            db.session.commit()
-        except IntegrityError as e:
-            db.session.rollback()
-            if 'duplicate key value violates unique constraint' in str(e):
-                error = 'show name already registered.'
-        flash("Promo Created.", category="success")
-    return render_template("dashboard/addpromo.html", form=form, error=error, current_user=current_user)
+    return render_template("dashboard/editloop.html", form=form, loop_playlist=json.dumps(loop_playlist), current_loop=current_loop, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 
 @dashboard.route("/create/get_channel", methods=["POST"])

@@ -29,7 +29,8 @@
         <ul>
           <a href="{{ url_for('dashboard.index') }}"><li>Dashboard</li></a>
           <a href="{{ url_for('dashboard.loops') }}"><li>Loops</li></a>
-          <a href="{{ url_for('dashboard.account') }}"><li>Account</li></a>
+          <a class="hamburger_item" href="{{ url_for('dashboard.account') }}"><li>Account</li></a>
+          <a class="hamburger_item" href="{{ url_for('dashboard.logout') }}"><li>Log Out</li></a>
         </ul>
       </div>
       <div class="account_icon">
