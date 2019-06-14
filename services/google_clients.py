@@ -424,11 +424,14 @@ class Gmail(API):
 # channel image
 # video files for clips
 # video files for promos
+
+
 class GoogleStorage(object):
     """ Class for interactive with Google Cloud Storage """
 
     def __init__(self):
-        credentials = service_account.Credentials.from_service_account_file('service-account-key.json')
+        credentials = service_account.Credentials.from_service_account_file(
+            'service-account-key.json')
         self.client = storage.Client(
             credentials=credentials)
 
@@ -464,7 +467,8 @@ class GoogleStorage(object):
         return blob.public_url
 
     def upload_promo_image(self, name, image_data):
-        assert isinstance(image_data, (str, unicode)), 'invalid option for image data, must be data string.'
+        assert isinstance(image_data, (str, unicode)
+                          ), 'invalid option for image data, must be data string.'
         bucket = self.client.get_bucket("cdn.barscreen.tv")
         existing = bucket.get_blob("promo_images/{}".format(name))
         if existing:
@@ -473,7 +477,6 @@ class GoogleStorage(object):
         blob.upload_from_string(image_data)
         blob.make_public()
         return blob.public_url
-
 
     def upload_loop_image(self, name, image_data):
         """ Takes image_data and a name and uploads the channel image """
@@ -487,7 +490,8 @@ class GoogleStorage(object):
         return blob.public_url
 
     def upload_clip_image(self, name, image_data):
-        assert isinstance(image_data, (str, unicode)), 'invalid option for image data, must be data string.'
+        assert isinstance(image_data, (str, unicode)
+                          ), 'invalid option for image data, must be data string.'
         bucket = self.client.get_bucket("cdn.barscreen.tv")
         existing = bucket.get_blob("clip_images/{}".format(name))
         if existing:

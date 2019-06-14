@@ -6,15 +6,17 @@ from forms.login import LoginForm
 from forms.password import CreatePassword
 from forms.dash_newpromo import DashNewPromoForm
 from models import Users, db, Channel, Show, Clip, Promo, Loop
-from services.imaging import get_still_from_video_file
+from services.imaging import screencap_from_video
 from werkzeug.utils import secure_filename
 from sqlalchemy.exc import IntegrityError
 from services.google_clients import Gmail, GoogleStorage
 from helpers import verify_password, confirm_token, generate_confirmation_token, InvalidTokenError
 import re
+import logging
 from flask import current_app as app
 from datetime import timedelta
 from functools import update_wrapper
+
 
 dashboard = Blueprint('dashboard', __name__, static_folder='../../static')
 
@@ -89,7 +91,13 @@ def login():
     form = LoginForm()
     if request.method == "POST" and form.validate_on_submit():
         # try and match user off given email
-        matched_user = Users.query.filter_by(email=form.email.data).first()
+        matched_user = db.session.query(Users).filter(Users.email==form.email.data).first()
+        if not matched_user:
+            flash("Invalid email or password.", "error")
+            return redirect(url_for("dashboard.index"))
+        if not matched_user.confirmed:
+            flash("User account has not been approved yet.", "error")
+            return redirect(url_for("dashboard.index"))
         # double check password matches hash
         if verify_password(matched_user.password, str(form.password.data)):
             login_user(matched_user)
@@ -169,30 +177,35 @@ def addloop():
     form = DashNewPromoForm()
     if request.method == "POST" and form.validate_on_submit():
         storage = GoogleStorage()
+        print("ya")
         try:
+            # Get secure filename from file data.
             fn = secure_filename(form.promo_file.data.filename)
+            # Save file locally.
+            form.promo_file.data.save('/tmp/' + fn)
+            # Get frame from 5 seconds into video and save it locally.
+            image_path = screencap_from_video("/tmp/{}".format(fn))
+
+            # save video locally
             url = storage.upload_promo_video(name=fn, file=form.promo_file.data)
 
-            # save vid and get still from it
-            form.promo_file.data.save('/tmp/{}'.format(fn))
-            still_img_path = get_still_from_video_file(
-                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
-            still_url = storage.upload_promo_image(
-                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+            screencap_url = storage.upload_promo_image(
+                name=image_path.split("/")[-1], image_data=open(image_path).read())
 
             current_user.promos.append(Promo(
                 name=form.promo_name.data,
                 description=form.description.data,
                 clip_url=url,
-                image_url=still_url,
+                image_url=screencap_url,
             ))
 
             db.session.commit()
-        except IntegrityError as e:
-            db.session.rollback()
-            if 'duplicate key value violates unique constraint' in str(e):
-                error = 'show name already registered.'
-        flash("Promo Created.", category="success")
+            flash("Loop created successfully.", category="success")
+
+        except Exception as err:
+            print(err)
+            logging.error("error uploading new loop: {} {}".format(type(err), err))
+            flash("Error creating new loop. Please try again in a few minutes", category="error")
     return render_template("dashboard/addloop.html", form=form, error=error, current_user=current_user, trends=trends, entertainments=entertainments, sports=sports, news=news)
 
 
