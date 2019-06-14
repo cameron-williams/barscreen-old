@@ -188,7 +188,7 @@ $(document).ready(function() {
             url: save_url,
             method: "POST",
             data: JSON.stringify({"name": loopname, "playlist": array, "image_data": image_url, "user_id": user_id}),
-            dataType: "jsonp",
+            dataType: "json",
             contentType: "application/json",
             headers: {
                        "Access-Control-Allow-Origin": "*",
