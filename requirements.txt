@@ -19,3 +19,4 @@ ipython
 pylint
 Pillow
 google-cloud-storage
+opencv-python
