@@ -199,7 +199,7 @@ def editloop(user_id, loop_id):
 
 
 @admin.route("/submit_loop", methods=["POST", "PUT", "OPTIONS"])
-@crossdomain(methods=["POST", "PUT", "OPTIONS"], headers="Content-Type")
+@crossdomain(origin=basestring, methods=["POST", "PUT", "OPTIONS"], headers="Content-Type")
 @login_required
 def submit_loop():
     req = request.get_json()
