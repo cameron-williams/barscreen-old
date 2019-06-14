@@ -116,7 +116,7 @@ def get_loop(loop_id):
                 last_clip_id = last_played.get(show.id)
                 # handle random show clip selection
                 if show.order == 'random':
-                    if last_clip_id:
+                    if last_clip_id and last_clip_id in clip:
                         clip_selection.pop(clip_selection.index(last_clip_id))
                     clip = random.choice(clip_selection)
 

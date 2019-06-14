@@ -192,7 +192,7 @@ def addloop():
 
             # save video locally
             url = storage.upload_promo_video(
-                name=fn, file=form.promo_file.data)
+                name=fn, file=open("/tmp/"+fn))
 
             screencap_url = storage.upload_promo_image(
                 name=image_path.split("/")[-1], image_data=open(image_path).read())
