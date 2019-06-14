@@ -81,7 +81,7 @@ $(document).ready(function () {
         ctx.drawImage(image2, 270, 205.5, 270, 205.5);
         img.attr("src", canvas[0].toDataURL("image/png"));
       }
-    } v
+    }
     if (thumbnails.length == 1) {
       var image1 = new Image();
       image1.crossOrigin = "";
