@@ -166,8 +166,8 @@ def loops():
 
 
 @dashboard.route("/loops/addloop", methods=["POST", "GET"])
+@crossdomain(origin="*", headers="*", methods=["POST", "GET"])
 @login_required
-@crossdomain(origin="*", headers="*", methods="*")
 def addloop():
     error = None
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()

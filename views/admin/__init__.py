@@ -199,8 +199,8 @@ def editloop(user_id, loop_id):
 
 
 @admin.route("/submit_loop", methods=["POST", "PUT"])
-@login_required
 @crossdomain(origin="*", methods=["POST", "PUT"])
+@login_required
 def submit_loop():
     req = request.get_json()
     current_user = Users.query.filter_by(id=req["user_id"]).first()
