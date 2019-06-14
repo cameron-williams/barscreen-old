@@ -81,10 +81,10 @@ $(document).ready(function() {
           ctx.drawImage(image2, 270, 205.5, 270, 205.5);
           img.attr("src", canvas[0].toDataURL("image/png"));
           }
-      }
-      if (thumbnails.length == 1){
-          var image1 = new Image();
-          image1.crossOrigin = "";
+      }v
+      ivails.length == 1){
+       vage1 = new Image();
+       v.crossOrigin = "";
           image1.src = thumbnails[0]
           image1.onload = function() {
             ctx.drawImage(image1, 0, 0, 540, 405);

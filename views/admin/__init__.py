@@ -20,6 +20,7 @@ from urllib import unquote_plus
 from base64 import b64encode
 from werkzeug.utils import secure_filename
 import re
+from views.dashboard import crossdomain
 
 admin = Blueprint('admin', __name__, static_folder='../../static')
 
@@ -199,6 +200,7 @@ def editloop(user_id, loop_id):
 
 @admin.route("/submit_loop", methods=["POST", "PUT"])
 @login_required
+@crossdomain(origin="*", methods=["POST", "PUT"])
 def submit_loop():
     req = request.get_json()
     current_user = Users.query.filter_by(id=req["user_id"]).first()
