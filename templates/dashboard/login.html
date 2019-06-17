@@ -16,9 +16,11 @@
 <body>
 {% with messages = get_flashed_messages() %}
    {% if messages %}
+    <div class="flash_message">
       {% for message in messages %}
-         {{ message }}
+         <span>{{ message }}</span>
       {% endfor %}
+    </div>
    {% endif %}
 {% endwith %}
   <div class="site_container">

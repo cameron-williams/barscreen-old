@@ -203,6 +203,22 @@ nav{
 }
 /*End Nav Bar */
 
+/* Flash Message */
+
+.flash_message{
+  position: absolute;
+  width: 100%;
+  font-weight: 600;
+  z-index: 999999;
+  top: 0;
+  box-sizing: border-box;
+  margin-top: 1em;
+  text-align: center;
+  background-color: #EF9F00;
+  padding: 1em;
+  border: 1px solid #232323;
+}
+
 /* Modal Stylings */
 
 .modal {
@@ -510,7 +526,7 @@ nav{
   width: 25%;
   max-width: 400px;
   height: calc(100% + 4em);
-  overflow: scroll;
+  overflow: auto;
   display: inline-block;
   padding: 1em;
   border-right: #232323 1px solid;
@@ -520,7 +536,7 @@ nav{
   display: inline-block;
   vertical-align: top;
   padding: 1em;
-  width: calc(100% - 25% - 5em);
+  width: calc(100% - 25% - .25em);
 }
 
 /* Playlist */
@@ -752,7 +768,7 @@ nav{
   position: absolute;
   color: #8D9499;
   width: 1.75em;
-  height: calc(100% - 28px);
+  height: calc(100% - 32px);
   display: inline-block;
   -webkit-transition: all .5s ease-in-out;
   -moz-transition: all .5s ease-in-out;
@@ -1245,7 +1261,7 @@ nav{
 
 /* Media Query */
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 850px) {
   .loops_container ul{
     grid-template-columns: calc(25% - 7.5px) calc(25% - 7.5px) calc(25% - 7.5px) calc(25% - 7.5px);
   }
@@ -1253,6 +1269,17 @@ nav{
   .content_display ul{
     grid-template-columns: calc(25% - 3.75px) calc(25% - 3.75px) calc(25% - 3.75px) calc(25% - 3.75px);
   }
+  /* Dashboard Responsiveness */
+  .creation_dashboard .content_col{
+    width: calc(100% - 35% - .25em);
+  }
+  .creation_dashboard .playlist_col{
+    width: 35%;
+  }
+  .playlist_list ul{
+    white-space: normal;
+  }
+
 }
 
 @media screen and (max-width: 600px) {
@@ -1301,5 +1328,92 @@ nav{
   /*Creat Dashboard Lists */
   .content_display ul{
     grid-template-columns: calc(33% - 3.5px) calc(33% - 3.5px) calc(33% - 3.5px);
+  }
+
+  /* Dashboard Responsiveness */
+  .creation_dashboard .content_col{
+    width: 100%;
+    max-width: 100%;
+    border: none;
+  }
+  .creation_dashboard .playlist_col{
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    border-bottom: solid 1px #232323;
+    border-right: none;
+  }
+
+  .playlist_title h3 {
+    display: inline-block;
+    float: none;
+  }
+
+  .playlist_title h3 i{
+    float: none;
+  }
+
+  .playlist_image{
+    display: inline-block;
+    vertical-align: top;
+    float: left;
+    clear: both;
+    margin-right: 5px;
+    margin-bottom: 5px;
+  }
+
+  .playlist_title button{
+    clear: both;
+  }
+
+  .playlist_list ul{
+    min-height: 149px;
+    white-space: nowrap;
+    overflow: auto;
+  }
+
+  .playlist_list ul li{
+    display: inline-block;
+    margin-left: 5px;
+    width: 10em;
+  }
+
+  .playlist_list ul li div{
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+
+  .playlist_list ul li div:first-child{
+    width: 100%;
+  }
+
+  .channel_information{
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+  }
+
+  .channel_shows{
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+  }
+
+  /* Account Page */
+
+  .account_menu{
+    display: block;
+    width: 100%;
+    margin-bottom: 1em;
+  }
+  .account_menu ul li {
+    padding: .5em;
+    display: inline-block;
+    width: 32%;
+  }
+  .account_content{
+    width: 100%;
+    max-width: 100%;
   }
 }

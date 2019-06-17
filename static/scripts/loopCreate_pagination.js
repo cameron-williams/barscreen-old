@@ -2,7 +2,7 @@ $(document).ready(function() {
 
   var lists = document.getElementsByClassName('content_display');
   listSize = 5;
-  var fourWide = window.matchMedia("(max-width: 800px)");
+  var fourWide = window.matchMedia("(max-width: 850px)");
   var threeWide = window.matchMedia("(max-width: 600px)")
   if (fourWide.matches){
       // Screen is less than 800px
@@ -14,7 +14,7 @@ $(document).ready(function() {
   }
   console.log(listSize);
 
-$(lists).each(function() {
+  $(lists).each(function() {
     var contentCount = $(this).find('ul li').length
     var listPresent = $(this).find('ul').has("li").length ? "Yes" : "No"
     var pageCount =  contentCount / listSize;
@@ -56,6 +56,9 @@ $(lists).each(function() {
         $(oneOver).addClass("active");
         showPage(parseInt($(oneOver).text()))
   	});
-});
+  });
 
+  if( $(".content_row").find("#add_promo").length > 0){
+      $(".first_promo").hide();
+  }
 })

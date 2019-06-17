@@ -1,3 +1,19 @@
+/* Flash Message */
+
+.flash_message{
+  position: absolute;
+  width: 100%;
+  font-weight: 600;
+  z-index: 999999;
+  top: 0;
+  box-sizing: border-box;
+  margin-top: 1em;
+  text-align: center;
+  background-color: #EF9F00;
+  padding: 1em;
+  border: 1px solid #232323;
+}
+
 /* Login Styles */
 
 .splash_login{

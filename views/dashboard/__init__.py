@@ -181,7 +181,6 @@ def addloop():
     form = DashNewPromoForm()
     if request.method == "POST" and form.validate_on_submit():
         storage = GoogleStorage()
-        print("ya")
         try:
             # Get secure filename from file data.
             fn = secure_filename(form.promo_file.data.filename)
