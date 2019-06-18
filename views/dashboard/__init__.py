@@ -252,9 +252,19 @@ def submit_loop():
     return jsonify({"success": True})
 
 
-@dashboard.route("/loops/<loop_id>")
+@dashboard.route("/loops/<loop_id>", methods=["GET", "POST", "DELETE"])
 @login_required
 def editloop(loop_id):
+    current_loop = db.session.query(Loop).filter_by(Loop.id==loop_id).first()
+    if not current_loop:
+        abort(404, {"error": "No loop by that id. (id:{})".format(loop_id)})
+
+    # Handles ajax post method for deleting a loop.
+    if request.method == "DELETE":
+        db.session.remove(current_loop)
+        db.session.commit()
+        return jsonify({"status": "ok", "message": "loop {} deleted".format(loop_id)})
+        
     trends = Channel.query.order_by(Channel.id.desc()).limit(10).all()
     entertainments = Channel.query.order_by(Channel.id.desc()).filter(
         (Channel.category).like('Entertainment')).all()
@@ -263,10 +273,9 @@ def editloop(loop_id):
     news = Channel.query.order_by(Channel.id.desc()).filter(
         (Channel.category).like('News')).all()
     loop_playlist = []
-    current_loop = Loop.query.filter_by(id=loop_id).first()
+
     form = DashNewPromoForm()
-    if not current_loop:
-        abort(404, {"error": "No channel by that id. (id:{})".format(loop_id)})
+
     for i in current_loop.playlist:
         media_id = re.search(r'\d+', i).group()
         if 'promo' in i.lower():
