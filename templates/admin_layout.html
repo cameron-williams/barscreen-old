@@ -49,6 +49,15 @@
       </div>
     </nav>
     <div id="loader"></div>
+    {% with messages = get_flashed_messages() %}
+       {% if messages %}
+        <div class="flash_message">
+          {% for message in messages %}
+             <span>{{ message }}</span>
+          {% endfor %}
+        </div>
+       {% endif %}
+    {% endwith %}
     <div id="content">
     {% block content %}{% endblock %}
     </div>

@@ -58,7 +58,7 @@ $(document).ready(function() {
   	});
   });
 
-  if( $(".content_row").find("#add_promo").length > 0){
+  if( $(".content_row").find(".add_promo").length > 0){
       $(".first_promo").hide();
   }
 })
