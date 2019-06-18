@@ -12,7 +12,7 @@ $(document).ready(function(){
         data: JSON.stringify({"email": email}),
         dataType: "json",
         contentType: "application/json",
-        error: function(errMsg){alert("Sorry: " + errMsg)},
+        error: function(jqXHR, exception){alert("Sorry: " + exception); console.log(jqXHR); console.log(exception);},
     });
     $(document).find(".alternate2").delay(250).fadeIn(250)
   });
