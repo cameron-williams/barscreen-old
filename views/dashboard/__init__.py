@@ -152,7 +152,7 @@ def change_password():
     password_token = generate_confirmation_token(existing_user.email)
 
     # Fill in email body and send email
-    email_body = """Please click on the link to reset your BarScreen password. Link: {}""".format(
+    email_body = """Please click on the link to reset your BarScreen password. Link: https://dashboard.barscreen.tv{}""".format(
         url_for('dashboard.confirm_email', token=password_token),
     )
     gmail.send_email(to=existing_user.email,
