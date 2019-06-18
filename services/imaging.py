@@ -5,6 +5,17 @@ import os
 import cv2
 
 
+def resize_image(image_path, width=512, height=288):
+    """
+    Takes an image path and resizes it to given dimensions.
+    """
+    assert os.path.isfile(image_path), "No file found at '{}'".format(image_path)
+    image = cv2.imread(image_path)
+    image = cv2.resize(image, (width, height))
+    cv2.imwrite(image_path, image)
+    return True
+
+
 def screencap_from_video(video_path):
     """
     Takes a video path. Will open that video and captures a frame from
