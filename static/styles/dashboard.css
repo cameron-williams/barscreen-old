@@ -1400,6 +1400,16 @@ nav{
     margin-left: 0;
   }
 
+  .modal-wrapper{
+    width: 80%;
+    margin-left: -40%;
+  }
+
+  .promo_modal .promo_form_container{
+    width: 100%;
+    display: block;
+  }
+
   /* Account Page */
 
   .account_menu{
