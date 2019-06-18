@@ -58,9 +58,9 @@ $(document).ready(function() {
   	});
   });
 
-  if($('.content_row .addpromo').css('display') != 'none')
+  if($('.promo_row').css('display') != 'none')
   {
     $(".first_promo").hide();
   }
-  
+
 })
