@@ -297,10 +297,9 @@ def addclip(channel_id, show_id):
 
             # save vid and get still from it
             form.clip_file.data.save('/tmp/{}'.format(fn))
-            still_img_path = get_still_from_video_file(
-                "/tmp/{}".format(fn), 5, output="/var/tmp/{}".format(fn.replace(".mp4", ".png")))
+            image_path = screencap_from_video("/tmp/{}".format(fn))
             still_url = storage.upload_clip_image(
-                name=still_img_path.split("/")[-1], image_data=open(still_img_path).read())
+                name=image_path.split("/")[-1], image_data=open(image_path).read())
 
             current_show.clips.append(Clip(
                 name=form.clip_name.data,
