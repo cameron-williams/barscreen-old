@@ -2,6 +2,7 @@
 Script that takes all Armchair Tourist RSS feeds and uploads
 them into our CDN/DB.
 """
+from app import create_app
 import os
 import requests
 
@@ -24,7 +25,7 @@ def armchair_tourist_witw_feed():
         Clip).filter(Clip.show_id == show.id).all()}
 
     # Iterate each entry in the feed.
-    for entry in r.json()["shortFormVideos"][22:23]:
+    for entry in r.json()["shortFormVideos"]:
 
         # Only continue if the entry does not exist as a clip already.
         if not existing_clips.get(entry["title"]):
@@ -81,4 +82,11 @@ def armchair_tourist_witw_feed():
             new_clip.image_url = image_url
             show.clips.append(new_clip)
             existing_clips[new_clip.name] = new_clip
+            print("Added clip", new_clip.name)
             db.session.commit()
+
+
+if __name__ == "__main__":
+    app = create_app()
+    with app.app_context():
+        armchair_tourist_witw_feed()
