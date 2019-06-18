@@ -112,7 +112,6 @@ def login():
 
 
 @dashboard.route("/confirm/<token>", methods=["GET", "POST"])
-@login_required
 def confirm_email(token):
     # make sure token is set based off what type of request we're getting
     if token:
