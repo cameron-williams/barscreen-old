@@ -18,7 +18,8 @@ var $hamburger = $(".hamburger");
     // Do something else, like open/close menu
   });
 
-  $('.flash_message').delay(500).fadeIn('normal', function() {
-        $(this).delay(2500).fadeOut();
-     });
+  $(function() {
+    $('.flash_message').delay(500).fadeIn();
+    $('.flash_message').delay(1500).fadeOut();
+  });
 });
