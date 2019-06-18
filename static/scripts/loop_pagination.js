@@ -1,6 +1,6 @@
 $(document).ready(function() {
   listSize = 5;
-  var fourWide = window.matchMedia("(max-width: 800px)");
+  var fourWide = window.matchMedia("(max-width: 850px)");
   var threeWide = window.matchMedia("(max-width: 600px)")
   if (fourWide.matches){
       // Screen is less than 800px
@@ -10,7 +10,7 @@ $(document).ready(function() {
       // Screen is less than 600px
       listSize = 3;
   }
-  
+
 	var pageCount =  $(".loop_item").length / listSize;
 
      for(var i = 0 ; i<pageCount;i++){
