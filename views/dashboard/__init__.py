@@ -255,7 +255,7 @@ def submit_loop():
 @dashboard.route("/loops/<loop_id>", methods=["GET", "POST", "DELETE"])
 @login_required
 def editloop(loop_id):
-    current_loop = db.session.query(Loop).filter_by(Loop.id==loop_id).first()
+    current_loop = db.session.query(Loop).filter(Loop.id==loop_id).first()
     if not current_loop:
         abort(404, {"error": "No loop by that id. (id:{})".format(loop_id)})
 
