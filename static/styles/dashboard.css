@@ -207,6 +207,7 @@ nav{
 
 .flash_message{
   position: absolute;
+  display: none;
   width: 100%;
   font-weight: 600;
   z-index: 999999;
