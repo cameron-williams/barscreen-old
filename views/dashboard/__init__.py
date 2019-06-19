@@ -146,6 +146,9 @@ def confirm_email(token):
 def change_password():
     req = request.get_json()
     existing_user = Users.query.filter_by(email=req["email"]).first()
+    if not existing_user:
+        flash("Invalid email. Please try again.")
+        return redirect(url_for("dashboard.login"))
     # create gmail client
     gmail = Gmail(delegated_user="info@barscreen.tv")
     # generate password token
