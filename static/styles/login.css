@@ -153,6 +153,11 @@ form{
   background-color: #F1B02E;
 }
 
+.container_login h3{
+  text-transform: uppercase;
+  color: #F0F4FF;
+}
+
 .container_rememberme{
   color: #F0F4FF;
   display: block;

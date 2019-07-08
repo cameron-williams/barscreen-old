@@ -133,34 +133,6 @@ $(document).ready(function () {
     e.stopPropagation();
   });
 
-  $('#title_edit2').on('click', function () {
-    if ($(".title_input input").is(":visible")) {
-      $(".title_input input").hide();
-      $(".title_input span").text(
-        $(".title_input input").val()
-      ).show();
-      $("#title_edit2").hide();
-      $("#title_edit1").show();
-    } else {
-      $("span").hide();
-      $("input").text(
-        $("span").val()
-      ).show();
-      $("button").text("Update");
-    }
-  });
-
-  $('#title_edit1').on('click', function () {
-    if ($(".title_input span").is(":visible")) {
-      $(".title_input span").hide();
-      $(".title_input input").text(
-        $(".title_input span").val()
-      ).show();
-      $("#title_edit1").hide();
-      $("#title_edit2").show();
-    }
-  });
-
   var array = [];
   $('#save_button').on('click', function () {
     $('#playlist').has('li').each(function () {
@@ -174,7 +146,7 @@ $(document).ready(function () {
         array[i] = loop_type[i] + loop_id[i];
     });
     console.log(array);
-    var loopname = $(".title_input span").text();
+    var loopname = $("#title_value").val();
     var image_url = $("#loop_preview").attr("src");
     console.log(loopname);
     if (loopname.length < 1 || $('#playlist').children().length < 1) {

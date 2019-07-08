@@ -1,5 +1,5 @@
 {% extends "dashboard_layout.html" %}
-{% block title %}BarsScreen Dashboard - Create Loop{% endblock %}
+{% block title %}BarScreen Dashboard - Create Loop{% endblock %}
 {% block h3title %}Create Loop{% endblock %}
 {% block head %}
   {{ super() }}
@@ -18,9 +18,7 @@
     <div class="playlist_col">
       <div class="playlist_title">
         <h3>
-          <div class="title_input"><span></span><input placeholder="Title"/></div>
-          <i id="title_edit1" class="fas fa-pen"></i>
-          <i id="title_edit2"class="far fa-check-circle"></i>
+          <div class="title_input"><input id="title_value" placeholder="Title"/></div>
         </h3>
         <div class="playlist_image">
           <img id="loop_preview"/>
