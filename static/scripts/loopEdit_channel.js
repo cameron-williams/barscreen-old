@@ -130,7 +130,7 @@ $(document).ready(function () {
     $(document).find('#description').val('');
   });
 
-  $("#add_promo").click(function (e) {
+  $(".add_promo").click(function (e) {
     e.preventDefault();
     e.stopPropagation();
     $('.modal').toggleClass('is-visible');
