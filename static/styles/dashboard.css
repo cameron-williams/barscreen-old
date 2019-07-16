@@ -1283,6 +1283,20 @@ nav{
 
 }
 
+@media screen and (max-width: 675px) {
+  .channel_information{
+    width: 100%;
+    height: auto;
+    margin-bottom: 1em;
+  }
+
+  .channel_shows{
+    width: 100%;
+    height: auto;
+    margin-left: 0;
+  }
+}
+
 @media screen and (max-width: 600px) {
   /* Navigation */
   .hamburger{
@@ -1387,18 +1401,6 @@ nav{
 
   .playlist_list ul li div:first-child{
     width: 100%;
-  }
-
-  .channel_information{
-    width: 100%;
-    height: auto;
-    margin-bottom: 1em;
-  }
-
-  .channel_shows{
-    width: 100%;
-    height: auto;
-    margin-left: 0;
   }
 
   .modal-wrapper{
